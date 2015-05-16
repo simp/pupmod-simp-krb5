@@ -1,0 +1,32 @@
+<%
+  t_defvars = [
+    'admin_server',
+    'kdc',
+    'database_module',
+    'default_domain',
+    'v4_realm',
+    'auth_to_local_names',
+    'auth_to_local'
+  ]
+-%>
+[realms]
+  <%= @name.upcase %> = {
+<% t_defvars.each do |t_var|
+  if not eval(t_var).empty? then
+-%>
+    <%= t_var %> = <%= eval(t_var) %>
+<%  end -%>
+<% end -%>
+<% if not @v4_instance_convert.empty? then -%>
+<%
+    if not @v4_instance_convert.is_a?(Hash) then
+      raise Puppet::ParseError('Error: v4_instance_convert must be a Hash!')
+    end
+-%>
+    v4_instance_convert = {
+<%  @v4_instance_convert.each_pair do |t_k,t_v| -%>
+      <%= t_k %> = <%= t_v %>
+<%  end -%>
+    }
+<% end -%>
+  }

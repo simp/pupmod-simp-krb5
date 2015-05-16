@@ -1,0 +1,72 @@
+<%
+# Normal Options
+  t_defvars = [
+    'acl_file',
+    'admin_keytab',
+    'database_name',
+    'default_principal_expiration',
+    'dict_file',
+    'kadmind_port',
+    'kpasswd_port',
+    'key_stash_file',
+    'kdc_ports',
+    'kdc_tcp_ports',
+    'master_key_name',
+    'master_key_type',
+    'max_life',
+    'max_renewable_life',
+    'iprop_enable',
+    'iprop_master_ulogsize',
+    'iprop_slave_poll',
+    'supported_enctypes',
+    'reject_bad_transit'
+  ]
+
+# Validation
+
+  t_valid_default_principal_flags = [
+    'postdateable',
+    'forwardable',
+    'tgt-based',
+    'renewable',
+    'proxiable',
+    'dup-skey',
+    'allow-tickets',
+    'preauth',
+    'hwauth',
+    'pwchange',
+    'service',
+    'pwservice'
+  ]
+
+t_default_principal_flags = @default_principal_flags.dup
+if t_default_principal_flags.is_a?(String) then
+  t_default_principal_flags = t_default_principal_flags.split(',')
+end
+
+t_default_principal_flags.each_index do |i|
+  t_default_principal_flags[i] =~ /(\+|-)?(.*)/
+  t_flag_opt = ( $1 || '+' )
+  t_flag = $2
+
+  if not t_valid_default_principal_flags.include?(t_flag)
+    raise Puppet::ParseError.new("Kdc_Realm: 'default_principal_flags' flag #{t_flag} must be one of '#{t_valid_default_principal_flags.join('\', \'')}")
+  end
+
+  t_default_principal_flags[i] = "#{t_flag_opt}#{t_flag}"
+end
+-%>
+[realms]
+  [<%= @name.upcase %>]
+<% t_defvars.each do |t_var|
+    if not eval(t_var).empty? then
+-%>
+    <%= t_var %> = <%= eval(t_var) %>
+<%  end -%>
+<% end -%>
+<%
+  # Non-default options
+  if not t_default_principal_flags.empty? then
+-%>
+    default_principal_flags = <%= t_default_principal_flags.join(',') %>
+<% end -%>
