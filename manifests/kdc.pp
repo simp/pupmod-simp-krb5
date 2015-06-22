@@ -66,19 +66,19 @@ class krb5::kdc (
   }
 
   file { '/var/kerberos/krb5kdc/kdc.conf':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0600',
-    notify  => Concat_build['kdc.conf']
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0600',
+    notify => Concat_build['kdc.conf']
   }
 
   file { '/usr/share/augeas/lenses/krb5kdc.aug':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => 'puppet:///modules/krb5/krb5kdc.aug'
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/krb5/krb5kdc.aug'
   }
 
   if !empty($kdc_tcp_ports) {

@@ -82,11 +82,11 @@ class krb5 (
   }
 
   file { '/usr/share/augeas/lenses/krb5.aug':
-    ensure  => 'file',
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
-    source  => 'puppet:///modules/krb5/krb5.aug'
+    ensure => 'file',
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0644',
+    source => 'puppet:///modules/krb5/krb5.aug'
   }
 
   package { [

@@ -1,0 +1,8 @@
+---
+fixtures:
+  symlinks:
+    krb5: "#{source_dir}"
+    common: "#{source_dir}/../common"
+    concat: "#{source_dir}/../concat"
+    iptables: "#{source_dir}/../iptables"
+    stdlib: "#{source_dir}/../stdlib"

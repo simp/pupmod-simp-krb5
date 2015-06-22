@@ -16,7 +16,7 @@ class krb5::keytab {
     group   => 'root',
     mode    => '0400',
     tag     => 'firstrun',
-    source  => 'puppet:///keydist/keytabs',
+    source  => 'puppet:///modules/pki/keydist/keytabs',
     recurse => true
   }
 
