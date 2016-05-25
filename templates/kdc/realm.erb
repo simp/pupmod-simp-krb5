@@ -1,0 +1,49 @@
+<%
+# Normal Options
+  _defvars = [
+    'acl_file',
+    'admin_keytab',
+    'database_name',
+    'default_principal_expiration',
+    'dict_file',
+    'kadmind_port',
+    'kpasswd_port',
+    'key_stash_file',
+    '_kdc_ports',
+    '_kdc_tcp_ports',
+    'master_key_name',
+    'master_key_type',
+    'max_life',
+    'max_renewable_life',
+    'iprop_enable',
+    'iprop_master_ulogsize',
+    'iprop_slave_poll',
+    '_supported_enctypes',
+    'reject_bad_transit'
+  ]
+-%>
+[realms]
+  <%= @name.upcase %> = {
+<% _defvars.each do |key|
+    val = eval("@#{key}")
+
+    unless val.empty?
+-%>
+    <%= key.sub(/^_/, '') %> = <%= val %>
+<%  end -%>
+<% end -%>
+<%
+  # Non-default options
+  if scope.lookupvar('_default_principal_flags') && !@_default_principal_flags.empty?
+-%>
+    default_principal_flags = <%=
+    @_default_principal_flags.map{ |x|
+      if x =~ /^[-+]/
+        x = x
+      else
+        x = %(+#{x})
+      end
+    }.join(',')
+  %>
+<% end -%>
+  }
