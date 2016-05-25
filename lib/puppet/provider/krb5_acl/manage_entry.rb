@@ -58,7 +58,7 @@ Puppet::Type.type(:krb5_acl).provide :manage_entry do
             if !target ||
                (target =~ Regexp.new(@resource[:operation_target])) ||
                ( (new_acl[i-1] =~ /^\s+#/) && (new_acl[i-1] !~ KRB5_ACL_EDIT_MSG) )
-
+            then
               to_delete << i
             end
           end

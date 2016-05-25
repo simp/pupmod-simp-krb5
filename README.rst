@@ -1,7 +1,10 @@
 |License| |Build Status| |SIMP compatibility|
 
+Krb5 Puppet Module
+==================
+
 Table of Contents
-^^^^^^^^^^^^^^^^^
+-----------------
 
 1. `Overview <#overview>`__
 2. `Module Description - What the module does and why it is
@@ -51,55 +54,49 @@ wiki <https://simp-project.atlassian.net/wiki/display/SD/SIMP+Development+Home>`
 This module is optimally designed for use within a larger SIMP
 ecosystem, but many of its functions can be used independently.
 
-Module Description
-------------------
-
-
 Setup
 -----
 
-
 What krb5 affects
-~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^
 
 This module helps administrators get a working KDC in place and clients
 configured to use the KDC.
 
-However, given the highly sensitive nature of Kerberos passwords and tokens,
-this module DOES NOT (yet) store or use any passwords related to the Kerberos
-KDC.
+The module, by default, sets up a fully functional KDC in your environment and
+generates keytabs for one admin user, and all of your hosts that it can
+discover via `keydist`.
 
-This means that you must run `/usr/sbin/kdb5_util create -s` on the KDC to set
-the principal adminstrator password and initialize the database.
-
-It is also up to you to register your systems/services with the KDC.
-
-If you forget your password, ***Puppet can't help you***.
-
+.. note::
+  The `keydist` discovery only works if the KDC is on the same system as your
+  Puppet Server!
 
 Setup Requirements
-~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^
 
 The only thing necessary to begin using krb5 is to install it into
-your modulepath. Agents will need to enable ``pluginsync``.
-
+your modulepath.
 
 Beginning with krb5
-~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 The following sections give a brief guide on how to get started, for more
 information, please see the official Red Hat documentation at
 https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/Managing_Smart_Cards/Configuring_a_Kerberos_5_Server.html
 
+.. note::
+  You can skip this section if you're using the default settings. These will
+  complete the following for you with randomly generated passwords for all
+  keytabs and the master password.
 
 Usage
 -----
 
 Creating Admin Principals
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ACL Configuration
-.................
+"""""""""""""""""
 
 The following Puppet code snippet will create an ACL for your admin user that
 is *probably* appropriate for your organization.
@@ -112,7 +109,7 @@ is *probably* appropriate for your organization.
   }
 
 Create Your Admin Principal
-...........................
+"""""""""""""""""""""""""""
 
 Your first principal will be an admin principal and will be allowed to manage
 the environment since it is in the `admin` group. This **must** be created on
@@ -131,7 +128,7 @@ You can now do everything remotely using this principal. Load it using
   $ /usr/bin/kinit <username>/admin
 
 Creating Host Principals
-~~~~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 Before you can really do anything with your hosts, you need to ensure that the
 host itself has a keytab.
@@ -147,7 +144,7 @@ following command:
   # /usr/sbin/kadmin.local -r YOUR.DOMAIN -q 'addprinc -randkey host/<fqdn>'
 
 Create Your Keytabs
-...................
+"""""""""""""""""""
 
 Then, create a separate keytab file for each of your created hosts using the
 following command:
@@ -157,7 +154,7 @@ following command:
   # /usr/sbin/kadmin.local -r YOUR.DOMAIN -q 'ktadd -k <fqdn>.keytab host/<fqdn>'
 
 Propagate the Keytabs
-~~~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^^^
 
 Move all of the resulting keytab files SECURELY to
 `<environment_dir>/keydist/<fqdn>/keytabs` on the Puppet server as appropriate
@@ -173,25 +170,9 @@ Then, update your node declarations to `include '::krb5::keytab'`.
 Once the Puppet Agent runs on the clients, your keytabs will copied to
 `/etc/krb5_keytabs`. The keytab matching your `fqdn` will be set in place as
 the default system keytab.
-doing the fancy stuff with your module here.
-
-Reference
----------
-
-**FIXME:** The text below is boilerplate copy. Ensure that it is correct
-and remove this message!
-
-Here, list the classes, types, providers, facts, etc contained in your
-module. This section should include all of the under-the-hood workings
-of your module so people know what the module is touching on their
-system but don't need to mess with things. (We are working on automating
-this message!)
 
 Limitations
 -----------
-
-**FIXME:** The text below is boilerplate copy. Ensure that it is correct
-and remove this message!
 
 SIMP Puppet modules are generally intended to be used on a Redhat
 Enterprise Linux-compatible distribution such as EL6 and EL7.
@@ -199,11 +180,10 @@ Enterprise Linux-compatible distribution such as EL6 and EL7.
 Development
 -----------
 
-Please see the `SIMP Contribution
-Guidelines <https://simp-project.atlassian.net/wiki/display/SD/Contributing+to+SIMP>`__.
+Please see the `SIMP Contribution Guidelines <https://simp-project.atlassian.net/wiki/display/SD/Contributing+to+SIMP>`__.
 
 Acceptance tests
-~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^
 
 To run the system tests, you need
 `Vagrant <https://www.vagrantup.com/>`__ installed. Then, run:

@@ -8,7 +8,7 @@ fixtures:
       repo: "git://github.com/simp/puppetlabs-stdlib"
       branch: "simp-master"
     haveged:
-      repo: "git://github.com/simp/puppet-haveged"
+      repo: "https://github.com/simp/puppet-haveged"
       branch: "simp-master"
   symlinks:
     krb5: "#{source_dir}"

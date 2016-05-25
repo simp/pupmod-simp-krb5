@@ -1,9 +1,9 @@
----
-  fixtures:
-    symlinks:
-      compliance_markup: "#{source_dir}/../compliance_markup"
-      haveged: "#{source_dir}/../haveged"
-      iptables: "#{source_dir}/../iptables"
-      krb5: "#{source_dir}"
-      simplib: "#{source_dir}/../simplib"
-      stdlib: "#{source_dir}/../stdlib"
+fixtures:
+  symlinks:
+    compliance_markup: "#{source_dir}/../compliance_markup"
+    concat: "#{source_dir}/../concat"
+    haveged: "#{source_dir}/../haveged"
+    iptables: "#{source_dir}/../iptables"
+    krb5: "#{source_dir}"
+    simplib: "#{source_dir}/../simplib"
+    stdlib: "#{source_dir}/../stdlib"
