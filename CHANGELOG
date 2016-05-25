@@ -1,0 +1,31 @@
+* Fri May 27 2016 Trevor Vaughan <tvaughan@onyxpoint.com> - 5.0.0-0
+- Overhaul of the entire module
+- Removed all use of 'concat'
+- Split the entire module into new-style components
+- Added tests
+
+* Fri Jan 16 2015 Trevor Vaughan <tvaughan@onyxpoint.com> - 4.1.0-3
+- Changed puppet-server requirement to puppet
+
+* Mon May 19 2014 Kendall Moore <kmoore@keywcorp.com> - 4.1.0-2
+- Removed all stock classes so they can be ported to the SIMP module.
+
+* Mon Apr 21 2014 Trevor Vaughan <tvaughan@onyxpoint.com> - 4.1.0-1
+- Updated to avoid globals and call Hiera instead.
+
+* Sat Mar 01 2014 Kendall Moore <kmoore@keywcorp.com> - 4.1.0-0
+- Refactored to pass all lint tests.
+- Added rspec tests for test coverage.
+
+* Mon Oct 14 2013 Trevor Vaughan <tvaughan@onyxpoint.com> - 0.0.1-3
+- Updated the custom types to no longer use Puppet::Util::FileLocking
+  since it has been removed.
+
+* Mon Oct 07 2013 Nick Markowski <nmarkowski@keywcorp.com> - 0.0.1-2
+- Updated template to reference instance variables with @
+
+* Mon Jan 28 2013 Maintenance - 0.0.1-1
+- Create a Cucumber test that includes krb5 in the manifest and runs puppet successfully.
+
+* Mon Sep 10 2012 Maintenance - 0.0.1-0
+- Initial implementation of krb5 module.

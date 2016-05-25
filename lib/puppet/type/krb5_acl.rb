@@ -15,7 +15,7 @@ module Puppet
         r[:principal] == self[:principal] and
         r[:operation_target] == self[:operation_target] and
         found_resource = r
-      }.empty? then
+      }.empty?
         msg = "Duplicate declaration: Krb5_acl with target='#{self[:target]}', principal='#{self[:principal]}', and operation_target='#{self[:operation_target]}' is already declared"
 
         msg << " in file #{found_resource.file} at line #{found_resource.line}" if found_resource.file and found_resource.line
@@ -27,7 +27,7 @@ module Puppet
     end
 
     def finish
-      if @catalog.resource("Service[kadmin]") then
+      if @catalog.resource("Service[kadmin]")
         self[:notify] = [ 'Service[kadmin]' ]
       end
 
@@ -48,7 +48,7 @@ module Puppet
       end
 
       munge do |value|
-        if value =~ /(.*)@(.*)/ then
+        if value =~ /(.*)@(.*)/
           value = "#{$1}@#{$2.upcase}"
         end
 
@@ -65,7 +65,7 @@ module Puppet
       end
 
       munge do |value|
-        if value =~ /(.*)@(.*)/ then
+        if value =~ /(.*)@(.*)/
           value = "#{$1}@#{$2.upcase}"
         end
 
@@ -85,7 +85,7 @@ module Puppet
       defaultto('undef')
 
       munge do |value|
-        if resource[:ensure] == 'absent' then
+        if resource[:ensure] == 'absent'
           value[0].chr != '^' and value = '^' + value
           value[-1].chr != '$' and value = value + '$'
         end
@@ -94,8 +94,8 @@ module Puppet
       end
 
       validate do |value|
-        if resource[:ensure] == 'absent' then
-          if value[0].chr == '/' or value[-1].chr == '/' then
+        if resource[:ensure] == 'absent'
+          if value[0].chr == '/' or value[-1].chr == '/'
             fail Puppet::Error, "'operation_target' regexes should not start or end with '/'"
           end
           begin
@@ -104,7 +104,7 @@ module Puppet
             fail Puppet::Error, "'operation_target' does not contain a valid regex"
           end
         else
-          if value =~ /[!@#\$%^&*\(\)+=]/ then
+          if value =~ /[!@#\$%^&*\(\)+=]/
             fail Puppet::Error, "'operation_target' does not look like a valid Kerberos 5 principal."
           end
 
@@ -116,18 +116,6 @@ module Puppet
     newproperty(:operation_mask) do
       desc "The operation mask per kadmind(8). Be aware that lower case activates a mask and upper case deactivates it."
       newvalues(/^([admcilpADMCILP]+|[x*])$/)
-      
-      def insync?(is)
-        is == @should.to_s
-      end
-
-      def sync
-        provider.mask_sync
-      end
-
-      def retrieve
-        return provider.get_mask
-      end
 
       munge do |value|
         value.split('').sort.uniq
@@ -136,17 +124,20 @@ module Puppet
       validate do |value|
         t_val = value.split('')
         t_val.each do |x|
-          x == '*' and next
-          if t_val.include?(x.swapcase) then
+          next if x == '*'
+          if t_val.include?(x.swapcase)
             fail Puppet::Error, "operation_mask options '#{x}' and '#{x.swapcase}' are mutually exclusive"
           end
         end
+      end
+
+      def insync?(is)
+        is == @should.join
       end
     end
 
     autorequire(:file) do
       File.dirname(self[:target])
     end
-
   end
-end          
+end
