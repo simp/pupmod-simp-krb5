@@ -8,7 +8,7 @@ fixtures:
       repo: "git://github.com/simp/puppetlabs-stdlib"
       branch: "simp-master"
     haveged:
-      repo: "git://github.com/simp/pupmod-simp-haveged"
+      repo: "https://github.com/simp/puppet-haveged"
       branch: "simp-master"
     compliance: "https://github.com/trevor-vaughan/pupmod-compliance"
   symlinks:
