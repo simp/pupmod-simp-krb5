@@ -16,12 +16,12 @@ class krb5::keytab {
     group   => 'root',
     mode    => '0400',
     tag     => 'firstrun',
-    source  => 'puppet:///modules/pki/keydist/keytabs',
+    source  => 'puppet:///modules/krb5_files/files/keytabs',
     recurse => true
   }
 
   file { '/etc/krb5.keytab':
-    ensure => 'symlink',
-    target => "/etc/krb5_keytabs/${::fqdn}.keytab"
+    ensure => 'file',
+    source => "/etc/krb5_keytabs/${::fqdn}.keytab"
   }
 }
