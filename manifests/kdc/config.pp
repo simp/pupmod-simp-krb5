@@ -38,9 +38,9 @@ class krb5::kdc::config (
 
   assert_private()
 
-  $_client_nets = $::krb5::kdc::client_nets
-  $_config_dir = $::krb5::kdc::config_dir
-  $_use_iptables = $::krb5::kdc::use_iptables
+  $_client_nets = getvar('::krb5::kdc::client_nets')
+  $_config_dir = getvar('::krb5::kdc::config_dir')
+  $_use_iptables = getvar('::krb5::kdc::use_iptables')
 
   validate_string($kdb5_password)
   validate_port($kdc_ports)
