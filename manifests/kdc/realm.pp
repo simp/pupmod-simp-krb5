@@ -6,11 +6,9 @@
 # @see man 5 kdc.conf -> REALMS SECTION
 #
 # @param initialize [Boolean] If set, auto-initialize the Realm. This will
-#   add an initial Principal for this Realm for updating the system via Puppet.
+#   add an initial Principal for this Realm.
 # @param auto_principal [String] If $initialize is set, this principal will be
 #   created as an administrative Principal on the Realm.
-# @param create_host_keytabs [Boolean] If set, automatically create keytabs for
-#   *all* hosts that this Puppet server knows about.
 # @param name [String] The affected Realm. This will be upcased if not done already.
 # @param client_nets [Array] The networks to allow access into the KDC realm.
 # @param acl_file [AbsolutePath] The path to the KDC realm ACL file.
@@ -50,7 +48,6 @@
 define krb5::kdc::realm (
   $initialize = false,
   $auto_principal = 'puppet_auto',
-  $create_host_keytabs = false,
   $client_nets = pick(
     getvar('::krb5::kdc::client_nets'),
     getvar('::client_nets'),
@@ -86,7 +83,6 @@ define krb5::kdc::realm (
 
   validate_bool($initialize)
   validate_string($auto_principal)
-  validate_bool($create_host_keytabs)
   validate_net_list($client_nets)
   validate_absolute_path($acl_file)
   validate_absolute_path($admin_keytab)
