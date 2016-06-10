@@ -30,16 +30,24 @@
 #   necessary work to set up the environment for production.
 #   @note This will simply use the system defaults. If you want something other
 #     than that, you'll need to call the `::krb5::kdc::realm` define directly.
-#   @note If you select this, this *will* automatically initialize your
-#     Kerberos database and prepare your system to run. Passwords *will* be
-#     auto-generated using passgen() and used on the host system.
+#
+#     If you select this, this *will* automatically initialize your Kerberos
+#     database and prepare your system to run.
 # @param auto_realm [String] If $auto_initialize is set, then use this string
 #   as your default Kerberos Realm.
 # @param auto_management_principal [String] If $auto_initialize is set, then
 #   use this string as the primary Kerberos principal name for the default Realm.
-# @param auto_create_host_keytabs [Boolean] If `$auto_initialize` is set, then
-#   create keytabs for all hosts that Puppet currently knows about.
-#   @note This capability expects a `${module_name}_files` module to be present in
+# @param auto_generate_host_keytabs [Boolean] If set, create keytabs for all
+#   hosts that Puppet currently knows about.
+#   @note Host Principals are identified by having a 'host/<fqdn>' entry in the
+#     list of principals. Any host without one of these entries
+#     *will be ignored*.
+#
+#     This is *not* dependent on `$auto_initialize`! You may want to toggle
+#     some of the parameters in the `::krb5::kdc::auto_keytabs` class to tailor
+#     the generation.
+#
+#     This capability expects a `${module_name}_files` module to be present in
 #     the environment's module path. It is **not** recommended that you place
 #     this module inside of the standard module path. Instead, the containing
 #     directory should be added to the `modulepath` directive of your
@@ -67,7 +75,7 @@ class krb5::kdc (
   $auto_initialize = true,
   $auto_realm = $::domain,
   $auto_management_principal = 'puppet_auto',
-  $auto_create_host_keytabs = true
+  $auto_generate_host_keytabs = true
 ) inherits ::krb5 {
 
   validate_net_list($client_nets)
@@ -78,7 +86,7 @@ class krb5::kdc (
   validate_bool($auto_initialize)
   validate_string($auto_realm)
   validate_string($auto_management_principal)
-  validate_bool($auto_create_host_keytabs)
+  validate_bool($auto_generate_host_keytabs)
 
   if $use_haveged { include '::haveged' }
 
@@ -93,9 +101,8 @@ class krb5::kdc (
 
   if $auto_initialize {
     ::krb5::kdc::realm { $auto_realm:
-      initialize          => $auto_initialize,
-      auto_principal      => $auto_management_principal,
-      create_host_keytabs => $auto_create_host_keytabs
+      initialize     => $auto_initialize,
+      auto_principal => $auto_management_principal
     }
 
     ::krb5::setting::realm { $auto_realm:
@@ -109,5 +116,11 @@ class krb5::kdc (
     if $use_haveged {
       Class['haveged'] -> Krb5::Kdc::Realm[$auto_realm]
     }
+  }
+
+  if $auto_generate_host_keytabs {
+    include '::krb5::kdc::auto_keytabs'
+
+    Class['krb5::kdc::service'] -> Class['krb5::kdc::auto_keytabs']
   }
 }
