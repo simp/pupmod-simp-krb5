@@ -47,5 +47,5 @@ end
 group :system_tests do
   gem 'beaker'
   gem 'beaker-rspec'
-  gem 'simp-beaker-helpers', '>= 1.5.0'
+  gem 'simp-beaker-helpers'
 end
