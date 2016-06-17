@@ -2,7 +2,9 @@
 fixtures:
   symlinks:
     krb5: "#{source_dir}"
-    common: "#{source_dir}/../common"
+    compliance: "#{source_dir}/../compliance"
     concat: "#{source_dir}/../concat"
     iptables: "#{source_dir}/../iptables"
+    haveged: "#{source_dir}/../haveged"
     stdlib: "#{source_dir}/../stdlib"
+    simplib: "#{source_dir}/../simplib"

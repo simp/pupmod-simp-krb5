@@ -1,0 +1,33 @@
+HOSTS:
+  client6-1:
+    roles:
+      - default
+      - master
+      - client
+      - server
+    platform:   el-6-x86_64
+    box:        puppetlabs/centos-6.6-64-nocm
+    box_url:    https://vagrantcloud.com/puppetlabs/boxes/centos-6.6-64-nocm
+    hypervisor: vagrant
+    yum_repos:
+      epel:
+        mirrorlist: 'https://mirrors.fedoraproject.org/mirrorlist?repo=epel-6&arch=$basearch&country=us'
+        gpgkeys:
+          - https://getfedora.org/static/0608B895.txt
+
+  client7-1:
+    roles:
+      - client
+    platform: el-7-x86_64
+    box: puppetlabs/centos-7.0-64-nocm
+    box_url: https://vagrantcloud.com/puppetlabs/boxes/centos-7.0-64-nocm
+    hypervisor: vagrant
+    yum_repos:
+      epel:
+        mirrorlist: 'https://mirrors.fedoraproject.org/mirrorlist?repo=epel-7&arch=$basearch&country=us'
+        gpgkeys:
+          - https://getfedora.org/static/352C64E5.txt
+
+CONFIG:
+  log_level: verbose
+  type: foss
