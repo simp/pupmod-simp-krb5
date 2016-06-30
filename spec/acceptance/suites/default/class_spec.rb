@@ -5,6 +5,26 @@ test_name 'krb5 class'
 describe 'krb5 class' do
 
   hosts.each do |host|
+
+    context 'set up EPEL' do
+      # Set up EPEL for haveged
+      let(:release){ fact_on( host, 'operatingsystemmajrelease' ) }
+      let(:setup_repos_manifest) {
+        <<-EOS
+          # Configure EPEL
+          # Mirrorlists and direct download installs can be problematic in Beaker
+          exec { 'Install EPEL':
+            command   => '/usr/bin/curl -O https://dl.fedoraproject.org/pub/epel/epel-release-latest-#{release}.noarch.rpm && yum -y localinstall epel-release-latest-#{release}.noarch.rpm && /bin/sed -i "/mirrorlist/d" /etc/yum.repos.d/epel.repo && /bin/sed -i "s/#baseurl/baseurl/" /etc/yum.repos.d/epel.repo',
+            cwd       => '/tmp',
+            creates   => '/etc/yum.repos.d/epel.repo'
+          }
+        EOS
+      }
+      it 'should install epel' do
+        apply_manifest_on(host, setup_repos_manifest)
+      end
+    end
+    
     context 'default setup' do
       let(:manifest) { %(include '::krb5') }
 
