@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa041b7_bbdf6e39",
+        "filename": "spec/acceptance/suites/default/class_spec.rb",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1005361
+      },
+      "writtenOn": "2016-06-30T17:58:26Z",
+      "side": 1,
+      "message": "You can just install the epel-release package",
+      "range": {
+        "startLine": 12,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "cec4425cb0375b25ec131b0a6d4f91d754131c9d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "baa041b7_7be20603",
+        "filename": "spec/acceptance/suites/default/class_spec.rb",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1005361
+      },
+      "writtenOn": "2016-06-30T17:58:26Z",
+      "side": 1,
+      "message": "ws",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 4
+      },
+      "revId": "cec4425cb0375b25ec131b0a6d4f91d754131c9d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
