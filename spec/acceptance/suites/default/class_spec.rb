@@ -3,9 +3,11 @@ require 'spec_helper_acceptance'
 test_name 'krb5 class'
 
 describe 'krb5 class' do
-
   hosts.each do |host|
+
     context 'default setup' do
+      install_package(host,'epel-release')
+
       let(:manifest) { %(include '::krb5') }
 
       it 'should work with no errors' do
