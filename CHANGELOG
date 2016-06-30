@@ -1,3 +1,6 @@
+* Thu Jun 30 2016 Nick Markowski <nmarkowski@keywcorp.com> - 5.0.1-0
+- Haveged now included by default.
+
 * Fri May 27 2016 Trevor Vaughan <tvaughan@onyxpoint.com> - 5.0.0-0
 - Overhaul of the entire module
 - Removed all use of 'concat'

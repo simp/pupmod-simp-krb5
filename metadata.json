@@ -1,6 +1,6 @@
 {
   "name":    "simp-krb5",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "author":  "simp",
   "summary": "Puppet management of the MIT kerberos stack",
   "license": "Apache-2.0",
@@ -9,6 +9,10 @@
   "issues_url":   "https://simp-project.atlassian.net",
   "tags": [ "simp", "profiles"],
   "dependencies": [
+    {
+      "name": "simp/puppet-haveged",
+      "version_requirement": ">= 0.3.0 < 1.0.0"
+    },
     {
       "name": "simp/iptables",
       "version_requirement": ">= 4.1.0"

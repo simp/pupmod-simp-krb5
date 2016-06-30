@@ -18,11 +18,14 @@
 class krb5 (
   $use_ldap = pick(getvar('::use_ldap'), hiera('use_ldap', false)),
   $use_iptables = pick(getvar('::use_iptables'), hiera('use_iptables', false)),
+  $use_haveged = defined('$::use_haveged') ? { true => getvar('::use_haveged'), default => hiera('use_haveged', true) },
   $enctypes = [ 'aes256-cts-hmac-sha1-96', 'aes128-cts-hmac-sha1-96' ]
+
 ){
 
   validate_bool($use_ldap)
   validate_bool($use_iptables)
+  validate_bool($use_haveged)
   validate_array($enctypes)
 
   contain '::krb5::install'
