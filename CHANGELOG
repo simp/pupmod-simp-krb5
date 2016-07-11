@@ -1,3 +1,7 @@
+* Mon Jul 11 2016 Trevor Vaughan <tvaughan@onyxpoint.com> - 5.0.2-0
+- Fixed a bug in the krb5kdc_auto_keytab provider where passed hosts were not
+  getting the realms array integrated.
+
 * Thu Jun 30 2016 Nick Markowski <nmarkowski@keywcorp.com> - 5.0.1-0
 - Haveged now included by default.
 

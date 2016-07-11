@@ -26,7 +26,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
     host_hash ||= {}
 
     # No reason to do all the processing if we're just trying to delete things
-    return File.directory?(target_dir) if resource[:ensure] == :absent
+    return File.directory?(target_dir) if resource[:ensure].to_s == 'absent'
 
     principal_list = execute(%(#{command(:kadmin)} -q "list_principals")).split.map(&:strip)
 
@@ -98,6 +98,11 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
     # Process ALL THE HOSTS
     host_hash.keys.sort.each do |hostname|
       host = host_hash[hostname].dup
+
+      # If we've been told to add hosts to specific realms, we need to add them
+      # to the array.
+      host['realms'] += target_realms
+      host['realms'].uniq!
 
       (host['realms'] - valid_realms).each do |realm|
         host['realms'].delete(realm)

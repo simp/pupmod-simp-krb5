@@ -214,6 +214,8 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
       value.each_key do |host|
         if value[host]['realms']
           value[host]['realms'] = value[host]['realms'].flatten.map(&:upcase)
+        else
+          value[host]['realms'] = []
         end
 
         value[host]['services'].flatten! if value[host]['services']
@@ -221,6 +223,8 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
         if @resource[:global_services] && !@resource[:global_services].empty?
           value[host]['services'] ||= []
           value[host]['services'] += @resource[:global_services]
+        else
+          value[host]['services'] = []
         end
       end
 

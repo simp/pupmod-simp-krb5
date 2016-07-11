@@ -19,7 +19,6 @@ group :test do
   gem "puppetlabs_spec_helper"
   gem "metadata-json-lint"
   gem "simp-rspec-puppet-facts", "~> 1.3"
-  gem "vagrant-wrapper"
 
 
   # simp-rake-helpers does not suport puppet 2.7.X
