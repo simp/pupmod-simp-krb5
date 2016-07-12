@@ -1,20 +1,19 @@
-<%
-  _defvars = [
-    'admin_server',
-    'kdc',
-    'default_domain',
-    'v4_realm',
-    'auth_to_local'
-  ]
--%>
 [realms]
   <%= @name.upcase %> = {
-<% _defvars.each do |key|
-  val = eval("@#{key}")
-  unless val.nil? || val.empty?
--%>
-    <%= key %> = <%= val %>
-<%  end -%>
+    admin_server = <%= @admin_server %>
+<% if @kdc.empty? -%>
+    kdc = <%= @admin_server %>
+<% else -%>
+    kdc = <%= @kdc %>
+<% end -%>
+<% unless @default_domain.empty? -%>
+    default_domain = <%= @default_domain %>
+<% end -%>
+<% unless @v4_realm.empty? -%>
+    v4_realm = <%= @v4_realm %>
+<% end -%>
+<% unless @auth_to_local.empty? -%>
+    auth_to_local = <%= @auth_to_local %>
 <% end -%>
 <% unless @v4_instance_convert.empty? -%>
     v4_instance_convert = {

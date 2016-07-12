@@ -1,3 +1,6 @@
+* Tue Jul 22 2016 Trevor Vaughan <tvaughan@onyxpoint.com> - 5.0.3-0
+- The Realm KDC must be explicitly specified
+
 * Mon Jul 11 2016 Trevor Vaughan <tvaughan@onyxpoint.com> - 5.0.2-0
 - Fixed a bug in the krb5kdc_auto_keytab provider where passed hosts were not
   getting the realms array integrated.
