@@ -23,7 +23,8 @@ class krb5::keytab (
   }
 
   file { '/etc/krb5.keytab':
-    ensure => 'file',
-    source => "/etc/krb5_keytabs/${::fqdn}.keytab"
+    ensure  => 'file',
+    source  => "file:///etc/krb5_keytabs/${::fqdn}.keytab",
+    require => File['/etc/krb5_keytabs']
   }
 }
