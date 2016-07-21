@@ -1,10 +1,10 @@
 # Drop all Requires, Obsoletes, and Provides statements in here
 
 Requires: puppet >= 3.3.0
-Requires: pupmod-onyxpoint-compliance_markup
+Requires: pupmod-simp-compliance_markup
 Requires: pupmod-iptables
 Requires: pupmod-pki
 Requires: pupmod-simplib
 Requires: puppetlabs-stdlib
 Requires: pupmod-haveged >= 0.3.0
-Obsoletes: krb5-test
+Obsoletes: krb5-test >= 0.0.1
