@@ -1,3 +1,6 @@
+* Thu Aug 11 2016 Nick Miller <nick.miller@onyxpoint.com> - 5.0.4-0
+- Keytab file source and permission corrections
+
 * Tue Jul 22 2016 Trevor Vaughan <tvaughan@onyxpoint.com> - 5.0.3-0
 - The Realm KDC must be explicitly specified
 

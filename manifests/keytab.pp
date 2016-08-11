@@ -9,7 +9,7 @@
 # * Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::keytab (
-  $keytab_source = "puppet:///modules/krb5_files/files/${::fqdn}/keytabs"
+  $keytab_source = "puppet:///modules/krb5_files/keytabs/${::fqdn}"
 ){
 
   file { '/etc/krb5_keytabs':
@@ -24,7 +24,7 @@ class krb5::keytab (
 
   file { '/etc/krb5.keytab':
     ensure  => 'file',
-    source  => "file:///etc/krb5_keytabs/${::fqdn}.keytab",
+    source  => "file:///etc/krb5_keytabs/krb5.keytab",
     require => File['/etc/krb5_keytabs']
   }
 }

@@ -216,6 +216,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
         FileUtils.mv(princ[:tmp_keytab], princ[:keytab])
         FileUtils.chmod(0640, princ[:keytab])
         FileUtils.chown(user, group, princ[:keytab])
+        FileUtils.chown(user, group, princ[:vno_file])
       else
         Puppet.warn("Could not add '#{princ_name}' to keytab at '#{princ[:keytab]}'")
         FileUtils.rm_f(princ[:tmp_keytab])

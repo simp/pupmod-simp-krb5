@@ -17,12 +17,14 @@ Table of Contents
 
 4. `Usage - Configuration options and additional functionality <#usage>`__
 
+   - `Automatically manage the KDC and keytabs on clients`_
    - `Creating Admin Principals`_
       - `ACL Configuration`_
       - `Create Your Admin Principal`_
    - `Creating Host Principals`_
       - `Create Your Keytabs`_
    - `Propagate the Keytabs`_
+   - `Integration with NFS`_
 
 5. `Reference - An under-the-hood peek at what the module is doing and
    how <#reference>`__
@@ -77,6 +79,14 @@ Setup Requirements
 The only thing necessary to begin using krb5 is to install it into
 your modulepath.
 
+You may also have need to create the keytab directories in the ``simp_files``
+folder in your environment. You will need to run:
+
+.. code:: shell
+
+  mkdir -p /etc/puppet/environments/<environment>/site_files/krb5_files/files/keytabs
+
+
 Beginning with krb5
 ^^^^^^^^^^^^^^^^^^^
 
@@ -91,6 +101,32 @@ https://access.redhat.com/knowledge/docs/en-US/Red_Hat_Enterprise_Linux/6/html/M
 
 Usage
 -----
+
+Automatically manage the KDC and keytabs on clients
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The examples in this section provides the hiera configuration needed to automatically set up the KDC and keytab distribution.
+
+In your default.yaml hiera file, to be applied to all nodes:
+
+.. code:: yaml
+
+    classes:
+      - 'krb5::keytab'
+
+    simp_krb5: true
+
+In your puppet server host yaml file:
+
+.. code:: yaml
+
+  classes:
+    - 'krb5::kdc'
+
+With the above configuration, the puppet server will generate an admin user
+and principle, and will generate and distribute keytabs unique to each
+server to ``/etc/krb5_keytabs/``.
+
 
 Creating Admin Principals
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -170,6 +206,13 @@ Then, update your node declarations to `include '::krb5::keytab'`.
 Once the Puppet Agent runs on the clients, your keytabs will copied to
 `/etc/krb5_keytabs`. The keytab matching your `fqdn` will be set in place as
 the default system keytab.
+
+
+Integration with NFS
+^^^^^^^^^^^^^^^^^^^^
+
+Please see our `NFS module documentation <https://github.com/simp/pupmod-simp-nfs>`__ or our `online documentation <http://simp.readthedocs.io/en/master/user_guide/HOWTO/NFS.html#exporting-home-directories>`__ on how to integrate NFS with krb5.
+
 
 Limitations
 -----------
