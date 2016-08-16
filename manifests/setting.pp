@@ -17,20 +17,31 @@
 #
 #     @example Update the [libdefaults] `clockskew` key
 #       krb5::setting { 'libdefaults:clockskew': value => '1000' }
+#
 # @param value [String] The string that should be used to set the desinated
 #   value. This string will *not* be processed so make sure that it's what you
 #   want to output to the system.
+#
 # @param target [AbsolutePath] The target *directory* to which to add setting files.
+#
 # @param ensure [String] Whether to set or clear the key. Valid values are
 #   'present' and 'absent'.  Setting anything besides 'absent' will default to
 #   'present'.
+#
+# @param filemode [FileMode] The File mode (per the Puppet File resource) that
+#   should be set on the settings files.
+#
+# @param seltype [String] The SELinux Type to which to set the file that holds
+#   the setting.
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 define krb5::setting (
   $value,
-  $target = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
-  $ensure = 'present'
+  $target  = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
+  $ensure  = 'present',
+  $filemode    = '0644',
+  $seltype = 'krb5_conf_t'
 ) {
 
   if !defined(Class['krb5']) {
@@ -51,7 +62,8 @@ define krb5::setting (
     ensure  => $ensure,
     owner   => 'root',
     group   => 'root',
-    mode    => '0600',
+    mode    => $filemode,
+    seltype => $seltype,
     content =>"[${_section}]\n  ${_key} = ${value}\n"
   }
 

@@ -33,7 +33,7 @@
 class krb5::kdc::config (
   $kdb5_password = passgen('kdb5kdc','1024'),
   $kdc_ports = ['88','750'],
-  $kdc_tcp_ports = []
+  $kdc_tcp_ports = ['88','750']
 ) inherits ::krb5::kdc {
 
   assert_private()
@@ -105,15 +105,19 @@ includedir ${_config_dir}\n"
 
   if !empty($kdc_ports) {
     krb5::setting { 'kdcdefaults:kdc_ports':
-      value  => $_kdc_ports,
-      target => $_config_dir
+      value    => $_kdc_ports,
+      target   => $_config_dir,
+      filemode => '0600',
+      seltype  => 'krb5kdc_conf_t'
     }
   }
 
   if !empty($kdc_tcp_ports) {
     krb5::setting { 'kdcdefaults:kdc_tcp_ports':
-      value  => $_kdc_tcp_ports,
-      target => $_config_dir
+      value   => $_kdc_tcp_ports,
+      target  => $_config_dir,
+      filemode => '0600',
+      seltype => 'krb5kdc_conf_t'
     }
   }
 
