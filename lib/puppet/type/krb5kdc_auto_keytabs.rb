@@ -31,7 +31,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
       The output directory to which to write the keytabs
 
       If '__default__' will be set to either
-      `${environmentpath}/${environment}/site_files/krb5_files/files/keytabs` or
+      `/var/simp/environments/${environment}/site_files/krb5_files/files/keytabs` or
       `/var/kerberos/krb5kdc/generated_keytabs` depending on which target path
       exists.
     EOM
@@ -46,9 +46,11 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
       if value == '__default__'
         value = '/var/kerberos/krb5kdc/generated_keytabs'
 
-        if Puppet[:environmentpath] && Puppet[:environment]
+        if Puppet[:environment]
           target_dir = (File.join(
-            Puppet[:environmentpath],
+            '/var',
+            'simp',
+            'environments',
             Puppet[:environment],
             'site_files',
             'krb5_files',
@@ -76,10 +78,10 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
 
       This takes a best guess from the SIMP default PKI key locations:
         * `${environmentpath}/${environment}/keydist`
-        * `${environmentpath}/${environment}/site_files/pki_files/files/keydist`
+        * `/var/simp/environments/${environment}/site_files/pki_files/files/keydist`
 
       If `$environmentpath` is not set, then `$confdir` will be substituted for
-      `${environmentpath/${environment}`
+      `${environmentpath}/${environment}`
     EOM
     defaultto(:true)
   end
