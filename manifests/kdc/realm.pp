@@ -149,16 +149,18 @@ define krb5::kdc::realm (
   $_upcase_realm = upcase($name)
 
   file { $acl_file:
-    ensure => 'file',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0600'
+    ensure  => 'file',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0600',
+    seltype => 'krb5kdc_conf_t'
   }
 
   file { "${config_dir}/${_name}__realm":
     owner   => 'root',
     group   => 'root',
     mode    => '0600',
+    seltype => 'krb5kdc_conf_t',
     content => template("${module_name}/kdc/realm.erb")
   }
 

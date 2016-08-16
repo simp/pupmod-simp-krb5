@@ -105,15 +105,17 @@ includedir ${_config_dir}\n"
 
   if !empty($kdc_ports) {
     krb5::setting { 'kdcdefaults:kdc_ports':
-      value  => $_kdc_ports,
-      target => $_config_dir
+      value   => $_kdc_ports,
+      target  => $_config_dir,
+      seltype => 'krb5kdc_conf_t'
     }
   }
 
   if !empty($kdc_tcp_ports) {
     krb5::setting { 'kdcdefaults:kdc_tcp_ports':
-      value  => $_kdc_tcp_ports,
-      target => $_config_dir
+      value   => $_kdc_tcp_ports,
+      target  => $_config_dir,
+      seltype => 'krb5kdc_conf_t'
     }
   }
 

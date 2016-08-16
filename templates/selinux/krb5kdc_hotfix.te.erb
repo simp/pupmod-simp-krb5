@@ -1,0 +1,18 @@
+module krb5kdc_hotfix 1.0;
+
+require {
+	type krb5kdc_t;
+	type krb5kdc_conf_t;
+	type krb5_conf_t;
+	type kadmind_t;
+	class dir { read search open };
+}
+
+#============= kadmind_t ==============
+allow kadmind_t krb5_conf_t:dir search;
+allow kadmind_t krb5_conf_t:dir { read open };
+
+#============= krb5kdc_t ==============
+allow krb5kdc_t krb5_conf_t:dir search;
+allow krb5kdc_t krb5_conf_t:dir { read open };
+allow krb5kdc_t krb5kdc_conf_t:dir read;

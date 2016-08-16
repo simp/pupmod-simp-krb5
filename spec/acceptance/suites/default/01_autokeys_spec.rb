@@ -27,10 +27,14 @@ krb5::kdc::auto_keytabs::introspect : true
 
       # Prep to generate keys from the SIMP PKI space
       it 'should be able to setup a mock SIMP environment' do
-        on(host, %(puppet config set environmentpath '#{puppet_confdir}/environments'))
+        on(host, %(puppet config set environmentpath '#{puppet_confdir}/environments:/var/simp/environments'))
         on(host, %(mkdir -p "#{puppet_confdir}/environments/production/modules"))
+
+        # Old Location
         on(host, %(mkdir -p "#{puppet_confdir}/environments/production/keydist/fake_host1.some.domain"))
-        on(host, %(mkdir -p "#{puppet_confdir}/environments/production/keydist/fake_host2.some.domain"))
+
+        # New Location
+        on(host, %(mkdir -p "/var/simp/environments/production/site_files/pki_files/files/keydist/fake_host2.some.domain"))
       end
 
       it 'should work with no errors' do
@@ -42,7 +46,7 @@ krb5::kdc::auto_keytabs::introspect : true
         apply_manifest_on(host, manifest, {:catch_changes => true})
       end
 
-      it 'should create keytabs for the hosts in keydist' do
+      it 'should create keytabs for the hosts' do
         ['fake_host1.some.domain', 'fake_host2.some.domain'].each do |hname|
           host_principals = on(host, %(kadmin.local -q 'list_principals')).stdout.strip.split("\n").join(':')
           expect(host_principals).to match(%r(:host/#{hname}@))
@@ -51,8 +55,8 @@ krb5::kdc::auto_keytabs::introspect : true
         end
       end
 
-      it 'should create keytabs for the hosts in the krb5 files space if it exists' do
-        on(host, %(mkdir -p "#{puppet_confdir}/environments/production/site_files/krb5_files/files"))
+      it 'should create keytabs for the hosts in the krb5 site_files space if it exists' do
+        on(host, %(mkdir -p "/var/simp/environments/production/site_files/krb5_files/files"))
 
         apply_manifest_on(host, manifest, :catch_failures => true)
 
@@ -60,14 +64,14 @@ krb5::kdc::auto_keytabs::introspect : true
           host_principals = on(host, %(kadmin.local -q 'list_principals')).stdout.strip.split("\n").join(':')
           expect(host_principals).to match(%r(:host/#{hname}@))
 
-          on(host, %(ls /var/kerberos/krb5kdc/generated_keytabs/#{hname}/krb5.keytab))
+          on(host, %(ls /var/simp/environments/production/site_files/krb5_files/files/keytabs/#{hname}/krb5.keytab))
         end
       end
 
       it 'should not generate keytabs for all known host principals by default' do
         on(host, %(kadmin.local -q "add_principal -randkey +allow_renewable +allow_svr host/cool_test_bro"))
 
-        generated_hosts = on(host, %(ls #{puppet_confdir}/environments/production/site_files/krb5_files/files/keytabs)).stdout.strip
+        generated_hosts = on(host, %(ls /var/simp/environments/production/site_files/krb5_files/files/keytabs)).stdout.strip
 
         expect(generated_hosts).to_not match(/cool_test_bro@/m)
       end
@@ -83,7 +87,7 @@ krb5::kdc::auto_keytabs::all_known : true
         set_hieradata_on(host, hieradata)
         apply_manifest_on(host, manifest, :catch_failures => true)
 
-        on(host, %(ls #{puppet_confdir}/environments/production/site_files/krb5_files/files/keytabs/cool_test_bro/krb5.keytab))
+        on(host, %(ls /var/simp/environments/production/site_files/krb5_files/files/keytabs/cool_test_bro/krb5.keytab))
       end
     end
   end
