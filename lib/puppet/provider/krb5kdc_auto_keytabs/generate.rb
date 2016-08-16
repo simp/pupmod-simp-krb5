@@ -280,24 +280,54 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
 
     search_paths = [
       'keydist',
-      File.join('site_files','pki_files','files','keydist')
+      File.join(
+        '/var',
+        'simp',
+        'environments',
+        Puppet[:environment],
+        'site_files',
+        'pki_files',
+        'files',
+        'keydist'
+      )
     ]
 
-    base_dir = Puppet[:confdir]
+    base_dirs = [Puppet[:confdir]]
 
     if Puppet[:environmentpath] && Puppet[:environment]
-      env_path = File.join(Puppet[:environmentpath], Puppet[:environment])
+      env_paths = Puppet[:environmentpath].split(':')
+      env_paths.map!{|x| File.join(x, Puppet[:environment])}
 
-      if File.directory?(env_path)
-        base_dir = env_path
+      unless env_paths.empty?
+        base_dirs = []
+
+        env_paths.each do |env_path|
+          if File.directory?(env_path)
+            base_dirs << env_path
+          end
+        end
       end
     end
 
-    return discovered_hosts unless File.directory?(base_dir)
+    found_base_dir = false
+    base_dirs.each do |base_dir|
+      if File.directory?(base_dir)
+        found_base_dir = true
+        break
+      end
+    end
+
+    return discovered_hosts unless found_base_dir
+
+    search_paths = search_paths.map do |path|
+      if path[0].chr == '/'
+        path = path
+      else
+        path = base_dirs.map{|x| File.join(x, path)}
+      end
+    end.flatten.compact
 
     search_paths.each do |path|
-      path = File.join(base_dir,path)
-
       if File.directory?(path)
         discovered_hosts += Dir.glob(File.join(path, '*.*')).map{|x| File.basename(x)}
       end
