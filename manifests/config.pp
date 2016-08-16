@@ -58,11 +58,12 @@ class krb5::config (
 
   # Include Directories
   file { '/etc/krb5.conf.d':
-    ensure => 'directory',
-    owner  => 'root',
-    group  => 'root',
-    mode   => '0644',
-    before => File['/etc/krb5.conf']
+    ensure  => 'directory',
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    seltype => 'krb5_conf_t',
+    before  => File['/etc/krb5.conf']
   }
 
   file { '/etc/krb5.conf.simp.d':
@@ -72,6 +73,7 @@ class krb5::config (
     mode    => '0644',
     purge   => true,
     recurse => true,
+    seltype => 'krb5_conf_t',
     before  => File['/etc/krb5.conf']
   }
 

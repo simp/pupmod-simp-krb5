@@ -99,6 +99,12 @@ class krb5::kdc (
   Class['krb5::kdc::install'] ~> Class['krb5::kdc::service']
   Class['krb5::kdc::config'] ~> Class['krb5::kdc::service']
 
+  # Hackery for a broken SELinux policy in EL7
+  if ($::operatingsystem in ['RedHat','CentOS']) and ($::operatingsystemmajrelease > '6') {
+    include '::krb5::kdc::selinux_hotfix'
+    Class['krb5::kdc::config'] -> Class['krb5::kdc::selinux_hotfix']
+  }
+
   if $auto_initialize {
     ::krb5::kdc::realm { $auto_realm:
       initialize     => $auto_initialize,
@@ -123,4 +129,11 @@ class krb5::kdc (
 
     Class['krb5::kdc::service'] -> Class['krb5::kdc::auto_keytabs']
   }
+
+  # Ensure that all settings are applied prior to the KDC starting
+  #
+  # This has to be separated due to the same setting code being used on the
+  # server and client.
+
+  Krb5::Setting <| |> ~> Class['krb5::kdc::service']
 }
