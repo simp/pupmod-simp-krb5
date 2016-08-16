@@ -63,7 +63,7 @@ class krb5::kdc::auto_keytabs (
   $output_dir      = '',
   $all_known       = false,
   $user            = 'root',
-  $group           = 'root',
+  $group           = 'puppet',
   $realms          = defined('$::krb5::kdc::auto_realm') ? { true => getvar('::krb5::kdc::auto_realm'), default => $::domain },
   $global_services = [],
   $hosts           = {},
