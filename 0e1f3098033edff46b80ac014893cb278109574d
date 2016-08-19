@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa041b7_dd6a7ced",
+        "filename": "manifests/keytab.pp",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1005194
+      },
+      "writtenOn": "2016-08-19T18:04:20Z",
+      "side": 1,
+      "message": "The module path in environment.conf is /var/simp/environments/simp/site_files.  I believe keytab_source should be: puppet:///krb5_files/keytabs/${::fqdn}\n\nHowever, when set (properly?) I get permission errors:\nError: /Stage[main]/Krb5::Keytab/File[/etc/krb5_keytabs]: Failed to generate additional resources using \u0027eval_generate\u0027: Error 400 on SERVER: Not authorized to call search on /file_metadata/krb5_files/keytabs/simp42.simp.dev with {:checksum_type\u003d\u003e\"sha256\", :links\u003d\u003e\"manage\", :recurse\u003d\u003etrue}",
+      "range": {
+        "startLine": 12,
+        "startChar": 20,
+        "endLine": 12,
+        "endChar": 66
+      },
+      "revId": "0e1f3098033edff46b80ac014893cb278109574d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
