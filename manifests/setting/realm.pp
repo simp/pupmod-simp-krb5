@@ -54,7 +54,7 @@ define krb5::setting::realm (
   file { "${target}/${_name}__realm":
     owner   => 'root',
     group   => 'root',
-    mode    => '0600',
+    mode    => '0644',
     seltype => 'krb5_conf_t',
     content => template('krb5/realm.erb')
   }

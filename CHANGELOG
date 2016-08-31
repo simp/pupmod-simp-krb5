@@ -1,3 +1,6 @@
+* Thu Sep 01 2016 Jeanne Greulich <jeanne.greulich@onyxpoint.com> - 5.0.6-0
+- Ensure that the /etc/krb5.simp.d/realm* files are mode 644
+
 * Tue Aug 16 2016 Trevor Vaughan <tvaughan@onyxpoint.com> - 5.0.5-0
 - Adapted to the new 'site_files' directory
 - Fixed a bug in the selinux policy in EL7
