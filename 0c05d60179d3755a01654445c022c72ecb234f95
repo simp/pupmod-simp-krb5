@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "baa041b7_51699024",
+        "filename": "manifests/setting/realm.pp",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1005143
+      },
+      "writtenOn": "2016-09-01T06:15:05Z",
+      "side": 1,
+      "message": "Out of curiosity: of all the 0600 \"__realm\" files (and other files) managed by the krb5 module, why did this one need to be 0644?",
+      "range": {
+        "startLine": 57,
+        "startChar": 16,
+        "endLine": 57,
+        "endChar": 20
+      },
+      "revId": "0c05d60179d3755a01654445c022c72ecb234f95",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    }
+  ]
+}
