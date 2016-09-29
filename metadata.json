@@ -1,16 +1,18 @@
 {
-  "name":    "simp-krb5",
-  "version": "5.0.6",
-  "author":  "simp",
+  "name": "simp-krb5",
+  "version": "5.0.7",
+  "author": "simp",
   "summary": "Puppet management of the MIT kerberos stack",
   "license": "Apache-2.0",
-  "source":  "https://github.com/simp/pupmod-simp-krb5",
+  "source": "https://github.com/simp/pupmod-simp-krb5",
   "project_page": "https://github.com/simp/pupmod-simp-krb5",
-  "issues_url":   "https://simp-project.atlassian.net",
-  "tags": [ "simp" ],
+  "issues_url": "https://simp-project.atlassian.net",
+  "tags": [
+    "simp"
+  ],
   "dependencies": [
     {
-      "name": "simp/puppet-haveged",
+      "name": "simp/haveged",
       "version_requirement": ">= 0.3.0 < 1.0.0"
     },
     {
