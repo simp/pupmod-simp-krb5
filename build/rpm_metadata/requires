@@ -1,7 +1,7 @@
 # Drop all Requires, Obsoletes, and Provides statements in here
 Obsoletes: krb5-test >= 0.0.1
-Requires: pupmod-simp-compliance_markup < 2.0.0-0
-Requires: pupmod-simp-compliance_markup >= 1.0.1-0
+Requires: pupmod-simp-compliance_markup < 3.0.0-0
+Requires: pupmod-simp-compliance_markup >= 2.0.0-0
 Requires: pupmod-simp-haveged < 1.0.0-0
 Requires: pupmod-simp-haveged >= 0.3.0-0
 Requires: pupmod-simp-iptables < 5.0.0-0
