@@ -1,3 +1,6 @@
+* Thu Nov 10 2016 Liz Nemsick <lnemsick.simp@gmail.com> - 5.0.9-0
+- Eliminated use of deprecated Puppet.newtype
+
 * Wed Sep 28 2016 Chris Tessmer <chris.tessmer@onyxpoint.com> - 5.0.7-0
 - Fix Forge `haveged` dependency name
 
