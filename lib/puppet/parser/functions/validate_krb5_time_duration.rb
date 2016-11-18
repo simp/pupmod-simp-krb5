@@ -41,11 +41,11 @@ module Puppet::Parser::Functions
     end
 
     unless seconds
-      raise Puppet::ParseError, ("'#{value}' is not a valid krb5 time duration") 
+      raise Puppet::ParseError, ("'#{value}' is not a valid krb5 time duration")
     end
 
     if seconds > 2147483647
-      raise Puppet::ParseError, ("'#{value}' is longer than 2147483647 seconds") 
+      raise Puppet::ParseError, ("'#{value}' is longer than 2147483647 seconds")
     end
   end
 end
