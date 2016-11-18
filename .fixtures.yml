@@ -1,17 +1,13 @@
 ---
 fixtures:
   repositories:
-    compliance_markup:
-      repo: "https://github.com/simp/pupmod-simp-compliance_markup"
-      branch: "master"
-#      branch: "1.0.2"
     haveged:
-      repo: "https://github.com/simp/puppet-haveged"
-      branch: "simp-master"
-    simplib: "https://github.com/simp/pupmod-simp-simplib"
-    iptables: "https://github.com/simp/pupmod-simp-iptables"
+      repo: https://github.com/simp/puppet-haveged
+      branch: simp-master
+    iptables: https://github.com/simp/pupmod-simp-iptables
+    simplib: https://github.com/simp/pupmod-simp-simplib
     stdlib:
-      repo: "https://github.com/simp/puppetlabs-stdlib"
-      branch: "simp-master"
+      repo: https://github.com/simp/puppetlabs-stdlib
+      branch: simp-master
   symlinks:
     krb5: "#{source_dir}"
