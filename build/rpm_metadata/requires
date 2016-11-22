@@ -4,7 +4,7 @@ Requires: pupmod-simp-haveged < 1.0.0-0
 Requires: pupmod-simp-haveged >= 0.3.0-0
 Requires: pupmod-simp-iptables < 6.0.0-0
 Requires: pupmod-simp-iptables >= 5.0.0-0
-Requires: pupmod-simp-pki < 5.0.0-0
-Requires: pupmod-simp-pki >= 4.2.4-0
+Requires: pupmod-simp-pki < 6.0.0-0
+Requires: pupmod-simp-pki >= 5.0.0-0
 Requires: pupmod-simp-simplib >= 2.0.0-0
 Requires: pupmod-simp-simplib < 3.0.0-0
