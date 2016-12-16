@@ -38,11 +38,11 @@ class krb5::kdc::config (
 
   assert_private()
 
-  $_client_nets = getvar('::krb5::kdc::client_nets')
+  $_trusted_nets = getvar('::krb5::kdc::trusted_nets')
   $_config_dir = getvar('::krb5::kdc::config_dir')
-  $_use_iptables = getvar('::krb5::kdc::use_iptables')
+  $_firewall = getvar('::krb5::kdc::firewall')
 
-  validate_string($kdb5_password)
+  #validate_string($kdb5_password)
   validate_port($kdc_ports)
   validate_port($kdc_tcp_ports)
 
@@ -51,7 +51,7 @@ class krb5::kdc::config (
   $_base_config_dir = inline_template('<%= File.dirname(@config_dir) %>')
   $_kdb5_credential_file = "${_base_config_dir}/.princ_db_creds"
 
-  if $_use_iptables { include '::krb5::kdc::firewall' }
+  if $_firewall { include '::krb5::kdc::firewall' }
 
   file { $_config_dir:
     ensure  => 'directory',
@@ -114,10 +114,10 @@ includedir ${_config_dir}\n"
 
   if !empty($kdc_tcp_ports) {
     krb5::setting { 'kdcdefaults:kdc_tcp_ports':
-      value   => $_kdc_tcp_ports,
-      target  => $_config_dir,
+      value    => $_kdc_tcp_ports,
+      target   => $_config_dir,
       filemode => '0600',
-      seltype => 'krb5kdc_conf_t'
+      seltype  => 'krb5kdc_conf_t'
     }
   }
 

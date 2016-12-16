@@ -10,7 +10,7 @@
 # @param auto_principal [String] If $initialize is set, this principal will be
 #   created as an administrative Principal on the Realm.
 # @param name [String] The affected Realm. This will be upcased if not done already.
-# @param client_nets [Array] The networks to allow access into the KDC realm.
+# @param trusted_nets [Array] The networks to allow access into the KDC realm.
 # @param acl_file [AbsolutePath] The path to the KDC realm ACL file.
 # @param admin_keytab [AbsolutePath] The path to the KDC realm keytab.
 # @param database_name [AbsolutePath] The path to the KDC realm database.
@@ -48,10 +48,10 @@
 define krb5::kdc::realm (
   $initialize = false,
   $auto_principal = 'puppet_auto',
-  $client_nets = pick(
-    getvar('::krb5::kdc::client_nets'),
-    getvar('::client_nets'),
-    hiera('client_nets', ['127.0.0.1'])
+  $trusted_nets = pick(
+    getvar('::krb5::kdc::trusted_nets'),
+    getvar('::trusted_nets'),
+    hiera('trusted_nets', ['127.0.0.1'])
   ),
   $acl_file = "/var/kerberos/krb5kdc/kadm5_${name}.acl",
   $admin_keytab = "/var/kerberos/krb5kdc/kadm5_${name}.keytab",
@@ -74,26 +74,27 @@ define krb5::kdc::realm (
   $supported_enctypes = [ 'aes256-cts:normal', 'aes128-cts:normal' ],
   $reject_bad_transit = '',
   $config_dir = pick(getvar('::krb5::kdc::config_dir'), '/var/kerberos/krb5kdc/kdc.conf.simp.d'),
-  $ensure = 'present'
+  $ensure = 'present',
+  $firewall = pick(getvar('::krb5::kdc::firewall'), false)
 ) {
 
   if !defined(Class['krb5::kdc']) {
     fail('You must include ::krb5::kdc before using ::krb5::kdc::realm')
   }
 
-  validate_bool($initialize)
-  validate_string($auto_principal)
-  validate_net_list($client_nets)
-  validate_absolute_path($acl_file)
-  validate_absolute_path($admin_keytab)
-  if !empty($database_name) { validate_absolute_path($database_name) }
-  validate_string($default_principal_expiration)
+  #validate_bool($initialize)
+  #validate_string($auto_principal)
+  validate_net_list($trusted_nets)
+  #validate_absolute_path($acl_file)
+  #validate_absolute_path($admin_keytab)
+  #if !empty($database_name) { validate_absolute_path($database_name) }
+  #validate_string($default_principal_expiration)
   if !empty($default_principal_flags) {
     if is_string($_default_principal_flags) {
       $_default_principal_flags = split($default_principal_flags,'\s+')
     }
     else {
-      validate_array($default_principal_flags)
+      #validate_array($default_principal_flags)
       $_default_principal_flags = $default_principal_flags
 
       $_possible_principal_flags = [
@@ -127,16 +128,16 @@ define krb5::kdc::realm (
   }
 
   validate_port($kdc_ports)
-  validate_string($master_key_name)
-  validate_string($master_key_type)
+  #validate_string($master_key_name)
+  #validate_string($master_key_type)
   if !empty($max_life) { validate_krb5_time_duration($max_life) }
   if !empty($max_renewable_life) { validate_krb5_time_duration($max_renewable_life) }
   validate_port($kdc_tcp_ports)
   validate_array_member($ensure, ['absent','present'])
-  if !empty($iprop_enable) { validate_bool($iprop_enable) }
-  if !empty($iprop_master_ulogsize) { validate_integer($iprop_master_ulogsize) }
-  validate_string($iprop_slave_poll)
-  if !empty($supported_enctypes) { validate_array($supported_enctypes) }
+  #if !empty($iprop_enable) { validate_bool($iprop_enable) }
+  #if !empty($iprop_master_ulogsize) { validate_integer($iprop_master_ulogsize) }
+  #validate_string($iprop_slave_poll)
+  #if !empty($supported_enctypes) { validate_array($supported_enctypes) }
   if !empty($reject_bad_transit) { validate_bool($reject_bad_transit) }
 
   # Formatted for the output file
@@ -164,19 +165,21 @@ define krb5::kdc::realm (
     content => template("${module_name}/kdc/realm.erb")
   }
 
-  if !empty($kdc_tcp_ports) {
-    iptables::add_tcp_stateful_listen { "${name}_allow_kdc":
-      order       => '11',
-      client_nets => $client_nets,
-      dports      => $kdc_tcp_ports
+  if $firewall {
+    if !empty($kdc_tcp_ports) {
+      iptables::add_tcp_stateful_listen { "${name}_allow_kdc":
+        order        => '11',
+        trusted_nets => $trusted_nets,
+        dports       => $kdc_tcp_ports
+      }
     }
-  }
 
-  if !empty($kdc_ports) {
-    iptables::add_udp_listen { "${name}_allow_kdc":
-      order       => '11',
-      client_nets => $client_nets,
-      dports      => $kdc_ports
+    if !empty($kdc_ports) {
+      iptables::add_udp_listen { "${name}_allow_kdc":
+        order        => '11',
+        trusted_nets => $trusted_nets,
+        dports       => $kdc_ports
+      }
     }
   }
 

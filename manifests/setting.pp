@@ -48,8 +48,8 @@ define krb5::setting (
     fail('You must include ::krb5 before using ::krb5::setting')
   }
 
-  validate_re($name,'^.+:.+$')
-  validate_absolute_path($target)
+  #validate_re($name,'^.+:.+$')
+  #validate_absolute_path($target)
 
   $_name_parts = split($name,':')
   $_section = $_name_parts[0]

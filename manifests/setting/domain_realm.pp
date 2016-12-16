@@ -24,8 +24,8 @@ define krb5::setting::domain_realm (
     fail('You must include ::krb5 before using ::krb5::setting::domain_realm')
   }
 
-  validate_string($realm)
-  validate_absolute_path($target)
+  #validate_string($realm)
+  #validate_absolute_path($target)
   validate_array_member($ensure, ['absent','present'])
 
   krb5::setting { "domain_realm:${name}":

@@ -100,7 +100,7 @@ Set the following to be applied to all nodes that require Kerberos connectivity
    classes:
      - 'krb5::keytab'
 
-   simp_krb5: true
+   krb5: true
 ```
 
 On your puppet server, set the following

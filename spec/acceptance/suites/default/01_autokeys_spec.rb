@@ -9,7 +9,7 @@ describe 'krb5 class autokeys' do
       let(:manifest) {
         <<-EOM
           class { 'krb5::kdc':
-            client_nets => "#{fact('ipaddress')}/24",
+            trusted_nets => "#{fact('ipaddress')}/24",
           }
         EOM
       }

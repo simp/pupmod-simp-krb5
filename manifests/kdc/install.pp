@@ -18,7 +18,7 @@ class krb5::kdc::install (
 
   package { 'krb5-server': ensure => $ensure }
 
-  if $::krb5::kdc::use_ldap {
+  if $::krb5::kdc::ldap {
     package { 'krb5-server-ldap': ensure => $ensure }
   }
 }

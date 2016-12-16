@@ -38,15 +38,14 @@ define krb5::setting::realm (
     fail('You must include ::krb5 before using ::krb5::setting::realm')
   }
 
-  validate_string($admin_server)
-  validate_string($default_domain)
-  if !empty($v4_instance_convert) { validate_hash($v4_instance_convert) }
-  validate_string($v4_realm)
-  if !empty($auth_to_local_names) { validate_hash($auth_to_local_names) }
-  validate_string($auth_to_local)
-  if !empty($auth_to_local) { validate_re($auth_to_local,['^DB:/', '^RULE:', '^DEFAULT$' ]) }
-  validate_absolute_path($target)
-
+  #validate_string($admin_server)
+  #validate_string($default_domain)
+  #if !empty($v4_instance_convert) { validate_hash($v4_instance_convert) }
+  #validate_string($v4_realm)
+  #if !empty($auth_to_local_names) { validate_hash($auth_to_local_names) }
+  #validate_string($auth_to_local)
+  #if !empty($auth_to_local) { validate_re($auth_to_local,['^DB:/', '^RULE:', '^DEFAULT$' ]) }
+  #validate_absolute_path($target)
   validate_net_list($admin_server)
 
   $_name = munge_krb5_conf_filename($name)

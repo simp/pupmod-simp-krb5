@@ -42,7 +42,7 @@ class krb5::config (
 
   assert_private()
 
-  validate_absolute_path($config_dir)
+  #validate_absolute_path($config_dir)
   validate_string($default_realm)
   validate_array($realm_domains)
   validate_bool($dns_lookup_realm)
