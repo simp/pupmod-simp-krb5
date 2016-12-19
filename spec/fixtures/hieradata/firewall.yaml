@@ -1,0 +1,4 @@
+---
+krb5::kdc::firewall: true
+krb5::kdc::trusted_nets:
+  - '1.2.3.4/32'

@@ -10,7 +10,9 @@ module Puppet::Parser::Functions
     seconds = nil
 
     # Seconds
-    if value =~ /^\d+$/
+    if value.is_a?(Numeric)
+      seconds = value
+    elsif value =~ /^\d+$/
       seconds = value.to_i
     elsif value =~ /^\d+:\d+(:\d+)?$/
       require 'date'

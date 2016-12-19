@@ -1,12 +1,12 @@
+# **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
+#
 # This class provides a hotfix for a broken SELinux policy in EL7.
 # The OS confinement of this class should be done elsewhere.
-#
-# @private
 #
 class krb5::kdc::selinux_hotfix {
   assert_private()
 
-  if defined('$::selinux_current_mode') and getvar('::selinux_current_mode') != 'disabled' {
+  if $facts['selinux_current_mode'] and ($facts['selinux_current_mode'] != 'disabled') {
     $_config_dir = $::krb5::kdc::config_dir
     $_base_config_dir = inline_template('<%= File.dirname(@_config_dir) %>')
 

@@ -1,5 +1,54 @@
 require 'spec_helper'
 
+shared_examples_for 'common kdc config' do
+  # krb5::kdc
+  it { is_expected.to compile.with_all_deps }
+  it { is_expected.to create_class('krb5::kdc') }
+  it { is_expected.to create_class('krb5::kdc::install')}
+  it { is_expected.to create_class('krb5::kdc::config')}
+  it { is_expected.to create_class('krb5::kdc::service')}
+  it { is_expected.to create_krb5__kdc__realm(facts[:domain])}
+  it { is_expected.to create_krb5__setting__realm(facts[:domain])}
+  it { is_expected.to contain_class('krb5::kdc::auto_keytabs')}
+  it_should_behave_like 'auto_keytab'
+  # krb5::kdc::install
+  it { is_expected.to contain_package('krb5-server')}
+  # krb5::kdc::config
+  it { is_expected.to create_file('/var/kerberos/krb5kdc/kdc.conf.simp.d')}
+  it { is_expected.to create_file('/var/kerberos/krb5kdc/.princ_db_creds')}
+  it { is_expected.to create_file('/var/kerberos/krb5kdc/kdc.conf')}
+  it { is_expected.to create_file('/var/kerberos/krb5kdc/kdc.conf.d')}
+  it { is_expected.to create_exec('initialize_principal_database')}
+  it { is_expected.to create_krb5__setting('kdcdefaults:kdc_ports')}
+  it { is_expected.to create_krb5__setting('kdcdefaults:kdc_tcp_ports')}
+  it { is_expected.to create_krb5_acl('remove_default')}
+  # krb5::kdc::service
+  it { is_expected.to create_service('krb5kdc')}
+  it { is_expected.to create_service('kadmin')}
+end
+
+shared_examples_for 'auto_keytab' do
+  it { is_expected.to create_krb5kdc_auto_keytabs('__default__').with(:realms => facts[:domain])}
+end
+
+shared_examples_for 'selinux hotfix' do
+  it { is_expected.to create_package('checkpolicy')}
+  it { is_expected.to create_package('policycoreutils-python')}
+  it { is_expected.to create_file('/var/kerberos/krb5kdc/.selinux')}
+  it { is_expected.to create_file('/var/kerberos/krb5kdc/.selinux/krb5kdc_hotfix.te')}
+  it { is_expected.to create_exec('krb5kdc_selinux_hotfix_build_module')}
+  it { is_expected.to create_exec('krb5kdc_selinux_hotfix_package_module')}
+  it { is_expected.to create_exec('krb5kdc_selinux_hotfix_install_module')}
+end
+
+shared_examples_for 'firewall' do
+  it { is_expected.to contain_class('iptables')}
+  it { is_expected.to create_iptables__add_tcp_stateful_listen('allow_kdc')}
+  it { is_expected.to create_iptables__add_udp_listen('allow_kdc')}
+  it { is_expected.to create_iptables__add_udp_listen('allow_kadmind')}
+  it { is_expected.to create_iptables__add_tcp_stateful_listen('allow_kadmind')}
+end
+
 describe 'krb5::kdc' do
   context 'supported operating systems' do
     on_supported_os.each do |os, facts|
@@ -8,22 +57,26 @@ describe 'krb5::kdc' do
           facts
         end
 
-        it { is_expected.to compile.with_all_deps }
-        it { is_expected.to create_class('krb5::kdc') }
-        it { is_expected.to create_file('/var/kerberos/krb5kdc/kdc.conf') }
-        it { is_expected.to create_class('haveged') }
-        it {
-          is_expected.to create_krb5__kdc__realm(facts[:domain]).that_requires('Class[haveged]')
-        }
-
-        context 'with iptables' do
-          let(:params) {{
-            :use_iptables => true
-          }}
-
-          it { is_expected.to compile.with_all_deps }
-          it { is_expected.to contain_class('krb5::kdc::firewall') }
+        context 'with default parameters' do
+          it_should_behave_like 'common kdc config'
+          it { is_expected.to_not create_class('krb5::kdc::selinux_hotfix')}
+          it { is_expected.to_not contain_class('haveged')}
+          it { is_expected.to_not contain_package('krb5-server-ldap')}
+          it { is_expected.to_not contain_class('krb5::kdc::firewall')}
         end
+
+        context 'with firewall = true, selinux = true, haveged = true, ldap = true' do
+          let(:params) {{:firewall => true, :selinux => true, :haveged => true, :ldap => true}}
+          it_should_behave_like 'common kdc config'
+          if ['RedHat','CentOS'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
+            it_should_behave_like 'selinux hotfix'
+          end
+          it { is_expected.to contain_class('haveged')}
+          it { is_expected.to contain_package('krb5-server-ldap')}
+          it { is_expected.to contain_class('krb5::kdc::firewall')}
+          it_should_behave_like 'firewall'
+        end
+
       end
     end
   end

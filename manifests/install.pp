@@ -1,26 +1,28 @@
+# **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
+#
 # Install the MIT Kerberos client
 #
+# @param ensure
+#   The package state to ensure
 #
-# @param ensure [String] The package state to ensure. Accepts 'latest' and
-#   'installed'.
+#   * Compatible with the ``Package`` Resource ``ensure`` parameter can
 #
-# @param use_haveged [Boolean] If true, include haveged for entropy generation.
+# @param haveged
+#   Include ``haveged`` for entropy generation.
 #
 # @author Trevor Vauthan <tvaughan@onyxpoint.com>
 #
 class krb5::install (
-  $use_haveged = $::krb5::use_haveged,
-  $ensure = 'latest',
-){
+  String $ensure = 'latest',
+  Boolean $haveged = $::krb5::haveged
+) {
+  assert_private()
 
-  validate_array_member($ensure, ['latest', 'installed'])
-  validate_bool($use_haveged)
-
-  if $use_haveged {
+  if $haveged {
     include '::haveged'
   }
 
-  if $::operatingsystem in ['CentOS', 'RedHat'] {
+  if $facts['os']['name'] in ['CentOS', 'RedHat'] {
     package { [
       'krb5-workstation',
       'pam_krb5'
@@ -28,11 +30,11 @@ class krb5::install (
       ensure => $ensure
     }
 
-    if $::operatingsystemmajrelease < '7' {
+    if $facts['os']['release']['major'] < '7' {
       package { 'krb5-auth-dialog': ensure => $ensure }
     }
   }
   else {
-    fail("Installation on '${::operatingsystem}' not yet supported")
+    fail("Installation on '${facts['os']['name']}' not yet supported")
   }
 }

@@ -1,6 +1,6 @@
-# Basic configuration of the MIT Kerberos client
+# **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 #
-# @private
+# Basic configuration of the MIT Kerberos client
 #
 # @param config_dir [AbsolutePath] The path to the Puppet managed config files.
 # @param default_realm [String] Default realm to which to bind.
@@ -26,31 +26,24 @@
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 class krb5::config (
-  $config_dir               = '/etc/krb5.conf.simp.d',
-  $default_realm            = inline_template('<%= @domain.upcase %>'),
-  $realm_domains            = [ inline_template('.<%= @domain %>'), $::domain ],
-  $dns_lookup_realm         = false,
-  $dns_lookup_kdc           = true,
-  $renew_lifetime           = '7d',
-  $forwardable              = true,
-  $clockskew                = '500',
-  $permitted_tgs_enctypes   = $::krb5::enctypes,
-  $permitted_tkt_enctypes   = $::krb5::enctypes,
-  $permitted_enctypes       = $::krb5::enctypes,
-  $puppet_exclusive_managed = true
+  Stdlib::Absolutepath $config_dir               = '/etc/krb5.conf.simp.d',
+  String               $default_realm            = inline_template('<%= @domain.upcase %>'),
+  Array[String]        $realm_domains            = [ ".${facts['domain']}", $facts['domain'] ],
+  Boolean              $dns_lookup_realm         = false,
+  Boolean              $dns_lookup_kdc           = true,
+  String               $renew_lifetime           = '7d',
+  Boolean              $forwardable              = true,
+  Integer              $clockskew                = 500,
+  Array[String]        $permitted_tgs_enctypes   = $::krb5::enctypes,
+  Array[String]        $permitted_tkt_enctypes   = $::krb5::enctypes,
+  Array[String]        $permitted_enctypes       = $::krb5::enctypes,
+  Boolean              $puppet_exclusive_managed = true
 ) inherits ::krb5 {
 
   assert_private()
 
-  validate_absolute_path($config_dir)
-  validate_string($default_realm)
-  validate_array($realm_domains)
-  validate_bool($dns_lookup_realm)
-  validate_bool($dns_lookup_kdc)
   validate_krb5_time_duration($renew_lifetime)
-  validate_bool($forwardable)
   validate_krb5_time_duration($clockskew)
-  validate_bool($puppet_exclusive_managed)
 
   $_base_config_dir = inline_template('<%= File.dirname(@config_dir) %>')
 

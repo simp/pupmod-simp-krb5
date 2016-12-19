@@ -1,15 +1,11 @@
-# == Define: krb5::setting
-#
 # This define allows you to set individual configuration elements in
-# /etc/krb5.conf without explicitly needing to specify all of the augeas
+# ``/etc/krb5.conf`` without explicitly needing to specify all of the augeas
 # parameters.
 #
 # Sections with nested sub-sections or allowed repeated keys have their own
 # specialized defines.
 #
-# For particular configuration parameters, please see:
-#
-# man 5 krb5.conf
+# @see krb5.conf(5)
 #
 # @param name [String] A string of the format `section:key`. For instance, if
 #   you wanted to add to the `libdefaults` section with key
@@ -37,26 +33,26 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 define krb5::setting (
-  $value,
-  $target  = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
-  $ensure  = 'present',
-  $filemode    = '0644',
-  $seltype = 'krb5_conf_t'
+  Scalar               $value,
+  Stdlib::Absolutepath $target   = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
+  String               $ensure   = 'present',
+  String               $filemode = '0644',
+  String               $seltype  = 'krb5_conf_t'
 ) {
 
   if !defined(Class['krb5']) {
     fail('You must include ::krb5 before using ::krb5::setting')
   }
 
-  validate_re($name,'^.+:.+$')
-  validate_absolute_path($target)
+  if $name !~ Pattern['^.+:.+$'] {
+    fail('$name must match /^.+:.+$/')
+  }
 
   $_name_parts = split($name,':')
   $_section = $_name_parts[0]
   $_key = $_name_parts[1]
 
   $_name = munge_krb5_conf_filename($name)
-
 
   file { "${target}/${_name}__setting":
     ensure  => $ensure,

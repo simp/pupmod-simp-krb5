@@ -1,15 +1,11 @@
-# == Class: krb5::keytab
+# A class to distribute Kerberos keytabs in a sane manner
 #
-# A class to distribute Kerberos keytabs in a sane manner.
+# Users should feel free to do what they like, but this will be consistent
 #
-# Users should feel free to do what they like, but this will be consistent.
-#
-# == Authors
-#
-# * Trevor Vaughan <tvaughan@onyxpoint.com>
+# @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::keytab (
-  $keytab_source = "puppet:///modules/krb5_files/keytabs/${::fqdn}"
+  $keytab_source = "puppet:///modules/krb5_files/keytabs/${facts['fqdn']}"
 ){
 
   file { '/etc/krb5_keytabs':

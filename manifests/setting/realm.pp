@@ -1,7 +1,7 @@
-# This define allows you to add a realm to the [realms] section of
-# /etc/krb5.conf
+# This define allows you to add a realm to the ``[realms]`` section of
+# ``/etc/krb5.conf``
 #
-# man 5 krb5.conf -> REALMS SECTION
+# @see krb5.conf(5) -> REALMS SECTION
 #
 # @param name [String] The affected Realm. This will be upcased.
 #
@@ -24,30 +24,19 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 define krb5::setting::realm (
-  $admin_server,
-  $kdc = '',
-  $default_domain = '',
-  $v4_instance_convert = '',
-  $v4_realm = '',
-  $auth_to_local_names = '',
-  $auth_to_local = '',
-  $target = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
+  Simplib::Host                 $admin_server,
+  Optional[Simplib::Host]       $kdc                 = undef,
+  Optional[String]              $default_domain      = undef,
+  Hash[String,String]           $v4_instance_convert = {},
+  Optional[String]              $v4_realm            = undef,
+  Hash[String,String]           $auth_to_local_names = {},
+  Optional[String]              $auth_to_local       = undef,
+  Stdlib::Absolutepath          $target              = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
 ) {
 
   if !defined(Class['krb5']) {
     fail('You must include ::krb5 before using ::krb5::setting::realm')
   }
-
-  validate_string($admin_server)
-  validate_string($default_domain)
-  if !empty($v4_instance_convert) { validate_hash($v4_instance_convert) }
-  validate_string($v4_realm)
-  if !empty($auth_to_local_names) { validate_hash($auth_to_local_names) }
-  validate_string($auth_to_local)
-  if !empty($auth_to_local) { validate_re($auth_to_local,['^DB:/', '^RULE:', '^DEFAULT$' ]) }
-  validate_absolute_path($target)
-
-  validate_net_list($admin_server)
 
   $_name = munge_krb5_conf_filename($name)
 

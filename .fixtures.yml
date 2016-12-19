@@ -6,8 +6,9 @@ fixtures:
       branch: simp-master
     iptables: https://github.com/simp/pupmod-simp-iptables
     simplib: https://github.com/simp/pupmod-simp-simplib
+    simp_options: https://github.com/simp/pupmod-simp-simp_options
     stdlib:
       repo: https://github.com/simp/puppetlabs-stdlib
-      branch: simp-master
+      branch: master
   symlinks:
     krb5: "#{source_dir}"
