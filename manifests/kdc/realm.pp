@@ -1,14 +1,14 @@
-# This define allows you to add a realm to the [realms] section of
-# /var/kerberos/krb5kdc/kdc.conf
+# This define allows you to add a realm to the ``[realms]`` section of
+# ``/var/kerberos/krb5kdc/kdc.conf``
 #
 # Note: The kdc.conf file is *fully managed* by Puppet
 #
-# @see man 5 kdc.conf -> REALMS SECTION
+# @see kdc.conf(5) -> REALMS SECTION
 #
 # @param initialize [Boolean] If set, auto-initialize the Realm. This will
 #   add an initial Principal for this Realm.
-# @param auto_principal [String] If $initialize is set, this principal will be
-#   created as an administrative Principal on the Realm.
+# @param auto_principal [String] If ``$initialize`` is set, this principal will
+#   be created as an administrative Principal on the Realm.
 # @param name [String] The affected Realm. This will be upcased if not done already.
 # @param trusted_nets [Array] The networks to allow access into the KDC realm.
 # @param acl_file [AbsolutePath] The path to the KDC realm ACL file.
@@ -46,55 +46,46 @@
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 define krb5::kdc::realm (
-  $initialize = false,
-  $auto_principal = 'puppet_auto',
-  $trusted_nets = pick(
-    getvar('::krb5::kdc::trusted_nets'),
-    getvar('::trusted_nets'),
-    hiera('trusted_nets', ['127.0.0.1'])
-  ),
-  $acl_file = "/var/kerberos/krb5kdc/kadm5_${name}.acl",
-  $admin_keytab = "/var/kerberos/krb5kdc/kadm5_${name}.keytab",
-  $database_name = '',
-  $default_principal_expiration = '',
-  $default_principal_flags = '',
-  $dict_file = '/usr/share/dict/words',
-  $kadmind_port = '',
-  $kpasswd_port = '',
-  $key_stash_file = '',
-  $kdc_ports = [],
-  $kdc_tcp_ports = [],
-  $master_key_name = '',
-  $master_key_type = 'aes256-cts',
-  $max_life = '',
-  $max_renewable_life = '',
-  $iprop_enable = '',
-  $iprop_master_ulogsize = '',
-  $iprop_slave_poll = '',
-  $supported_enctypes = [ 'aes256-cts:normal', 'aes128-cts:normal' ],
-  $reject_bad_transit = '',
-  $config_dir = pick(getvar('::krb5::kdc::config_dir'), '/var/kerberos/krb5kdc/kdc.conf.simp.d'),
-  $ensure = 'present',
-  $firewall = pick(getvar('::krb5::kdc::firewall'), false)
+  Boolean                        $initialize                   = false,
+  String                         $auto_principal               = 'puppet_auto',
+  Simplib::Netlist               $trusted_nets                 = pick(
+                                                                    getvar('::krb5::kdc::trusted_nets'),
+                                                                    simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1']})
+                                                                  ),
+  Stdlib::Absolutepath           $acl_file                     = "/var/kerberos/krb5kdc/kadm5_${name}.acl",
+  Stdlib::Absolutepath           $admin_keytab                 = "/var/kerberos/krb5kdc/kadm5_${name}.keytab",
+  Optional[String]               $database_name                = undef,
+  Optional[String]               $default_principal_expiration = undef,
+  Array[String]                  $default_principal_flags      = [],
+  Stdlib::Absolutepath           $dict_file                    = '/usr/share/dict/words',
+  Optional[Simplib::Port]        $kadmind_port                 = undef,
+  Optional[Simplib::Port]        $kpasswd_port                 = undef,
+  Optional[Stdlib::Absolutepath] $key_stash_file               = undef,
+  Array[Simplib::Port]           $kdc_ports                    = [],
+  Array[Simplib::Port]           $kdc_tcp_ports                = [],
+  Optional[String]               $master_key_name              = undef,
+  String                         $master_key_type              = 'aes256-cts',
+  Optional[String]               $max_life                     = undef,
+  Optional[String]               $max_renewable_life           = undef,
+  Optional[Boolean]              $iprop_enable                 = undef,
+  Optional[Integer]              $iprop_master_ulogsize        = undef,
+  Optional[String]               $iprop_slave_poll             = undef,
+  Array[String]                  $supported_enctypes           = [ 'aes256-cts:normal', 'aes128-cts:normal' ],
+  Optional[Boolean]              $reject_bad_transit           = undef,
+  Stdlib::Absolutepath           $config_dir                   = simplib::lookup('krb5::kdc::config_dir', { 'default_value' => '/var/kerberos/krb5kdc/kdc.conf.simp.d' }),
+  String                         $ensure                       = 'present',
+  Boolean                        $firewall                     = simplib::lookup('krb5::kdc::firewall', { 'default_value' => false })
 ) {
 
   if !defined(Class['krb5::kdc']) {
     fail('You must include ::krb5::kdc before using ::krb5::kdc::realm')
   }
 
-  #validate_bool($initialize)
-  #validate_string($auto_principal)
-  validate_net_list($trusted_nets)
-  #validate_absolute_path($acl_file)
-  #validate_absolute_path($admin_keytab)
-  #if !empty($database_name) { validate_absolute_path($database_name) }
-  #validate_string($default_principal_expiration)
   if !empty($default_principal_flags) {
     if is_string($_default_principal_flags) {
       $_default_principal_flags = split($default_principal_flags,'\s+')
     }
     else {
-      #validate_array($default_principal_flags)
       $_default_principal_flags = $default_principal_flags
 
       $_possible_principal_flags = [
@@ -124,21 +115,11 @@ define krb5::kdc::realm (
     }
   }
   else {
-    $_default_principal_flags = ''
+    $_default_principal_flags = []
   }
 
-  validate_port($kdc_ports)
-  #validate_string($master_key_name)
-  #validate_string($master_key_type)
-  if !empty($max_life) { validate_krb5_time_duration($max_life) }
-  if !empty($max_renewable_life) { validate_krb5_time_duration($max_renewable_life) }
-  validate_port($kdc_tcp_ports)
-  validate_array_member($ensure, ['absent','present'])
-  #if !empty($iprop_enable) { validate_bool($iprop_enable) }
-  #if !empty($iprop_master_ulogsize) { validate_integer($iprop_master_ulogsize) }
-  #validate_string($iprop_slave_poll)
-  #if !empty($supported_enctypes) { validate_array($supported_enctypes) }
-  if !empty($reject_bad_transit) { validate_bool($reject_bad_transit) }
+  if $max_life { validate_krb5_time_duration($max_life) }
+  if $max_renewable_life { validate_krb5_time_duration($max_renewable_life) }
 
   # Formatted for the output file
   $_kdc_ports = join($kdc_ports,',')

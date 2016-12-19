@@ -1,11 +1,11 @@
+# **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
+#
 # This class provides the necessary structure to manage the Kerberos 5 KDC on a
 # given system.
 #
 # The variables used here can be found in kdc.conf(5).
 #
 # Any variable *not* covered here can be managed using file resources.
-#
-# @private
 #
 # @example Add Your Own Custom Config Snippet
 #   class my_krb5kdc {
@@ -19,21 +19,28 @@
 #     Class['my_krb5kdc'] ~> Class['krb5::kdc::service']
 #   }
 #
-# @param kdb5_password [String] The password that should be used for
-#   auto-initializing the Principal database. If this password is changed,
-#   there will be **no** effect unless the password file is physically removed
-#   from the system.
+# @param kdb5_password
+#   The password that should be used for auto-initializing the Principal
+#   database
+#
+#   * If this password is changed, there will be **no** effect unless the
+#     password file is physically removed from the system
+#
 #   @note For safety, the Principal database will *not* be rebuilt unless it is
-#     physically absent from the system.
-# @param kdc_ports [Array(Ports)] The UDP ports on which the KDC should listen.
-# @param kdc_tcp_ports [Array(Ports)] The TCP ports on which the KDC should listen.
+#     physically absent from the system
+#
+# @param kdc_ports
+#   The ``UDP`` ports on which the KDC should listen
+#
+# @param kdc_tcp_ports
+#   The ``TCP`` ports on which the KDC should listen
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::config (
-  $kdb5_password = passgen('kdb5kdc','1024'),
-  $kdc_ports = ['88','750'],
-  $kdc_tcp_ports = ['88','750']
+  String $kdb5_password = passgen('kdb5kdc','1024'),
+  Array[Simplib::Port] $kdc_ports = [88, 750],
+  Array[Simplib::Port] $kdc_tcp_ports = [88, 750]
 ) inherits ::krb5::kdc {
 
   assert_private()

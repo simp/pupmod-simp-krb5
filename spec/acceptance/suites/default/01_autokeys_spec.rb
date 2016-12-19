@@ -9,7 +9,7 @@ describe 'krb5 class autokeys' do
       let(:manifest) {
         <<-EOM
           class { 'krb5::kdc':
-            trusted_nets => "#{fact('ipaddress')}/24",
+            trusted_nets => ["#{fact('ipaddress')}/24"]
           }
         EOM
       }
@@ -24,10 +24,13 @@ krb5::kdc::auto_keytabs::introspect : true
       let(:puppet_confdir) {
         on(host, %(puppet config print confdir)).stdout.strip
       }
+      let(:puppet_codedir) {
+        on(host, %(puppet config print codedir)).stdout.strip
+      }
 
       # Prep to generate keys from the SIMP PKI space
       it 'should be able to setup a mock SIMP environment' do
-        on(host, %(puppet config set environmentpath '#{puppet_confdir}/environments:/var/simp/environments'))
+        on(host, %(puppet config set environmentpath '#{puppet_codedir}/environments:#{puppet_confdir}/environments:/var/simp/environments'))
         on(host, %(mkdir -p "#{puppet_confdir}/environments/production/modules"))
 
         # Old Location

@@ -42,7 +42,7 @@ describe 'krb5 class' do
       let(:manifest) {
         <<-EOM
           class { 'krb5::kdc':
-            trusted_nets => "#{fact('ipaddress')}/24",
+            trusted_nets => ["#{fact('ipaddress')}/24"],
           }
         EOM
       }

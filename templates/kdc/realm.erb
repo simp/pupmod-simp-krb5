@@ -27,7 +27,7 @@
 <% _defvars.each do |key|
     val = eval("@#{key}")
 
-    unless val.empty?
+    if val && !val.empty?
 -%>
     <%= key.sub(/^_/, '') %> = <%= val %>
 <%  end -%>

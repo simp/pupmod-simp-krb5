@@ -48,20 +48,20 @@ describe 'krb5::kdc::realm' do
           let(:params) {{:initialize => true, :auto_principal => 'auto_principal_bob' }}
           it_should_behave_like 'common realm config'
           context 'with tcp ports' do
-            let(:params) {{ :kdc_tcp_ports => ['2000','1234'] }}
+            let(:params) {{ :kdc_tcp_ports => [2000,1234] }}
             it {  is_expected.to create_iptables__add_tcp_stateful_listen(%(#{title}_allow_kdc)).with({
-                :order       => '11',
+                :order        => 11,
                 :trusted_nets => ['1.2.3.4/32'],
-                :dports      => params[:kdc_tcp_ports]
+                :dports       => params[:kdc_tcp_ports]
               })
             }
           end
           context 'with udp ports' do
-            let(:params) {{ :kdc_ports => ['2000','1234'] }}
+            let(:params) {{ :kdc_ports => [2000,1234] }}
             it { is_expected.to create_iptables__add_udp_listen(%(#{title}_allow_kdc)).with({
-                :order       => '11',
+                :order        => 11,
                 :trusted_nets => ['1.2.3.4/32'],
-                :dports      => params[:kdc_ports]
+                :dports       => params[:kdc_ports]
               })
             }
           end

@@ -1,3 +1,5 @@
+# **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
+#
 # This class provides a mechanism for auto-generating keytabs on the KDC as
 # well as provisioning those keytabs for distribution via Puppet if possible.
 #
@@ -23,8 +25,6 @@
 #     @note For any of the above, if `$environmentpath` is empty, or does not
 #       exist, then `$confdir` will be substituted for
 #       `${environmentpath}/${environment}`
-#
-# @private
 #
 # @param introspect [Boolean] If set, attempt to discover, and create all
 #   relevant keytabs from data on the Puppet server.
@@ -59,15 +59,20 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::auto_keytabs (
-  $introspect      = true,
-  $output_dir      = '',
-  $all_known       = false,
-  $user            = 'root',
-  $group           = 'puppet',
-  $realms          = defined('$::krb5::kdc::auto_realm') ? { true => getvar('::krb5::kdc::auto_realm'), default => $::domain },
-  $global_services = [],
-  $hosts           = {},
-  $purge           = true
+  Boolean                        $introspect      = true,
+  Optional[Stdlib::Absolutepath] $output_dir      = undef,
+  Boolean                        $all_known       = false,
+  String                         $user            = 'root',
+  String                         $group           = 'puppet',
+  String                         $realms          = simplib::lookup('krb5::kdc::auto_realm', { 'default_value' => $facts['domain'] }),
+  Array[String]                  $global_services = [],
+  Boolean                        $purge           = true,
+  Hash[String,
+    Struct[{'ensure'             => Enum['absent','present'],
+            Optional['realms']   => Array[String],
+            Optional['services'] => Array[String]
+    }]
+  ]                              $hosts           = {}
 ) inherits ::krb5::kdc {
 
   assert_private()

@@ -1,28 +1,28 @@
 [realms]
   <%= @name.upcase %> = {
     admin_server = <%= @admin_server %>
-<% if @kdc.empty? -%>
-    kdc = <%= @admin_server %>
-<% else -%>
+<% if @kdc -%>
     kdc = <%= @kdc %>
+<% else -%>
+    kdc = <%= @admin_server %>
 <% end -%>
-<% unless @default_domain.empty? -%>
+<% if @default_domain -%>
     default_domain = <%= @default_domain %>
 <% end -%>
-<% unless @v4_realm.empty? -%>
+<% if @v4_realm -%>
     v4_realm = <%= @v4_realm %>
 <% end -%>
-<% unless @auth_to_local.empty? -%>
+<% if @auth_to_local -%>
     auth_to_local = <%= @auth_to_local %>
 <% end -%>
-<% unless @v4_instance_convert.empty? -%>
+<% if !@v4_instance_convert.empty? -%>
     v4_instance_convert = {
 <%  @v4_instance_convert.each_pair do |key, val| -%>
       <%= key %> = <%= val %>
 <%  end -%>
     }
 <% end -%>
-<% unless @auth_to_local_names.empty? -%>
+<% if !@auth_to_local_names.empty? -%>
     auth_to_local_names = {
 <%  @auth_to_local_names.each_pair do |key, val| -%>
       <%= key %> = <%= val %>

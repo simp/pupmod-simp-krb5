@@ -1,20 +1,22 @@
+# **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
+#
 # == Class krb5::kdc::install
 #
 # Install the krb5kdc packages
 #
-# @private
+# @param ensure
+#   The package state to ensure
 #
-# @param ensure [String] May be one of 'latest', 'absent', or 'present'.
+#   * Accepts all valid options for the ``Package`` resource's ``ensure``
+#     parameter
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::install (
-  $ensure = 'latest'
+  String $ensure = 'latest'
 ) inherits ::krb5::kdc {
 
   assert_private()
-
-  validate_array_member($ensure, ['latest','absent','present'])
 
   package { 'krb5-server': ensure => $ensure }
 
