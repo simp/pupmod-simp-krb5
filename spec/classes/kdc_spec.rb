@@ -43,10 +43,10 @@ end
 
 shared_examples_for 'firewall' do
   it { is_expected.to contain_class('iptables')}
-  it { is_expected.to create_iptables__add_tcp_stateful_listen('allow_kdc')}
-  it { is_expected.to create_iptables__add_udp_listen('allow_kdc')}
-  it { is_expected.to create_iptables__add_udp_listen('allow_kadmind')}
-  it { is_expected.to create_iptables__add_tcp_stateful_listen('allow_kadmind')}
+  it { is_expected.to create_iptables__listen__tcp_stateful('allow_kdc')}
+  it { is_expected.to create_iptables__listen__udp('allow_kdc')}
+  it { is_expected.to create_iptables__listen__udp('allow_kadmind')}
+  it { is_expected.to create_iptables__listen__tcp_stateful('allow_kadmind')}
 end
 
 describe 'krb5::kdc' do
@@ -59,14 +59,19 @@ describe 'krb5::kdc' do
 
         context 'with default parameters' do
           it_should_behave_like 'common kdc config'
-          it { is_expected.to_not create_class('krb5::kdc::selinux_hotfix')}
-          it { is_expected.to_not contain_class('haveged')}
+          it { is_expected.to contain_class('haveged')}
           it { is_expected.to_not contain_package('krb5-server-ldap')}
           it { is_expected.to_not contain_class('krb5::kdc::firewall')}
+
+          if ['RedHat','CentOS'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
+            it { is_expected.to contain_class('krb5::kdc::selinux_hotfix') }
+          else
+            it { is_expected.to_not contain_class('krb5::kdc::selinux_hotfix') }
+          end
         end
 
-        context 'with firewall = true, selinux = true, haveged = true, ldap = true' do
-          let(:params) {{:firewall => true, :selinux => true, :haveged => true, :ldap => true}}
+        context 'with firewall = true, haveged = true, ldap = true' do
+          let(:params) {{:firewall => true, :haveged => true, :ldap => true}}
           it_should_behave_like 'common kdc config'
           if ['RedHat','CentOS'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
             it_should_behave_like 'selinux hotfix'
@@ -77,6 +82,17 @@ describe 'krb5::kdc' do
           it_should_behave_like 'firewall'
         end
 
+        context 'when including the krb5::client class first' do
+          let(:pre_condition) do
+            'include krb5::client'
+          end
+
+          it_should_behave_like 'common kdc config'
+
+          if ['RedHat','CentOS'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
+            it_should_behave_like 'selinux hotfix'
+          end
+        end
       end
     end
   end

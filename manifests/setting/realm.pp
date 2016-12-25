@@ -45,7 +45,7 @@ define krb5::setting::realm (
     group   => 'root',
     mode    => '0644',
     seltype => 'krb5_conf_t',
-    content => template('krb5/realm.erb')
+    content => template("${module_name}/realm.erb")
   }
 
   Class['krb5'] -> Krb5::Setting::Realm[$name]

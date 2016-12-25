@@ -36,8 +36,8 @@ describe 'krb5::kdc::realm' do
         context 'with catalysts disabled and initialize = false' do
           let(:hieradata) { "no_auto_initialize" }
           it_should_behave_like 'common realm config'
-          it { is_expected.to_not create_iptables__add_tcp_stateful_listen('krbtestrealm_allow_kdc')}
-          it { is_expected.to_not create_iptables__add_udp_listen('krbtestrealm_allow_kdc')}
+          it { is_expected.to_not create_iptables__listen__tcp_stateful('krbtestrealm_allow_kdc')}
+          it { is_expected.to_not create_iptables__listen__udp('krbtestrealm_allow_kdc')}
           it { is_expected.to_not create_krb5_acl('krbtestrealm_puppet_auto_admin')}
           it { is_expected.to_not create_exec('add_admin_principal_puppet_auto')}
           it { is_expected.to_not create_exec('create_admin_principal_puppet_auto_keytab')}
@@ -49,7 +49,7 @@ describe 'krb5::kdc::realm' do
           it_should_behave_like 'common realm config'
           context 'with tcp ports' do
             let(:params) {{ :kdc_tcp_ports => [2000,1234] }}
-            it {  is_expected.to create_iptables__add_tcp_stateful_listen(%(#{title}_allow_kdc)).with({
+            it {  is_expected.to create_iptables__listen__tcp_stateful(%(#{title}_allow_kdc)).with({
                 :order        => 11,
                 :trusted_nets => ['1.2.3.4/32'],
                 :dports       => params[:kdc_tcp_ports]
@@ -58,7 +58,7 @@ describe 'krb5::kdc::realm' do
           end
           context 'with udp ports' do
             let(:params) {{ :kdc_ports => [2000,1234] }}
-            it { is_expected.to create_iptables__add_udp_listen(%(#{title}_allow_kdc)).with({
+            it { is_expected.to create_iptables__listen__udp(%(#{title}_allow_kdc)).with({
                 :order        => 11,
                 :trusted_nets => ['1.2.3.4/32'],
                 :dports       => params[:kdc_ports]

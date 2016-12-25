@@ -40,7 +40,7 @@ class krb5::kdc::firewall (
   include '::iptables'
 
   if !empty($kdc_tcp_ports) {
-    ::iptables::add_tcp_stateful_listen { 'allow_kdc':
+    ::iptables::listen::tcp_stateful { 'allow_kdc':
       order        => 11,
       trusted_nets => $trusted_nets,
       dports       => $kdc_tcp_ports
@@ -48,7 +48,7 @@ class krb5::kdc::firewall (
   }
 
   if !empty($kdc_ports) {
-    ::iptables::add_udp_listen { 'allow_kdc':
+    ::iptables::listen::udp { 'allow_kdc':
       order        => 11,
       trusted_nets => $trusted_nets,
       dports       => $kdc_ports
@@ -57,13 +57,13 @@ class krb5::kdc::firewall (
 
   if $allow_kadmind {
     # The ports for kadmind
-    ::iptables::add_udp_listen { 'allow_kadmind':
+    ::iptables::listen::udp { 'allow_kadmind':
       order        => 11,
       trusted_nets => $trusted_nets,
       dports       => $kadmind_udp_ports
     }
 
-    ::iptables::add_tcp_stateful_listen { 'allow_kadmind':
+    ::iptables::listen::tcp_stateful { 'allow_kadmind':
       order        => 11,
       trusted_nets => $trusted_nets,
       dports       => $kadmind_tcp_ports
