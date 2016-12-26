@@ -110,6 +110,11 @@ includedir ${_config_dir}\n"
     path    => ['/sbin','/bin','/usr/sbin','/usr/bin']
   }
 
+  # The initialization of the principal DB must happen after *all* of the
+  # global settings have been properly configured.
+
+  Krb5::Setting <| |> ~> Exec['initialize_principal_database']
+
   if !empty($kdc_ports) {
     krb5::setting { 'kdcdefaults:kdc_ports':
       value    => $_kdc_ports,

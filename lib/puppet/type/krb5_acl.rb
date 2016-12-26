@@ -26,10 +26,6 @@ Puppet::Type.newtype(:krb5_acl) do
   end
 
   def finish
-    if @catalog.resource("Service[kadmin]")
-      self[:notify] = [ 'Service[kadmin]' ]
-    end
-
     super
   end
 
@@ -137,5 +133,9 @@ Puppet::Type.newtype(:krb5_acl) do
 
   autorequire(:file) do
     File.dirname(self[:target])
+  end
+
+  autonotify(:service) do
+    ['kadmin']
   end
 end

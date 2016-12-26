@@ -91,6 +91,7 @@ class krb5::kdc (
   # Hackery for a broken SELinux policy in EL7
   if ($facts['os']['name'] in ['RedHat','CentOS']) and ($facts['os']['release']['major'] > '6') {
     contain '::krb5::kdc::selinux_hotfix'
+
     Class['krb5::kdc::config'] -> Class['krb5::kdc::selinux_hotfix']
   }
 
