@@ -27,6 +27,7 @@ describe 'krb5::kdc::realm' do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
         let(:facts) do
+          facts[:server_facts] = { :servername => 'puppet.bar.baz' }
           facts
         end
 
