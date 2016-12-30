@@ -38,8 +38,8 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::config (
-  String $kdb5_password = passgen('kdb5kdc','1024'),
-  Array[Simplib::Port] $kdc_ports = [88, 750],
+  String               $kdb5_password = passgen('kdb5kdc','1024'),
+  Array[Simplib::Port] $kdc_ports     = [88, 750],
   Array[Simplib::Port] $kdc_tcp_ports = [88, 750]
 ) inherits ::krb5::kdc {
 
