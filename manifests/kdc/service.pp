@@ -8,7 +8,7 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::service (
-  String $ensure = 'running',
+  String  $ensure = 'running',
   Boolean $enable = true
 ) {
 

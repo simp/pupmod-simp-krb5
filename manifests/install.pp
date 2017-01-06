@@ -13,7 +13,7 @@
 # @author Trevor Vauthan <tvaughan@onyxpoint.com>
 #
 class krb5::install (
-  String $ensure = 'latest',
+  String  $ensure  = 'latest',
   Boolean $haveged = $::krb5::haveged
 ) {
   assert_private()

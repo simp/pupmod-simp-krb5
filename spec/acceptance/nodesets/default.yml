@@ -1,5 +1,5 @@
 HOSTS:
-  client6-1:
+  el6:
     roles:
       - default
       - master
@@ -14,7 +14,7 @@ HOSTS:
         gpgkeys:
           - https://getfedora.org/static/0608B895.txt
 
-  client7-1:
+  el7:
     roles:
       - client
     platform: el-7-x86_64

@@ -91,6 +91,7 @@ class krb5::kdc (
   # Hackery for a broken SELinux policy in EL7
   if ($facts['os']['name'] in ['RedHat','CentOS']) and ($facts['os']['release']['major'] > '6') {
     contain '::krb5::kdc::selinux_hotfix'
+
     Class['krb5::kdc::config'] -> Class['krb5::kdc::selinux_hotfix']
   }
 
@@ -100,9 +101,15 @@ class krb5::kdc (
       auto_principal => $auto_management_principal
     }
 
-    ::krb5::setting::realm { $auto_realm:
-      admin_server => $facts['fqdn'],
-      kdc          => $facts['fqdn']
+    # Unfortunate, but we need to make sure that we don't conflict with an
+    # existing declaration of this realm from the client delcaration.
+    # While there are rare cases where you don't want a KDC to be its own
+    # client, they do exist given the nature of cross-realm trust capabilites.
+
+    if !defined(Krb5::Setting::Realm[$auto_realm]) {
+      krb5::setting::realm { $auto_realm:
+        admin_server => $facts['fqdn']
+      }
     }
 
     Class['krb5::kdc::config'] -> Krb5::Kdc::Realm[$auto_realm]

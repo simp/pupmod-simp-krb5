@@ -77,11 +77,11 @@ class krb5::kdc::auto_keytabs (
 
   assert_private()
 
-  if empty($output_dir) {
-    $_output_dir = '__default__'
+  if $output_dir {
+    $_output_dir = $output_dir
   }
   else {
-    $_output_dir = $output_dir
+    $_output_dir = '__default__'
   }
 
   krb5kdc_auto_keytabs { $_output_dir:

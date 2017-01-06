@@ -38,8 +38,8 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::config (
-  String $kdb5_password = passgen('kdb5kdc','1024'),
-  Array[Simplib::Port] $kdc_ports = [88, 750],
+  String               $kdb5_password = passgen('kdb5kdc','1024'),
+  Array[Simplib::Port] $kdc_ports     = [88, 750],
   Array[Simplib::Port] $kdc_tcp_ports = [88, 750]
 ) inherits ::krb5::kdc {
 
@@ -109,6 +109,11 @@ includedir ${_config_dir}\n"
     require => File[$_kdb5_credential_file],
     path    => ['/sbin','/bin','/usr/sbin','/usr/bin']
   }
+
+  # The initialization of the principal DB must happen after *all* of the
+  # global settings have been properly configured.
+
+  Krb5::Setting <| |> ~> Exec['initialize_principal_database']
 
   if !empty($kdc_ports) {
     krb5::setting { 'kdcdefaults:kdc_ports':

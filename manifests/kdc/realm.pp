@@ -148,16 +148,16 @@ define krb5::kdc::realm (
 
   if $firewall {
     if !empty($kdc_tcp_ports) {
-      iptables::add_tcp_stateful_listen { "${name}_allow_kdc":
-        order        => '11',
+      iptables::listen::tcp_stateful { "${name}_allow_kdc":
+        order        => 11,
         trusted_nets => $trusted_nets,
         dports       => $kdc_tcp_ports
       }
     }
 
     if !empty($kdc_ports) {
-      iptables::add_udp_listen { "${name}_allow_kdc":
-        order        => '11',
+      iptables::listen::udp { "${name}_allow_kdc":
+        order        => 11,
         trusted_nets => $trusted_nets,
         dports       => $kdc_ports
       }
