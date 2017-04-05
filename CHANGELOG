@@ -1,6 +1,3 @@
-* Wed Apr 05 2017 Jeanne Greulich <jeanne.greulich@onyxpoint.com> 7.0.1-0
-- Fixed Facter call in type for krb5kdc_auto_keytabs.rb
-
 * Fri Dec 16 2016 Nick Markowski <nmarkowski@keywcorp.com> - 6.0.0-0
 - Updated global catalysts
 
