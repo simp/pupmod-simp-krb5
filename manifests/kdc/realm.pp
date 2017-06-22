@@ -5,44 +5,49 @@
 #
 # @see kdc.conf(5) -> REALMS SECTION
 #
-# @param initialize [Boolean] If set, auto-initialize the Realm. This will
+# @attr name  The affected Realm. This will be upcased if not done already.
+#
+# @param initialize  If set, auto-initialize the Realm. This will
 #   add an initial Principal for this Realm.
-# @param auto_principal [String] If ``$initialize`` is set, this principal will
+# @param auto_principal  If ``$initialize`` is set, this principal will
 #   be created as an administrative Principal on the Realm.
-# @param name [String] The affected Realm. This will be upcased if not done already.
-# @param trusted_nets [Array] The networks to allow access into the KDC realm.
-# @param acl_file [AbsolutePath] The path to the KDC realm ACL file.
-# @param admin_keytab [AbsolutePath] The path to the KDC realm keytab.
-# @param database_name [AbsolutePath] The path to the KDC realm database.
-# @param default_principal_expiration [AbsoluteTime] The Absolute Time for
+# @param trusted_nets  networks to allow access into the KDC realm.
+# @param acl_file  The path to the KDC realm ACL file.
+# @param admin_keytab  The path to the KDC realm keytab.
+# @param database_name  The path to the KDC realm database.
+# @param default_principal_expiration  The Absolute Time for
 #   expiring the principal expiration date for this realm.
 #   @see http://web.mit.edu/kerberos/krb5-devel/doc/basic/date_format.html#abstime
-# @param default_principal_flags [Array(String)] An array following the
+# @param default_principal_flags  An array following the
 #   format prescribed in the man page. The absence of a '-' in front of the
 #   entry implies that a '+' will be added.
-# @param dict_file [AbsolutePath] The path to the dictionary file of strings
+# @param dict_file  The path to the dictionary file of strings
 #   that are not allowed as passwords.
-# @param kadmind_port [Port] The port on which kadmind should listen.
-# @param kpasswd_port [Port] The port on which kpasswd should listen.
-# @param key_stash_file [AbsolutePath] The path to the KDC realm master key.
-# @param kdc_ports [Array] UDP ports upon which the KDC should listen.
-# @param kdc_tcp_ports [Array] TCP ports upon which the KDC should listen.
-# @param master_key_name [String] The principal associated with the master key.
-# @param master_key_type [String] The master key's key type.
-# @param max_life [TimeDuration] The maximum time period for which a ticket may be valid.
-# @param max_renewable_life [TimeDuration] The maximum time period during which
-#   a valid ticket may be renewed.
-# @param iprop_enable [Boolean] Whether incremental database propogation is enabled.
-# @param iprop_master_ulogsize [Integer] The maximum number of log entries for
+# @param kadmind_port  The port on which kadmind should listen.
+# @param kpasswd_port  The port on which kpasswd should listen.
+# @param key_stash_file  The path to the KDC realm master key.
+# @param kdc_ports  UDP ports upon which the KDC should listen.
+# @param kdc_tcp_ports  TCP ports upon which the KDC should listen.
+# @param master_key_name  The principal associated with the master key.
+# @param master_key_type  The master key's key type.
+# @param max_life  The maximum time period for which a ticket may be valid.
+#   Should be a valid krb5 Time Duration string.
+#   @see http://web.mit.edu/kerberos/krb5-1.13/doc/basic/date_format.html#duration
+# @param max_renewable_life  The maximum time period during which
+#   a valid ticket may be renewed.  Should be a valid krb5 Time Duration string.
+# @param iprop_enable  Whether incremental database propogation is enabled.
+# @param iprop_master_ulogsize  The maximum number of log entries for
 #   incremental propogation.
-# @param iprop_slave_poll [DeltaTime] How often the KDC polls for new updates
+# @param iprop_slave_poll  How often the KDC polls for new updates
 #   from the master.
-# @param supported_enctypes [Array] The default key/salt combinations for this realm.
-# @param reject_bad_transit [Boolean] Whether to check the list of transited
+# @param supported_enctypes  The default key/salt combinations for this realm.
+# @param reject_bad_transit  Whether to check the list of transited
 #   realms for cross-realm tickets.
-# @param ensure [String] Whether to set or clear the key.
+# @param config_dir  The path to the Puppet managed config files.
+# @param ensure  Whether to set or clear the key.
 #   Valid values are 'present' and 'absent'. Setting anything besides 'absent'
 #   will default to 'present'.
+# @param firewall Whether to add appropriate iptables rules for KDC
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 define krb5::kdc::realm (
@@ -118,15 +123,15 @@ define krb5::kdc::realm (
     $_default_principal_flags = []
   }
 
-  if $max_life { validate_krb5_time_duration($max_life) }
-  if $max_renewable_life { validate_krb5_time_duration($max_renewable_life) }
+  if $max_life { krb5::validate_time_duration($max_life) }
+  if $max_renewable_life { krb5::validate_time_duration($max_renewable_life) }
 
   # Formatted for the output file
   $_kdc_ports = join($kdc_ports,',')
   $_kdc_tcp_ports = join($kdc_tcp_ports,',')
   $_supported_enctypes = join($supported_enctypes,',')
 
-  $_name = munge_krb5_conf_filename($name)
+  $_name = krb5::munge_conf_filename($name)
 
   $_upcase_realm = upcase($name)
 

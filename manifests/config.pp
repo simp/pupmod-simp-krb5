@@ -2,26 +2,24 @@
 #
 # Basic configuration of the MIT Kerberos client
 #
-# @param config_dir [AbsolutePath] The path to the Puppet managed config files.
-# @param default_realm [String] Default realm to which to bind.
-# @param realm_domains [Array] Array of domains bound to the default realm set
+# @param config_dir  The path to the Puppet managed config files.
+# @param default_realm  Default realm to which to bind.
+# @param realm_domains  Array of domains bound to the default realm set
 #   in $default_realm.
-# @param dns_lookup_realm [Boolean] Use DNS TXT records to lookup the realm.
-# @param dns_lookup_kdc [Boolean] Use DNS SRV records to lookup the KDC.
-# @param renew_lifetime [String] The default renewable lifetime for initial
+# @param dns_lookup_realm  Use DNS TXT records to lookup the realm.
+# @param dns_lookup_kdc  Use DNS SRV records to lookup the KDC.
+# @param renew_lifetime  The default renewable lifetime for initial
 #   tickets. Should be a valid krb5 Time Duration string.
 #   @see http://web.mit.edu/kerberos/krb5-1.13/doc/basic/date_format.html#duration
-# @parm forwardable [Boolean] Whether or not to make initial tickets
+# @param forwardable  Whether or not to make initial tickets
 #   forwardable by default. This is needed for SSH GSSAPI.
-# @param clockskew [String] Max allowable amount of clockskew allowed before
-#   assuming that a message is invalid. Should be a valid krb5 Time Duration
-#   string.
-#   @see http://web.mit.edu/kerberos/krb5-1.13/doc/basic/date_format.html#duration
-# @permitted_tgs_enctypes [Array]
+# @param clockskew  Max allowable amount of seconds of clockskew allowed
+#   before assuming that a message is invalid.
+# @param permitted_tgs_enctypes
 #   Supported encryption types reported by the KDC.
-# @permitted_tkt_enctypes [Array] Permitted client encryption types.
-# @permitted_enctypes [Array] Permitted session key encryption types.
-# @puppet_exclusive_managed [Boolean] Set to false to allow users to add files
+# @param permitted_tkt_enctypes  Permitted client encryption types.
+# @param permitted_enctypes  Permitted session key encryption types.
+# @param puppet_exclusive_managed  Set to false to allow users to add files
 #   to the /etc/krb5.conf.d directory manually.
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
@@ -33,7 +31,7 @@ class krb5::config (
   Boolean              $dns_lookup_kdc           = true,
   String               $renew_lifetime           = '7d',
   Boolean              $forwardable              = true,
-  Integer              $clockskew                = 500,
+  Integer[0]           $clockskew                = 500,
   Array[String]        $permitted_tgs_enctypes   = $::krb5::enctypes,
   Array[String]        $permitted_tkt_enctypes   = $::krb5::enctypes,
   Array[String]        $permitted_enctypes       = $::krb5::enctypes,
@@ -42,8 +40,7 @@ class krb5::config (
 
   assert_private()
 
-  validate_krb5_time_duration($renew_lifetime)
-  validate_krb5_time_duration($clockskew)
+  krb5::validate_time_duration($renew_lifetime)
 
   $_base_config_dir = inline_template('<%= File.dirname(@config_dir) %>')
 

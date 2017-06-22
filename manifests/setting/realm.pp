@@ -3,23 +3,24 @@
 #
 # @see krb5.conf(5) -> REALMS SECTION
 #
-# @param name [String] The affected Realm. This will be upcased.
+# @attr name  The affected Realm. This will be upcased.
 #
-# @param admin_server [HostString] The host where the admin server is running.
-# @param kdc [HostString] The host where the KDC is running.
-# @param default_domain [String] The default domain in which hosts are assumed
+# @param admin_server  The host where the admin server is running.
+# @param kdc  The host where the KDC is running.
+# @param default_domain  The default domain in which hosts are assumed
 #   to be present.
-# @param v4_instance_convert [Hash] A hash of 'tag name' to 'tag value'
+# @param v4_instance_convert  A hash of 'tag name' to 'tag value'
 #   mappings for default domain mapping translations.
-# @param v4_realm [String] The v4 realm to be used when talking to legacy
+# @param v4_realm  The v4 realm to be used when talking to legacy
 #   systems.
-# @param auth_to_local_names [Hash] A hash of 'principal names' to 'local user
+# @param auth_to_local_names  A hash of 'principal names' to 'local user
 #   names' per the man page.
-# @param auth_to_local [String] A general rule for mapping to local user names.
+# @param auth_to_local  A general rule for mapping to local user names.
 #   The following values are allowed:
 #     DB:<filename>
 #     RULE:<exp>
 #     DEFAULT
+# @param target  The path to the Puppet managed config files.
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
@@ -38,7 +39,7 @@ define krb5::setting::realm (
     fail('You must include ::krb5 before using ::krb5::setting::realm')
   }
 
-  $_name = munge_krb5_conf_filename($name)
+  $_name = krb5::munge_conf_filename($name)
 
   file { "${target}/${_name}__realm":
     owner   => 'root',

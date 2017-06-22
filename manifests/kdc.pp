@@ -17,26 +17,27 @@
 #     Class['my_krb5kdc'] ~> Class['krb5::kdc::service']
 #   }
 #
-# @param trusted_nets [Array(NetworkAddress)] An Array of hostnames or IP
+# @param trusted_nets  An Array of hostnames or IP
 #   addresses that are allowed into this system. Only used by the IPTables
 #   settings.
-# @param ldap [Boolean] If set, configure the system to incorporate LDAP
+# @param config_dir  The path to the Puppet managed config files.
+# @param ldap  If set, configure the system to incorporate LDAP
 #   components.
 #   @note This presently does not set up the LDAP back-end for KRB5
-# @param firewall [Boolean] If set, use the SIMP iptables module.
-# @param haveged [Boolean] If set, enable the HAVEGE daemon for entropy
-# @param auto_initialize [Boolean] If set, create a default realm do all
+# @param firewall  If set, use the SIMP iptables module.
+# @param haveged  If set, enable the HAVEGE daemon for entropy
+# @param auto_initialize  If set, create a default realm do all
 #   necessary work to set up the environment for production.
 #   @note This will simply use the system defaults. If you want something other
 #     than that, you'll need to call the `::krb5::kdc::realm` define directly.
 #
 #     If you select this, this *will* automatically initialize your Kerberos
 #     database and prepare your system to run.
-# @param auto_realm [String] If $auto_initialize is set, then use this string
+# @param auto_realm  If $auto_initialize is set, then use this string
 #   as your default Kerberos Realm.
-# @param auto_management_principal [String] If $auto_initialize is set, then
+# @param auto_management_principal  If $auto_initialize is set, then
 #   use this string as the primary Kerberos principal name for the default Realm.
-# @param auto_generate_host_keytabs [Boolean] If set, create keytabs for all
+# @param auto_generate_host_keytabs  If set, create keytabs for all
 #   hosts that Puppet currently knows about.
 #   @note Host Principals are identified by having a 'host/<fqdn>' entry in the
 #     list of principals. Any host without one of these entries
