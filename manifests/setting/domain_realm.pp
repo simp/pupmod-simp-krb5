@@ -5,12 +5,13 @@
 #
 # @see krb5.conf(5)
 #
-# @param name [String] A unique domain definition.
-# @param ensure [String] Whether to set or clear the key. Valid values are
+# @attr name  A unique domain definition.
+#
+# @param ensure  Whether to set or clear the key. Valid values are
 #   'present' and 'absent'.  Setting anything besides 'absent' will default to
 #   'present'.
-# @param realm [String] The realm to which to map your domain.
-# @param target [AbsolutePath] The target *directory* to which to add setting files.
+# @param realm  The realm to which to map your domain.
+# @param target  The target *directory* to which to add setting files.
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #

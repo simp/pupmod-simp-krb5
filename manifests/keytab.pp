@@ -2,6 +2,7 @@
 #
 # Users should feel free to do what they like, but this will be consistent
 #
+# @param keytab_source
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::keytab (

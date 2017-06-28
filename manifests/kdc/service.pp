@@ -2,8 +2,8 @@
 #
 # Manage the KRB5 services
 #
-# @param ensure [String] May be one of 'running' or 'stopped'.
-# @param enable [Boolean] If true, enable the services at boot time.
+# @param ensure  May be one of 'running' or 'stopped'.
+# @param enable  If true, enable the services at boot time.
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #

@@ -26,20 +26,20 @@
 #       exist, then `$confdir` will be substituted for
 #       `${environmentpath}/${environment}`
 #
-# @param introspect [Boolean] If set, attempt to discover, and create all
+# @param introspect  If set, attempt to discover, and create all
 #   relevant keytabs from data on the Puppet server.
 #   @note This has no effect if you aren't running on a Puppet server.
-# @param output_dir [Absolute_Path] The directory into which to install the
+# @param output_dir  The directory into which to install the
 #   keytabs.
-# @param all_known [Boolean] If set, generate keytabs for any 'host/.*' entries
+# @param all_known  If set, generate keytabs for any 'host/.*' entries
 #   known to the KDC.
-# @param user [String] The user that should own the keytab files.
-# @param group [String] The group that should own the keytab files.
-# @param realms [String] The REALMs into which the hosts should be added unless
+# @param user  The user that should own the keytab files.
+# @param group  The group that should own the keytab files.
+# @param realms  The REALMs into which the hosts should be added unless
 #   otherwise specified in the `$hosts` Hash. Will be auto-upcased.
-# @param global_services [Array(String)] An Array of Kerberos services that
+# @param global_services  An Array of Kerberos services that
 #   should be added to *all* hosts.
-# @param hosts [Hash] A Hash of hosts for which keytabs should be
+# @param hosts  A Hash of hosts for which keytabs should be
 #   generated, and kept in the KDC by Puppet.
 #   This is done as a Hash so that you don't end up with thousands of Puppet
 #   resources in your catalog.
@@ -53,7 +53,7 @@
 #
 #   @note This will be combined with the auto-generated hosts if $auto_generate
 #     is `true`
-# @param purge [Boolean] If set, purge any keytab directories for systems that
+# @param purge  If set, purge any keytab directories for systems that
 #   we don't know about.
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
