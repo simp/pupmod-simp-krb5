@@ -1,6 +1,7 @@
 * Thu Jun 22 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.2-0
 - Update custom Puppet 3 functions to namespaced, Puppet 4 functions
 - Fix most of the puppet strings problems
+- Update puppet requirement and remove OBE pe requirement in metadata.json
 
 * Wed Apr 05 2017 Jeanne Greulich <jeanne.greulich@onyxpoint.com> 7.0.1-0
 - Fixed Facter call in type for krb5kdc_auto_keytabs.rb
