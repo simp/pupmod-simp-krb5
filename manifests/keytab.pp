@@ -6,10 +6,10 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::keytab (
- $keytab_source = "puppet:///modules/krb5_files/keytabs/${facts['fqdn']}",
- $owner         = 'root',
- $group         = 'root',
- $mode          = '0400'
+  $keytab_source = "puppet:///modules/krb5_files/keytabs/${facts['fqdn']}",
+  $owner         = 'root',
+  $group         = 'root',
+  $mode          = '0400'
 ){
 
   file { '/etc/krb5_keytabs':
