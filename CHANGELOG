@@ -1,3 +1,7 @@
+* Mon Oct 30 2017 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.0.3-0
+- Allow users to modify the owner, group, and mode of files that may be used by
+  multiple subsystems
+
 * Thu Jun 22 2017 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.2-0
 - Update custom Puppet 3 functions to namespaced, Puppet 4 functions
 - Fix most of the puppet strings problems

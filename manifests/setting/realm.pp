@@ -25,14 +25,17 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 define krb5::setting::realm (
-  Simplib::Host                 $admin_server,
-  Optional[Simplib::Host]       $kdc                 = undef,
-  Optional[String]              $default_domain      = undef,
-  Hash[String,String]           $v4_instance_convert = {},
-  Optional[String]              $v4_realm            = undef,
-  Hash[String,String]           $auth_to_local_names = {},
-  Optional[String]              $auth_to_local       = undef,
-  Stdlib::Absolutepath          $target              = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
+  Simplib::Host           $admin_server,
+  Optional[Simplib::Host] $kdc                 = undef,
+  Optional[String]        $default_domain      = undef,
+  Hash[String,String]     $v4_instance_convert = {},
+  Optional[String]        $v4_realm            = undef,
+  Hash[String,String]     $auth_to_local_names = {},
+  Optional[String]        $auth_to_local       = undef,
+  Stdlib::Absolutepath    $target              = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
+  String                  $owner               = 'root',
+  String                  $group               = 'root',
+  String                  $mode                = '0644'
 ) {
 
   if !defined(Class['krb5']) {
@@ -42,9 +45,9 @@ define krb5::setting::realm (
   $_name = krb5::munge_conf_filename($name)
 
   file { "${target}/${_name}__realm":
-    owner   => 'root',
-    group   => 'root',
-    mode    => '0644',
+    owner   => $owner,
+    group   => $group,
+    mode    => $mode,
     seltype => 'krb5_conf_t',
     content => template("${module_name}/realm.erb")
   }
