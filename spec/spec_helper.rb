@@ -138,6 +138,13 @@ RSpec.configure do |c|
     end
   end
 
+
+  if ENV.fetch('DEBUG','no') == 'yes'
+    Puppet.debug=true
+    Puppet::Util::Log.level = :debug
+    Puppet::Util::Log.newdestination(:console)
+  end
+
   c.after(:each) do
     # clean up the mocked environmentpath
     FileUtils.rm_rf(@spec_global_env_temp)

@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
+
   context 'when generating keys' do
     let :krb5kdc_auto_keytabs do
+      Facter.stubs(:value).with(:domain).returns('example.com')
       Puppet::Type.type(:krb5kdc_auto_keytabs).new(:name => '/var/kerberos/krb5kdc/auto_keytabs')
     end
 
@@ -117,7 +119,7 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
     end
 
     it "should upcase all realms in the :hosts hash" do
-     expect(
+      expect(
         Puppet::Type.type(:krb5kdc_auto_keytabs).new(
           :name  => '/var/kerberos/krb5kdc/auto_keytabs',
           :hosts =>  {
