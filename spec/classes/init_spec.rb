@@ -1,11 +1,11 @@
 require 'spec_helper'
 
 shared_examples_for 'common config' do
-	it { is_expected.to compile.with_all_deps }
-	it { is_expected.to create_class('krb5') }
-	it { is_expected.to create_class('krb5::install').that_comes_before('Class[krb5::config]')}
-	it { is_expected.to create_class('krb5::config') }
-	it { is_expected.to create_file('/etc/krb5.conf') }
+  it { is_expected.to compile.with_all_deps }
+  it { is_expected.to create_class('krb5') }
+  it { is_expected.to create_class('krb5::install').that_comes_before('Class[krb5::config]')}
+  it { is_expected.to create_class('krb5::config') }
+  it { is_expected.to create_file('/etc/krb5.conf') }
 
   #krb5 install
   it { is_expected.to create_package('krb5-workstation')}
@@ -24,7 +24,7 @@ describe 'krb5' do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
         let(:facts) do
-					facts[:server_facts] = { :servername => 'puppet.bar.baz' }
+          facts[:server_facts] = { :servername => 'puppet.bar.baz' } unless server_facts_hash
           facts
         end
 
