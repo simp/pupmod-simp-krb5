@@ -28,6 +28,9 @@ class krb5 (
   Boolean       $haveged  = simplib::lookup('simp_options::haveged', { 'default_value' => true }),
   Array[String] $enctypes = [ 'aes256-cts-hmac-sha1-96', 'aes128-cts-hmac-sha1-96' ]
 ){
+
+  simplib::assert_metadata($module_name)
+
   contain '::krb5::install'
   contain '::krb5::config'
 

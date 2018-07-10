@@ -5,7 +5,7 @@ describe 'krb5::setting' do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
         let(:facts) do
-          facts[:server_facts] = { :servername => 'puppet.bar.baz' }
+          facts[:server_facts] = server_facts_hash unless (Gem::Version.new(Puppet.version) >= Gem::Version.new('5.0.0'))
           facts
         end
 

@@ -1,3 +1,6 @@
+* Wed Mar 21 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.0.4-0
+- Add support for Puppet 5 and OEL
+
 * Mon Oct 30 2017 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.0.3-0
 - Allow users to modify the owner, group, and mode of files that may be used by
   multiple subsystems

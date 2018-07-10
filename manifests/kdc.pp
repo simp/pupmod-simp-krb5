@@ -78,6 +78,8 @@ class krb5::kdc (
   Boolean              $auto_generate_host_keytabs = true
 ) inherits ::krb5 {
 
+  simplib::assert_metadata($module_name)
+
   if $haveged { include '::haveged' }
 
   contain '::krb5::kdc::install'
@@ -90,7 +92,7 @@ class krb5::kdc (
   Class['krb5::kdc::config'] ~> Class['krb5::kdc::service']
 
   # Hackery for a broken SELinux policy in EL7
-  if ($facts['os']['name'] in ['RedHat','CentOS']) and ($facts['os']['release']['major'] > '6') {
+  if ($facts['os']['name'] in ['RedHat','CentOS','OracleLinux']) and ($facts['os']['release']['major'] > '6') {
     contain '::krb5::kdc::selinux_hotfix'
 
     Class['krb5::kdc::config'] -> Class['krb5::kdc::selinux_hotfix']

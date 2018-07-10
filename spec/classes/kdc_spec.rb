@@ -54,7 +54,7 @@ describe 'krb5::kdc' do
     on_supported_os.each do |os, facts|
       context "on #{os}" do
         let(:facts) do
-          facts[:server_facts] = { :servername => 'puppet.bar.baz' }
+          facts[:server_facts] = server_facts_hash unless (Gem::Version.new(Puppet.version) >= Gem::Version.new('5.0.0'))
           facts
         end
 
@@ -64,7 +64,7 @@ describe 'krb5::kdc' do
           it { is_expected.to_not contain_package('krb5-server-ldap')}
           it { is_expected.to_not contain_class('krb5::kdc::firewall')}
 
-          if ['RedHat','CentOS'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
+          if ['RedHat','CentOS','OracleLinux'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
             it { is_expected.to contain_class('krb5::kdc::selinux_hotfix') }
           else
             it { is_expected.to_not contain_class('krb5::kdc::selinux_hotfix') }
@@ -74,7 +74,7 @@ describe 'krb5::kdc' do
         context 'with firewall = true, haveged = true, ldap = true' do
           let(:params) {{:firewall => true, :haveged => true, :ldap => true}}
           it_should_behave_like 'common kdc config'
-          if ['RedHat','CentOS'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
+          if ['RedHat','CentOS','OracleLinux'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
             it_should_behave_like 'selinux hotfix'
           end
           it { is_expected.to contain_class('haveged')}
@@ -90,7 +90,7 @@ describe 'krb5::kdc' do
 
           it_should_behave_like 'common kdc config'
 
-          if ['RedHat','CentOS'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
+          if ['RedHat','CentOS','OracleLinux'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
             it_should_behave_like 'selinux hotfix'
           end
         end

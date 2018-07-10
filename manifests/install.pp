@@ -22,19 +22,16 @@ class krb5::install (
     include '::haveged'
   }
 
-  if $facts['os']['name'] in ['CentOS', 'RedHat'] {
-    package { [
-      'krb5-workstation',
-      'pam_krb5'
-    ]:
-      ensure => $ensure
-    }
+  package { [
+    'krb5-workstation',
+    'pam_krb5'
+  ]:
+    ensure => $ensure
+  }
 
+  if $facts['os']['name'] in ['CentOS', 'RedHat', 'OracleLinux'] {
     if $facts['os']['release']['major'] < '7' {
       package { 'krb5-auth-dialog': ensure => $ensure }
     }
-  }
-  else {
-    fail("Installation on '${facts['os']['name']}' not yet supported")
   }
 }
