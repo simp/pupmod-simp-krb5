@@ -1,3 +1,6 @@
+* Fri Sep 07 2018 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.4-0
+- Drop Hiera 4 support
+
 * Wed Mar 21 2018 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.0.4-0
 - Add support for Puppet 5 and OEL
 
