@@ -13,14 +13,18 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::install (
-  String $ensure = 'latest'
+  String $ensure = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
 ) inherits ::krb5::kdc {
 
   assert_private()
 
-  package { 'krb5-server': ensure => $ensure }
+  package { 'krb5-server':
+    ensure => $ensure
+  }
 
   if $::krb5::kdc::ldap {
-    package { 'krb5-server-ldap': ensure => $ensure }
+    package { 'krb5-server-ldap':
+      ensure => $ensure
+    }
   }
 }

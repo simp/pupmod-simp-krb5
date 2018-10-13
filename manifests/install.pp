@@ -13,7 +13,7 @@
 # @author Trevor Vauthan <tvaughan@onyxpoint.com>
 #
 class krb5::install (
-  String  $ensure  = 'latest',
+  String  $ensure  = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
   Boolean $haveged = $::krb5::haveged
 ) {
   assert_private()

@@ -1,3 +1,7 @@
+* Fri Oct 12 2018 Nick Miller <nick.miller@onyxpoint.com> - 7.0.4-0
+- Changed the packages from 'latest' to 'installed'
+- Ensure parameters will also now respect `simp_options::package_ensure`
+
 * Fri Sep 07 2018 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.4-0
 - Drop Hiera 4 support
 
