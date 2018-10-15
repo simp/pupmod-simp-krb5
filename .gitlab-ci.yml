@@ -46,6 +46,13 @@
   script:
     - bundle exec rake spec
 
+# To avoid running a prohibitive number of tests every commit,
+# don't set this env var in your gitlab instance
+.only_with_SIMP_FULL_MATRIX: &only_with_SIMP_FULL_MATRIX
+  only:
+    variables:
+      - $SIMP_FULL_MATRIX
+
 stages:
   - validation
   - unit
@@ -132,62 +139,80 @@ pup5_latest-unit:
 
 # Acceptance tests
 # ==============================================================================
-default-acceptance:
+default:
   stage: acceptance
   tags:
     - beaker
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '4.10'
+    PUPPET_VERSION: '~> 4.10.10'
   script:
+    - bundle exec rake spec_clean
     - bundle exec rake beaker:suites[default]
 
-fips-acceptance:
+default-puppet5:
   stage: acceptance
   tags:
     - beaker
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '4.10'
+    PUPPET_VERSION: '~> 5.3'
+    BEAKER_PUPPET_COLLECTION: 'puppet5'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default]
+
+default-fips:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  variables:
+    PUPPET_VERSION: '~> 4.10.10'
     BEAKER_fips: 'yes'
   script:
+    - bundle exec rake spec_clean
     - bundle exec rake beaker:suites[default]
 
-acceptance-puppet5-default:
+default-oel:
   stage: acceptance
   tags:
     - beaker
   <<: *cache_bundler
   <<: *setup_bundler_env
   variables:
-    PUPPET_VERSION: '5.4'
+    PUPPET_VERSION: '~> 4.10.10'
+  script:
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
+
+default-oel-puppet5:
+  stage: acceptance
+  tags:
+    - beaker
+  <<: *cache_bundler
+  <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
+  variables:
+    PUPPET_VERSION: '~> 5.3'
     BEAKER_PUPPET_COLLECTION: 'puppet5'
   script:
-    - bundle exec rake beaker:suites[default,puppet5]
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
 
-acceptance-fips-puppet5-default:
+default-oel-fips:
   stage: acceptance
   tags:
     - beaker
   <<: *cache_bundler
   <<: *setup_bundler_env
+  <<: *only_with_SIMP_FULL_MATRIX
   variables:
+    PUPPET_VERSION: '~> 4.10.10'
     BEAKER_fips: 'yes'
-    PUPPET_VERSION: '5.4'
-    BEAKER_PUPPET_COLLECTION: 'puppet5'
   script:
-    - bundle exec rake beaker:suites[default]
-
-acceptance-oel-puppet5-default:
-  stage: acceptance
-  tags:
-    - beaker
-  <<: *cache_bundler
-  <<: *setup_bundler_env
-  variables:
-    PUPPET_VERSION: '5.4'
-    BEAKER_PUPPET_COLLECTION: 'puppet5'
-  script:
-    - bundle exec rake beaker:suites[default,oel_p5]
+    - bundle exec rake spec_clean
+    - bundle exec rake beaker:suites[default,oel]
