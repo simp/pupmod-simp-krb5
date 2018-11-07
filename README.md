@@ -1,3 +1,9 @@
+[![License](https://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+[![CII Best Practices](https://bestpractices.coreinfrastructure.org/projects/73/badge)](https://bestpractices.coreinfrastructure.org/projects/73)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/simp/krb5.svg)](https://forge.puppetlabs.com/simp/krb5)
+[![Puppet Forge Downloads](https://img.shields.io/puppetforge/dt/simp/krb5.svg)](https://forge.puppetlabs.com/simp/krb5)
+[![Build Status](https://travis-ci.org/simp/pupmod-simp-krb5.svg)](https://travis-ci.org/simp/pupmod-simp-krb5)
+
 # Krb5
 
 #### Table of Contents
@@ -215,19 +221,12 @@ SIMP Puppet modules are generally intended to be used on a Red Hat Enterprise Li
 
 ## Development
 
-Please read our [Contribution Guide](https://simp-project.atlassian.net/wiki/display/SD/Contributing+to+SIMP) and visit our [Developer Wiki](https://simp-project.atlassian.net/wiki/display/SD/SIMP+Development+Home)
+Please read our [Contribution Guide](http://simp-doc.readthedocs.io/en/stable/contributors_guide/index.html).
 
 If you find any issues, they can be submitted to our [JIRA](https://simp-project.atlassian.net).
 
-[SIMP Contribution Guidelines](https://simp-project.atlassian.net/wiki/display/SD/Contributing+to+SIMP)
+[System Integrity Management Platform](https://simp-project.com)
 
-[System Integrity Management Platform](https://github.com/NationalSecurityAgency/SIMP)
-
-[![Apache](http://img.shields.io/:license-apache-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
-
-[![Build Status](https://travis-ci.org/simp/pupmod-simp-krb5.svg)](https://travis-ci.org/simp/pupmod-simp-krb5)
-
-[![SIMP Compatibility](https://img.shields.io/badge/SIMP%20compatibility-4.2.*%2F5.1.*-orange.svg)](https://img.shields.io/badge/SIMP%20compatibility-4.2.*%2F5.1.*-orange.svg)
 
 ## Acceptance tests
 
