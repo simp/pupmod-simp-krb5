@@ -38,7 +38,7 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::config (
-  String               $kdb5_password = passgen('kdb5kdc','1024'),
+  String               $kdb5_password = simplib::passgen('kdb5kdc', { 'length' => 1024 }),
   Array[Simplib::Port] $kdc_ports     = [88, 750],
   Array[Simplib::Port] $kdc_tcp_ports = [88, 750]
 ) inherits ::krb5::kdc {
@@ -48,10 +48,6 @@ class krb5::kdc::config (
   $_trusted_nets = getvar('::krb5::kdc::trusted_nets')
   $_config_dir = getvar('::krb5::kdc::config_dir')
   $_firewall = getvar('::krb5::kdc::firewall')
-
-  #validate_string($kdb5_password)
-  validate_port($kdc_ports)
-  validate_port($kdc_tcp_ports)
 
   $_kdc_ports = join($kdc_ports,',')
   $_kdc_tcp_ports = join($kdc_tcp_ports,',')
