@@ -25,7 +25,8 @@
 
 Management of the MIT Kerberos Stack
 
-This module is a component of the `System Integrity Management Platform`, a compliance-oriented systems management framework built on `Puppet`.
+This module is a component of the [System Integrity Management Platform](https://simp-project.com),
+a compliance-management framework built on Puppet.
 
 This module is designed for use within a larger SIMP ecosystem, but many of its functions can be used independently.
 
@@ -212,7 +213,7 @@ Once this is complete, the keys will be propagated across your environment per
 
 ### Integration with SIMP NFS Module
 
-Please see our [NFS module documentation](https://github.com/simp/pupmod-simp-nfs) or our [online documentation](http://simp.readthedocs.io/en/master/user_guide/HOWTO/NFS.html) for
+Please see our [NFS module documentation](https://github.com/simp/pupmod-simp-nfs) or our [online documentation](https://simp.readthedocs.io/en/stable/user_guide/HOWTO/NFS.html) for
 information on how to integrate KRB5 with NFS.
 
 ## Limitations
@@ -221,12 +222,9 @@ SIMP Puppet modules are generally intended to be used on a Red Hat Enterprise Li
 
 ## Development
 
-Please read our [Contribution Guide](http://simp-doc.readthedocs.io/en/stable/contributors_guide/index.html).
+Please read our [Contribution Guide](https://simp-doc.readthedocs.io/en/stable/contributors_guide/index.html).
 
 If you find any issues, they can be submitted to our [JIRA](https://simp-project.atlassian.net).
-
-[System Integrity Management Platform](https://simp-project.com)
-
 
 ## Acceptance tests
 

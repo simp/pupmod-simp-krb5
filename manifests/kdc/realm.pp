@@ -113,7 +113,7 @@ define krb5::kdc::realm (
 
       $_possible_principal_flag_check_string = join($_possible_principal_flags, '|')
 
-      validate_re_array(
+      simplib::validate_re_array(
         $_default_principal_flags,
         "^([+-]?(${_possible_principal_flag_check_string}))"
       )
