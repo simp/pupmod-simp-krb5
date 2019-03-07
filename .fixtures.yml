@@ -1,9 +1,7 @@
 ---
 fixtures:
   repositories:
-    haveged:
-      repo: https://github.com/simp/puppet-haveged
-      branch: simp-master
+    haveged: https://github.com/simp/pupmod-simp-haveged
     iptables: https://github.com/simp/pupmod-simp-iptables
     simp_options: https://github.com/simp/pupmod-simp-simp_options
     simplib: https://github.com/simp/pupmod-simp-simplib

@@ -222,7 +222,7 @@ SIMP Puppet modules are generally intended to be used on a Red Hat Enterprise Li
 
 ## Development
 
-Please read our [Contribution Guide](https://simp-doc.readthedocs.io/en/stable/contributors_guide/index.html).
+Please read our [Contribution Guide](https://simp.readthedocs.io/en/stable/contributors_guide/index.html).
 
 If you find any issues, they can be submitted to our [JIRA](https://simp-project.atlassian.net).
 
