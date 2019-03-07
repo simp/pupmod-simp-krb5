@@ -5,6 +5,8 @@
   a deprecated simplib Puppet 3 function.
 - Removed unnecessary use of validate_port() on parameters of type
   Simplib::Port
+- Update the upper bound of stdlib to < 6.0.0
+- Update a URL in the README.md
 
 * Wed Nov 07 2018 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.4-0
 - Update badges and contribution guide URL in README.md
