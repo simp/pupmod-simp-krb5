@@ -1,4 +1,7 @@
-* Fri Aug 02 2019 Robert Vincent <pillarsdotnet@gmail.com> - 7.0.6-0
+* Fri Aug 02 2019 Robert Vincent <pillarsdotnet@gmail.com> - 7.1.0-0
+- Remove Puppet 4 support
+- Add Puppet 6 support
+- Add puppetlabs-stdlib 6 support
 - Support puppetlabs/stdlib 6.x and puppet 6.x.
 
 * Tue Feb 12 2019 Liz Nemsick <lnemsick.simp@gmail.com> - 7.0.5-0
