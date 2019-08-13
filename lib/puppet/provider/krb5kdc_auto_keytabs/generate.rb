@@ -212,7 +212,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
           end
         end
       else
-        Puppet.warn("Could not add '#{princ_name}' to keytab at '#{princ[:keytab]}'")
+        Puppet.warning("Could not add '#{princ_name}' to keytab at '#{princ[:keytab]}'")
         FileUtils.rm_f(princ[:tmp_keytab])
       end
     end
