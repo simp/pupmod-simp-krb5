@@ -1,5 +1,4 @@
-# This define allows you to add a realm to the ``[realms]`` section of
-# ``/var/kerberos/krb5kdc/kdc.conf``
+# @summary Allows you to add a realm to the ``[realms]`` section of ``/var/kerberos/krb5kdc/kdc.conf``.
 #
 # Note: The kdc.conf file is *fully managed* by Puppet
 #

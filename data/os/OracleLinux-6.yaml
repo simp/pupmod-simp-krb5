@@ -1,0 +1,3 @@
+---
+krb5::install::packages:
+  - krb5-auth-dialog

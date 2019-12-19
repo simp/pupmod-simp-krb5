@@ -1,4 +1,4 @@
-# This define allows you to configure individual domain => realm mappings.
+# @summary Allows you to configure individual domain => realm mappings.
 #
 # It was specifically created so that you could pass in your domains as a name
 # array and then your realm as a value.

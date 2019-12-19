@@ -32,13 +32,7 @@ shared_examples_for 'auto_keytab' do
 end
 
 shared_examples_for 'selinux hotfix' do
-  it { is_expected.to create_package('checkpolicy')}
-  it { is_expected.to create_package('policycoreutils-python')}
-  it { is_expected.to create_file('/var/kerberos/krb5kdc/.selinux')}
-  it { is_expected.to create_file('/var/kerberos/krb5kdc/.selinux/krb5kdc_hotfix.te')}
-  it { is_expected.to create_exec('krb5kdc_selinux_hotfix_build_module')}
-  it { is_expected.to create_exec('krb5kdc_selinux_hotfix_package_module')}
-  it { is_expected.to create_exec('krb5kdc_selinux_hotfix_install_module')}
+  it { is_expected.to create_vox_selinux__module('krb5kdc_hotfix') }
 end
 
 shared_examples_for 'firewall' do

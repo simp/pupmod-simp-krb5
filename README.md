@@ -28,7 +28,10 @@ Management of the MIT Kerberos Stack
 This module is a component of the [System Integrity Management Platform](https://simp-project.com),
 a compliance-management framework built on Puppet.
 
-This module is designed for use within a larger SIMP ecosystem, but many of its functions can be used independently.
+This module is designed for use within a larger SIMP ecosystem, but many of its
+functions can be used independently.
+
+See [REFERENCE.md](./REFERENCE.md) for full API details.
 
 ## Setup
 

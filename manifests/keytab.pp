@@ -1,8 +1,19 @@
-# A class to distribute Kerberos keytabs in a sane manner
+# @summary Distribute Kerberos keytabs in a sane manner
 #
 # Users should feel free to do what they like, but this will be consistent
 #
 # @param keytab_source
+#   The `File` resource compatible source for the system keytab
+#
+# @param owner
+#   The keytab file owner
+#
+# @param group
+#   The keytab file group
+#
+# @param mode
+#   The keytab file mode
+#
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::keytab (

@@ -1,7 +1,6 @@
 # **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 #
-# This class provides the necessary structure to manage the Kerberos 5 KDC on a
-# given system.
+# @summary Provides the necessary structure to manage the Kerberos 5 KDC on a given system.
 #
 # The variables used here can be found in kdc.conf(5).
 #

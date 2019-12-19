@@ -1,6 +1,6 @@
 # **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 #
-# Manage the KRB5 services
+# @summary Manage the KRB5 services
 #
 # @param ensure  May be one of 'running' or 'stopped'.
 # @param enable  If true, enable the services at boot time.

@@ -1,5 +1,4 @@
-# This define allows you to add a realm to the ``[realms]`` section of
-# ``/etc/krb5.conf``
+# @summary Allows you to add a realm to the ``[realms]`` section of ``/etc/krb5.conf``.
 #
 # @see krb5.conf(5) -> REALMS SECTION
 #

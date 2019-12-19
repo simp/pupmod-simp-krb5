@@ -1,6 +1,6 @@
-# Kerberos 5 management and manipulation.
+# @summary Kerberos 5 management and manipulation
 #
-# This base class installs everything necessary for basic KRB client use.
+# This base class installs everything necessary for basic KRB client use
 #
 # We modify the default ``/etc/krb5.conf`` to use an include structure under
 # ``/etc/krb5.conf.simp.d``. Each ``[subsection]`` is broken out into a
@@ -31,8 +31,8 @@ class krb5 (
 
   simplib::assert_metadata($module_name)
 
-  contain '::krb5::install'
-  contain '::krb5::config'
+  contain 'krb5::install'
+  contain 'krb5::config'
 
   Class['krb5::install'] -> Class['krb5::config']
 }

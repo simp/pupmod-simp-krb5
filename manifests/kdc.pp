@@ -1,5 +1,4 @@
-# This class provides the necessary structure to manage the Kerberos 5 KDC on a
-# given system.
+# @summary The necessary structure to manage the Kerberos 5 KDC on a given system.
 #
 # The variables used here can be found in ``kdc.conf(5)``.
 #
@@ -7,9 +6,9 @@
 #
 # @example Add Your Own Custom Config Snippet
 #   class my_krb5kdc {
-#     include '::krb5::kdc'
+#     include 'krb5::kdc'
 #
-#     file { "${::krb5::kdc::config_dir}/my_snippet__custom":
+#     file { "${krb5::kdc::config_dir}/my_snippet__custom":
 #       content => "My Custom Content"
 #     }
 #
@@ -29,7 +28,7 @@
 # @param auto_initialize  If set, create a default realm do all
 #   necessary work to set up the environment for production.
 #   @note This will simply use the system defaults. If you want something other
-#     than that, you'll need to call the `::krb5::kdc::realm` define directly.
+#     than that, you'll need to call the `krb5::kdc::realm` define directly.
 #
 #     If you select this, this *will* automatically initialize your Kerberos
 #     database and prepare your system to run.
@@ -44,7 +43,7 @@
 #     *will be ignored*.
 #
 #     This is *not* dependent on `$auto_initialize`! You may want to toggle
-#     some of the parameters in the `::krb5::kdc::auto_keytabs` class to tailor
+#     some of the parameters in the `krb5::kdc::auto_keytabs` class to tailor
 #     the generation.
 #
 #     This capability expects a `${module_name}_files` module to be present in
@@ -69,22 +68,22 @@
 class krb5::kdc (
   Simplib::Netlist     $trusted_nets               = simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1', '::1'] }),
   Stdlib::Absolutepath $config_dir                 = '/var/kerberos/krb5kdc/kdc.conf.simp.d',
-  Boolean              $ldap                       = $::krb5::ldap,
-  Boolean              $firewall                   = $::krb5::firewall,
-  Boolean              $haveged                    = $::krb5::haveged,
+  Boolean              $ldap                       = $krb5::ldap,
+  Boolean              $firewall                   = $krb5::firewall,
+  Boolean              $haveged                    = $krb5::haveged,
   Boolean              $auto_initialize            = true,
   String               $auto_realm                 = $facts['domain'],
   String               $auto_management_principal  = 'puppet_auto',
   Boolean              $auto_generate_host_keytabs = true
-) inherits ::krb5 {
+) inherits krb5 {
 
   simplib::assert_metadata($module_name)
 
-  if $haveged { include '::haveged' }
+  if $haveged { include 'haveged' }
 
-  contain '::krb5::kdc::install'
-  contain '::krb5::kdc::config'
-  contain '::krb5::kdc::service'
+  contain 'krb5::kdc::install'
+  contain 'krb5::kdc::config'
+  contain 'krb5::kdc::service'
 
   Class['krb5'] -> Class['krb5::kdc']
   Class['krb5::kdc::install'] ~> Class['krb5::kdc::config']
@@ -93,13 +92,13 @@ class krb5::kdc (
 
   # Hackery for a broken SELinux policy in EL7
   if ($facts['os']['name'] in ['RedHat','CentOS','OracleLinux']) and ($facts['os']['release']['major'] > '6') {
-    contain '::krb5::kdc::selinux_hotfix'
+    contain 'krb5::kdc::selinux_hotfix'
 
     Class['krb5::kdc::config'] -> Class['krb5::kdc::selinux_hotfix']
   }
 
   if $auto_initialize {
-    ::krb5::kdc::realm { $auto_realm:
+    krb5::kdc::realm { $auto_realm:
       initialize     => $auto_initialize,
       auto_principal => $auto_management_principal
     }
@@ -124,7 +123,7 @@ class krb5::kdc (
   }
 
   if $auto_generate_host_keytabs {
-    include '::krb5::kdc::auto_keytabs'
+    include 'krb5::kdc::auto_keytabs'
 
     Class['krb5::kdc::service'] -> Class['krb5::kdc::auto_keytabs']
   }

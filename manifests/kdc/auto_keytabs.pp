@@ -1,7 +1,6 @@
 # **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 #
-# This class provides a mechanism for auto-generating keytabs on the KDC as
-# well as provisioning those keytabs for distribution via Puppet if possible.
+# @summary Provides a mechanism for auto-generating keytabs on the KDC as well as provisioning those keytabs for distribution via Puppet if possible.
 #
 # The keytabs will be collected in a directory that is, by default, located at
 # `/var/kerberos/krb5kdc/generated_keytabs`.

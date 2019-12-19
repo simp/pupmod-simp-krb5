@@ -1,6 +1,6 @@
 # **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 #
-# Default System Settings
+# @summary Default System Settings
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 class krb5::config::default_settings {

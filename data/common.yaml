@@ -1,0 +1,9 @@
+---
+lookup_options:
+  krb5::install::packages:
+    merge:
+      strategy: deep
+      knockout_prefix: --
+
+krb5::install::packages:
+  - krb5-workstation
