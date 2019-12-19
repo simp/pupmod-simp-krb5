@@ -7,6 +7,7 @@ fixtures:
       ref: v4.1.0
     iptables: https://github.com/simp/pupmod-simp-iptables
     selinux: https://github.com/simp/pupmod-simp-selinux
+    selinux_core: https://github.com/puppetlabs/puppetlabs-selinux_core
     simp_options: https://github.com/simp/pupmod-simp-simp_options
     simplib: https://github.com/simp/pupmod-simp-simplib
     stdlib: https://github.com/simp/puppetlabs-stdlib
