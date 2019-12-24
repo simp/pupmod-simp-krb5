@@ -1,8 +1,6 @@
 # **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 #
-# == Class krb5::kdc::install
-#
-# Install the krb5kdc packages
+# @summary Install the krb5kdc packages
 #
 # @param ensure
 #   The package state to ensure
@@ -14,7 +12,7 @@
 #
 class krb5::kdc::install (
   String $ensure = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
-) inherits ::krb5::kdc {
+) inherits krb5::kdc {
 
   assert_private()
 
@@ -22,7 +20,7 @@ class krb5::kdc::install (
     ensure => $ensure
   }
 
-  if $::krb5::kdc::ldap {
+  if $krb5::kdc::ldap {
     package { 'krb5-server-ldap':
       ensure => $ensure
     }

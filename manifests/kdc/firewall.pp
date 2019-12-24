@@ -1,6 +1,6 @@
 # **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 #
-# Set up the firewall for the KDC
+# @summary Set up the firewall for the KDC
 #
 # @param kdc_ports
 #   The ``UDP`` ports on which the KDC should listen
@@ -37,10 +37,12 @@ class krb5::kdc::firewall (
 
   assert_private()
 
-  include '::iptables'
+  simplib::assert_optional_dependency($module_name, 'simp/iptables')
+
+  include 'iptables'
 
   if !empty($kdc_tcp_ports) {
-    ::iptables::listen::tcp_stateful { 'allow_kdc':
+    iptables::listen::tcp_stateful { 'allow_kdc':
       order        => 11,
       trusted_nets => $trusted_nets,
       dports       => $kdc_tcp_ports
@@ -48,7 +50,7 @@ class krb5::kdc::firewall (
   }
 
   if !empty($kdc_ports) {
-    ::iptables::listen::udp { 'allow_kdc':
+    iptables::listen::udp { 'allow_kdc':
       order        => 11,
       trusted_nets => $trusted_nets,
       dports       => $kdc_ports
@@ -57,13 +59,13 @@ class krb5::kdc::firewall (
 
   if $allow_kadmind {
     # The ports for kadmind
-    ::iptables::listen::udp { 'allow_kadmind':
+    iptables::listen::udp { 'allow_kadmind':
       order        => 11,
       trusted_nets => $trusted_nets,
       dports       => $kadmind_udp_ports
     }
 
-    ::iptables::listen::tcp_stateful { 'allow_kadmind':
+    iptables::listen::tcp_stateful { 'allow_kadmind':
       order        => 11,
       trusted_nets => $trusted_nets,
       dports       => $kadmind_tcp_ports

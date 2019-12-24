@@ -12,46 +12,52 @@
   ],
   "dependencies": [
     {
-      "name": "simp/haveged",
-      "version_requirement": ">= 0.3.0 < 1.0.0"
-    },
-    {
-      "name": "simp/iptables",
-      "version_requirement": ">= 6.0.0 < 7.0.0"
-    },
-    {
-      "name": "simp/pki",
-      "version_requirement": ">= 6.0.0 < 7.0.0"
-    },
-    {
       "name": "simp/simplib",
-      "version_requirement": ">= 3.7.0 < 4.0.0"
+      "version_requirement": ">= 3.7.0 < 5.0.0"
     },
     {
       "name": "puppetlabs/stdlib",
       "version_requirement": ">= 4.13.1 < 7.0.0"
     }
   ],
+  "simp": {
+    "optional_dependencies": [
+      {
+        "name": "simp/haveged",
+        "version_requirement": ">= 0.3.0 < 1.0.0"
+      },
+      {
+        "name": "simp/iptables",
+        "version_requirement": ">= 6.0.0 < 7.0.0"
+      },
+      {
+        "name": "simp/vox_selinux"
+      }
+    ]
+  },
   "operatingsystem_support": [
     {
       "operatingsystem": "CentOS",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "RedHat",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     },
     {
       "operatingsystem": "OracleLinux",
       "operatingsystemrelease": [
         "6",
-        "7"
+        "7",
+        "8"
       ]
     }
   ],

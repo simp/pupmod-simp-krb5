@@ -1,4 +1,4 @@
-# A client class that will connect with the given KDC
+# @summary A client class that will connect with the given KDC
 #
 # By default, this is set up to connect with the KDC that would be configured
 # if you use the default options.
@@ -22,7 +22,7 @@ class krb5::client (
     }]
   ] $realms = {}
 ) {
-  include '::krb5'
+  include 'krb5'
 
   # There's a possibility that the krb5::kdc class has already created the
   # default one and you can only declare one realm with a given name.

@@ -9,7 +9,6 @@ shared_examples_for 'common config' do
 
   #krb5 install
   it { is_expected.to create_package('krb5-workstation')}
-  it { is_expected.to create_package('pam_krb5')}
 
   #krb5 config
   it { is_expected.to create_file('/etc/krb5.conf.d') }

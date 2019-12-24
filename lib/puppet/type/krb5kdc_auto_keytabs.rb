@@ -11,6 +11,8 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
   require 'puppet/parameter/boolean'
 
   ensurable do
+    desc 'The state to enforce on the resource'
+
     defaultto(:present)
 
     newvalue(:present) do

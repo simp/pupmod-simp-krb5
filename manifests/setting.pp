@@ -1,6 +1,4 @@
-# This define allows you to set individual configuration elements in
-# ``/etc/krb5.conf`` without explicitly needing to specify all of the augeas
-# parameters.
+# @summary Allows you to set individual configuration elements in ``/etc/krb5.conf``.
 #
 # Sections with nested sub-sections or allowed repeated keys have their own
 # specialized defines.

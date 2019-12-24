@@ -1,3 +1,10 @@
+* Wed Dec 18 2019 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.1.0-0
+- Add EL8 support
+  - Update SELinux hotfix
+  - Migrate SELinux hotfix to vox_selinux::module
+- Update documentation
+- Add REFERENCE.md
+
 * Fri Aug 02 2019 Robert Vincent <pillarsdotnet@gmail.com> - 7.1.0-0
 - Remove Puppet 4 support
 - Add Puppet 6 support
