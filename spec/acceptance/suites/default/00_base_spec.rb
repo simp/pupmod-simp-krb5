@@ -59,8 +59,8 @@ describe 'krb5 class' do
       ['krb5kdc','kadmin'].each do |svc|
         it "should be running service #{svc}" do
           on(host, "puppet resource service #{svc}") do
-            expect(stdout).to match(/ensure => 'running'/)
-            expect(stdout).to match(/enable => '?true'?/)
+            expect(stdout).to match(/ensure\s*=> 'running'/)
+            expect(stdout).to match(/enable\s*=> '?true'?/)
           end
         end
       end
