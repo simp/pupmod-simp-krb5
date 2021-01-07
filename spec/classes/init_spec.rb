@@ -31,17 +31,11 @@ describe 'krb5' do
           it_should_behave_like 'common config'
           it { is_expected.to create_file('/etc/krb5.conf') }
           it { is_expected.to contain_class('haveged') }
-          if facts[:operatingsystemmajrelease] < '7'
-            it { is_expected.to create_package('krb5-auth-dialog')}
-          end
         end
 
         context 'with haveged => true' do
           let(:params) {{:haveged => true}}
           it_should_behave_like 'common config'
-          if facts[:operatingsystemmajrelease] < '7'
-            it { is_expected.to create_package('krb5-auth-dialog')}
-          end
           it { is_expected.to contain_class('haveged') }
         end
       end
