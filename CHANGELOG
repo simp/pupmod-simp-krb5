@@ -1,3 +1,6 @@
+* Thu Jan 07 2021 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.1.1
+- Removed EL6 support
+
 * Wed Dec 18 2019 Trevor Vaughan <tvaughan@onyxpoint.com> - 7.1.0-0
 - Add EL8 support
   - Update SELinux hotfix

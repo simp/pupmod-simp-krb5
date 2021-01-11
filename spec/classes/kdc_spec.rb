@@ -57,20 +57,13 @@ describe 'krb5::kdc' do
           it { is_expected.to contain_class('haveged')}
           it { is_expected.to_not contain_package('krb5-server-ldap')}
           it { is_expected.to_not contain_class('krb5::kdc::firewall')}
-
-          if ['RedHat','CentOS','OracleLinux'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
-            it { is_expected.to contain_class('krb5::kdc::selinux_hotfix') }
-          else
-            it { is_expected.to_not contain_class('krb5::kdc::selinux_hotfix') }
-          end
+          it { is_expected.to contain_class('krb5::kdc::selinux_hotfix') }
         end
 
         context 'with firewall = true, haveged = true, ldap = true' do
           let(:params) {{:firewall => true, :haveged => true, :ldap => true}}
           it_should_behave_like 'common kdc config'
-          if ['RedHat','CentOS','OracleLinux'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
-            it_should_behave_like 'selinux hotfix'
-          end
+          it_should_behave_like 'selinux hotfix'
           it { is_expected.to contain_class('haveged')}
           it { is_expected.to contain_package('krb5-server-ldap')}
           it { is_expected.to contain_class('krb5::kdc::firewall')}
@@ -83,10 +76,7 @@ describe 'krb5::kdc' do
           end
 
           it_should_behave_like 'common kdc config'
-
-          if ['RedHat','CentOS','OracleLinux'].include?(facts[:operatingsystem]) and facts[:operatingsystemmajrelease] > '6'
-            it_should_behave_like 'selinux hotfix'
-          end
+          it_should_behave_like 'selinux hotfix'
         end
       end
     end
