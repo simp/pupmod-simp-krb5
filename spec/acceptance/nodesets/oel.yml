@@ -6,30 +6,32 @@
   end
 -%>
 HOSTS:
-  oel6.test:
+  oel7.test:
     roles:
       - default
       - master
       - client
-    platform: el-6-x86_64
-    box: onyxpoint/oel-6-x86_64
-    hypervisor: <%= hypervisor %>
-    yum_repos:
-      epel:
-        mirrorlist: 'https://mirrors.fedoraproject.org/metalink?repo=epel-6&arch=$basearch'
-        gpgkeys:
-          - https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
-  oel7.test:
-    roles:
-      - client
     platform: el-7-x86_64
-    box: onyxpoint/oel-7-x86_64
+    box: generic/oracle7
     hypervisor: <%= hypervisor %>
     yum_repos:
       epel:
         mirrorlist: 'https://mirrors.fedoraproject.org/metalink?repo=epel-7&arch=$basearch'
         gpgkeys:
           - https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
+
+  el8.test:
+    roles:
+      - client
+    platform: el-8-x86_64
+    box: generic/oracle8
+    hypervisor: <%= hypervisor %>
+    yum_repos:
+      epel:
+        mirrorlist: 'https://mirrors.fedoraproject.org/metalink?repo=epel-8&arch=$basearch'
+        gpgkeys:
+          - https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-$releasever
+
 CONFIG:
   log_level: verbose
   type: aio
