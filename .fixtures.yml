@@ -2,9 +2,7 @@
 fixtures:
   repositories:
     haveged: https://github.com/simp/pupmod-simp-haveged
-    firewalld:
-      repo: https://github.com/simp/pupmod-voxpupuli-firewalld
-      ref: v4.1.0
+    firewalld: https://github.com/simp/pupmod-voxpupuli-firewalld
     iptables: https://github.com/simp/pupmod-simp-iptables
     selinux: https://github.com/simp/pupmod-simp-selinux
     selinux_core:
