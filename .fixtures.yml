@@ -2,9 +2,7 @@
 fixtures:
   repositories:
     haveged: https://github.com/simp/pupmod-simp-haveged
-    firewalld:
-      repo: https://github.com/simp/pupmod-voxpupuli-firewalld
-      ref: v4.1.0
+    firewalld: https://github.com/simp/pupmod-voxpupuli-firewalld
     iptables: https://github.com/simp/pupmod-simp-iptables
     selinux: https://github.com/simp/pupmod-simp-selinux
     selinux_core:
@@ -13,6 +11,7 @@ fixtures:
     simp_options: https://github.com/simp/pupmod-simp-simp_options
     simplib: https://github.com/simp/pupmod-simp-simplib
     stdlib: https://github.com/simp/puppetlabs-stdlib
+    systemd: https://github.com/simp/puppet-systemd
     vox_selinux:
       repo: https://github.com/simp/pupmod-voxpupuli-selinux
       branch: simp-master
