@@ -9,7 +9,7 @@ describe 'krb5::setting::realm' do
           facts
         end
 
-        let(:pre_condition) { 'include ::krb5' }
+        let(:pre_condition) { 'include krb5' }
 
         let(:title){ 'myrealm' }
 

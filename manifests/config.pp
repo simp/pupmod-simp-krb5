@@ -32,11 +32,11 @@ class krb5::config (
   String               $renew_lifetime           = '7d',
   Boolean              $forwardable              = true,
   Integer[0]           $clockskew                = 500,
-  Array[String]        $permitted_tgs_enctypes   = $::krb5::enctypes,
-  Array[String]        $permitted_tkt_enctypes   = $::krb5::enctypes,
-  Array[String]        $permitted_enctypes       = $::krb5::enctypes,
+  Array[String]        $permitted_tgs_enctypes   = $krb5::enctypes,
+  Array[String]        $permitted_tkt_enctypes   = $krb5::enctypes,
+  Array[String]        $permitted_enctypes       = $krb5::enctypes,
   Boolean              $puppet_exclusive_managed = true
-) inherits ::krb5 {
+) inherits krb5 {
 
   assert_private()
 
@@ -44,7 +44,7 @@ class krb5::config (
 
   $_base_config_dir = inline_template('<%= File.dirname(@config_dir) %>')
 
-  include '::krb5::config::default_settings'
+  include 'krb5::config::default_settings'
 
   # Include Directories
   file { '/etc/krb5.conf.d':

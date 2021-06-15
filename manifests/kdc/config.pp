@@ -8,9 +8,9 @@
 #
 # @example Add Your Own Custom Config Snippet
 #   class my_krb5kdc {
-#     include '::krb5::kdc'
+#     include 'krb5::kdc'
 #
-#     file { "${::krb5::kdc::config_dir}/my_snippet__custom":
+#     file { "${krb5::kdc::config_dir}/my_snippet__custom":
 #       content => "My Custom Content"
 #     }
 #
@@ -40,20 +40,20 @@ class krb5::kdc::config (
   String               $kdb5_password = simplib::passgen('kdb5kdc', { 'length' => 1024 }),
   Array[Simplib::Port] $kdc_ports     = [88, 750],
   Array[Simplib::Port] $kdc_tcp_ports = [88, 750]
-) inherits ::krb5::kdc {
+) inherits krb5::kdc {
 
   assert_private()
 
-  $_trusted_nets = getvar('::krb5::kdc::trusted_nets')
-  $_config_dir = getvar('::krb5::kdc::config_dir')
-  $_firewall = getvar('::krb5::kdc::firewall')
+  $_trusted_nets = getvar('krb5::kdc::trusted_nets')
+  $_config_dir = getvar('krb5::kdc::config_dir')
+  $_firewall = getvar('krb5::kdc::firewall')
 
   $_kdc_ports = join($kdc_ports,',')
   $_kdc_tcp_ports = join($kdc_tcp_ports,',')
   $_base_config_dir = inline_template('<%= File.dirname(@config_dir) %>')
   $_kdb5_credential_file = "${_base_config_dir}/.princ_db_creds"
 
-  if $_firewall { include '::krb5::kdc::firewall' }
+  if $_firewall { include 'krb5::kdc::firewall' }
 
   file { $_config_dir:
     ensure  => 'directory',

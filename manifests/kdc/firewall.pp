@@ -27,9 +27,9 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::kdc::firewall (
-  Array[Simplib::Port] $kdc_ports         = $::krb5::kdc::config::kdc_ports,
-  Array[Simplib::Port] $kdc_tcp_ports     = $::krb5::kdc::config::kdc_tcp_ports,
-  Simplib::Netlist     $trusted_nets      = $::krb5::kdc::config::_trusted_nets,
+  Array[Simplib::Port] $kdc_ports         = $krb5::kdc::config::kdc_ports,
+  Array[Simplib::Port] $kdc_tcp_ports     = $krb5::kdc::config::kdc_tcp_ports,
+  Simplib::Netlist     $trusted_nets      = $krb5::kdc::config::_trusted_nets,
   Boolean              $allow_kadmind     = true,
   Array[Simplib::Port] $kadmind_udp_ports = [464],
   Array[Simplib::Port] $kadmind_tcp_ports = [464, 749]

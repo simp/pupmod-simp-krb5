@@ -32,14 +32,14 @@
 #
 define krb5::setting (
   Scalar               $value,
-  Stdlib::Absolutepath $target   = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
+  Stdlib::Absolutepath $target   = pick(getvar('krb5::config::config_dir'), '/etc/krb5.conf.d'),
   String               $ensure   = 'present',
   String               $filemode = '0644',
   String               $seltype  = 'krb5_conf_t'
 ) {
 
   if !defined(Class['krb5']) {
-    fail('You must include ::krb5 before using ::krb5::setting')
+    fail('You must include krb5 before using krb5::setting')
   }
 
   if $name !~ Pattern['^.+:.+$'] {

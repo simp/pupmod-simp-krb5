@@ -53,7 +53,7 @@ define krb5::kdc::realm (
   Boolean                        $initialize                   = false,
   String                         $auto_principal               = 'puppet_auto',
   Simplib::Netlist               $trusted_nets                 = pick(
-                                                                    getvar('::krb5::kdc::trusted_nets'),
+                                                                    getvar('krb5::kdc::trusted_nets'),
                                                                     simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1']})
                                                                   ),
   Stdlib::Absolutepath           $acl_file                     = "/var/kerberos/krb5kdc/kadm5_${name}.acl",
@@ -82,7 +82,7 @@ define krb5::kdc::realm (
 ) {
 
   if !defined(Class['krb5::kdc']) {
-    fail('You must include ::krb5::kdc before using ::krb5::kdc::realm')
+    fail('You must include krb5::kdc before using krb5::kdc::realm')
   }
 
   if !empty($default_principal_flags) {

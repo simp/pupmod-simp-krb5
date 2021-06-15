@@ -1,3 +1,9 @@
+* Tue Jun 15 2021 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.2.0
+- Removed
+  - Removed support for Puppet 5
+  - Removed unnecessary use of top scope in manifests
+- Ensured support for Puppet 7 in requirements and stdlib
+
 * Thu Jan 07 2021 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.1.1
 - Removed EL6 support
 

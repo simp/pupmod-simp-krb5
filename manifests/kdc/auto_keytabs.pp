@@ -72,7 +72,7 @@ class krb5::kdc::auto_keytabs (
             Optional['services'] => Array[String]
     }]
   ]                              $hosts           = {}
-) inherits ::krb5::kdc {
+) inherits krb5::kdc {
 
   assert_private()
 

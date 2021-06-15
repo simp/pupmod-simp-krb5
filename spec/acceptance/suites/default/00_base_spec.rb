@@ -9,7 +9,7 @@ describe 'krb5 class' do
     context 'default setup' do
       install_package(host,'epel-release')
 
-      let(:manifest) { %(include '::krb5') }
+      let(:manifest) { %(include 'krb5') }
 
       it 'should work with no errors' do
         apply_manifest_on(host, manifest, :catch_failures => true)
