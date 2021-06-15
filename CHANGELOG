@@ -1,3 +1,7 @@
+* Tue Jun 15 2021 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.2.0
+- Removed support for Puppet 5
+- Ensured support for Puppet 7 in requirements and stdlib
+
 * Thu Jan 07 2021 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.1.1
 - Removed EL6 support
 
