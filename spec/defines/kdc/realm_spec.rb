@@ -31,7 +31,7 @@ describe 'krb5::kdc::realm' do
           facts
         end
 
-        let(:pre_condition) { 'include ::krb5::kdc' }
+        let(:pre_condition) { 'include krb5::kdc' }
         let(:title){ 'krbtestrealm' }
 
         context 'with catalysts disabled and initialize = false' do

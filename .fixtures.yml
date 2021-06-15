@@ -1,19 +1,19 @@
 ---
 fixtures:
   repositories:
-    haveged: https://github.com/simp/pupmod-simp-haveged
-    firewalld: https://github.com/simp/pupmod-voxpupuli-firewalld
-    iptables: https://github.com/simp/pupmod-simp-iptables
+    augeas_core: https://github.com/simp/pupmod-puppetlabs-augeas_core.git
+    haveged: https://github.com/simp/pupmod-simp-haveged.git
+    firewalld: https://github.com/simp/pupmod-voxpupuli-firewalld.git
+    iptables: https://github.com/simp/pupmod-simp-iptables.git
     selinux: https://github.com/simp/pupmod-simp-selinux
-    selinux_core:
-      repo: https://github.com/simp/pupmod-puppetlabs-selinux_core.git
-      puppet_version: ">= 6.0.0"
-    simp_options: https://github.com/simp/pupmod-simp-simp_options
-    simplib: https://github.com/simp/pupmod-simp-simplib
-    stdlib: https://github.com/simp/puppetlabs-stdlib
-    systemd: https://github.com/simp/puppet-systemd
+    selinux_core: https://github.com/simp/pupmod-puppetlabs-selinux_core.git
+    simp_firewalld: https://github.com/simp/pupmod-simp-simp_firewalld.git
+    simp_options: https://github.com/simp/pupmod-simp-simp_options.git
+    simplib: https://github.com/simp/pupmod-simp-simplib.git
+    stdlib: https://github.com/simp/puppetlabs-stdlib.git
+    systemd: https://github.com/simp/puppet-systemd.git
     vox_selinux:
-      repo: https://github.com/simp/pupmod-voxpupuli-selinux
+      repo: https://github.com/simp/pupmod-voxpupuli-selinux.git
       branch: simp-master
   symlinks:
     krb5: "#{source_dir}"

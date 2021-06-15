@@ -31,14 +31,14 @@ define krb5::setting::realm (
   Optional[String]        $v4_realm            = undef,
   Hash[String,String]     $auth_to_local_names = {},
   Optional[String]        $auth_to_local       = undef,
-  Stdlib::Absolutepath    $target              = pick(getvar('::krb5::config::config_dir'), '/etc/krb5.conf.d'),
+  Stdlib::Absolutepath    $target              = pick(getvar('krb5::config::config_dir'), '/etc/krb5.conf.d'),
   String                  $owner               = 'root',
   String                  $group               = 'root',
   String                  $mode                = '0644'
 ) {
 
   if !defined(Class['krb5']) {
-    fail('You must include ::krb5 before using ::krb5::setting::realm')
+    fail('You must include krb5 before using krb5::setting::realm')
   }
 
   $_name = krb5::munge_conf_filename($name)
