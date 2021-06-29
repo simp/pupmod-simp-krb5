@@ -5,7 +5,7 @@ fixtures:
     haveged: https://github.com/simp/pupmod-simp-haveged.git
     firewalld: https://github.com/simp/pupmod-voxpupuli-firewalld.git
     iptables: https://github.com/simp/pupmod-simp-iptables.git
-    selinux: https://github.com/simp/pupmod-simp-selinux
+    selinux: https://github.com/simp/pupmod-simp-selinux.git
     selinux_core: https://github.com/simp/pupmod-puppetlabs-selinux_core.git
     simp_firewalld: https://github.com/simp/pupmod-simp-simp_firewalld.git
     simp_options: https://github.com/simp/pupmod-simp-simp_options.git
