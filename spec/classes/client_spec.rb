@@ -7,11 +7,12 @@ describe 'krb5::client' do
   end
 
   context 'supported operating systems' do
-    on_supported_os.each do |os, facts|
+    on_supported_os.each do |os, os_facts|
       context "on #{os}" do
         let(:facts) do
-          facts[:server_facts] = server_facts_hash unless (Gem::Version.new(Puppet.version) >= Gem::Version.new('5.0.0'))
-          facts
+          # to workaround service provider issues related to masking haveged
+          # when tests are run on GitLab runners which are docker containers
+          os_facts.merge( { :haveged__rngd_enabled => false } )
         end
 
         context 'with default parameters' do
