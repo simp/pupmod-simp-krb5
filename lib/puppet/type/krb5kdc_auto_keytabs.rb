@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
-  @doc = <<-HERE
+  @doc = <<~DOC
     Auto-generates principals and keytabs on a functional KDC and outputs the
     keytabs to a directory of the user's choosing.
 
     Can optionally take a hash of hosts, with associated principal metadata,
     to be created on the KDC. Will warn if you are attempting to add a host
     that does not have a valid REALM.
-  HERE
+  DOC
 
   require 'puppet/parameter/boolean'
 
@@ -28,15 +30,15 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     end
   end
 
-  newparam(:name, :namevar => :true) do
-    desc <<-EOM
+  newparam(:name, :namevar => true) do
+    desc <<~DESC
       The output directory to which to write the keytabs
 
       If '__default__' will be set to either
       `/var/simp/environments/${environment}/site_files/krb5_files/files/keytabs` or
       `/var/kerberos/krb5kdc/generated_keytabs` depending on which target path
       exists.
-    EOM
+    DESC
 
     validate do |value|
       unless (value == '__default__') || Puppet::Util.absolute_path?(value)
@@ -49,7 +51,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
         value = '/var/kerberos/krb5kdc/generated_keytabs'
 
         if Puppet[:environment]
-          target_dir = (File.join(
+          target_dir = File.join(
             '/var',
             'simp',
             'environments',
@@ -57,8 +59,8 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
             'site_files',
             'krb5_files',
             'files',
-            'keytabs'
-          ))
+            'keytabs',
+          )
 
           if File.directory?(File.dirname(target_dir))
             value = target_dir
@@ -71,7 +73,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
   end
 
   newparam(:introspect, :boolean => true, :parent => Puppet::Parameter::Boolean) do
-    desc <<-EOM
+    desc <<~DESC
       Attempt to discover, and create, all relevant keytabs from data on the
       Puppet server.
 
@@ -84,23 +86,23 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
 
       If `$environmentpath` is not set, then `$confdir` will be substituted for
       `${environmentpath}/${environment}`
-    EOM
-    defaultto(:true)
+    DESC
+    defaultto(true)
   end
 
   newparam(:all_known, :boolean => true, :parent => Puppet::Parameter::Boolean) do
-    desc <<-EOM
+    desc <<~DESC
       Generate keytabs for any 'host/.*' entires known to the KDC.
-    EOM
-    defaultto(:false)
+    DESC
+    defaultto(false)
   end
 
   newparam(:user) do
-    desc <<-EOM
+    desc <<~DESC
       The user that should own the generated keytabs, defaults to
       '#{Puppet[:user]}' when installing into a Puppet Environment and 'root'
       otherwise.
-    EOM
+    DESC
 
     defaultto('root')
 
@@ -111,7 +113,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     end
 
     munge do |value|
-      if Puppet[:environmentpath] && (@resource[:name] =~ /^#{Puppet[:environmentpath]}/)
+      if Puppet[:environmentpath] && (@resource[:name] =~ %r{^#{Puppet[:environmentpath]}})
         value = Puppet[:user]
       end
 
@@ -120,11 +122,11 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
   end
 
   newparam(:group) do
-    desc <<-EOM
+    desc <<~DESC
       The group that should own the generated keytabs, defaults to
       '#{Puppet[:group]}' when installing into a Puppet Environment and 'root'
       otherwise.
-    EOM
+    DESC
 
     defaultto('group')
 
@@ -135,7 +137,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     end
 
     munge do |value|
-      if Puppet[:environmentpath] && (@resource[:name] =~ /^#{Puppet[:environmentpath]}/)
+      if Puppet[:environmentpath] && (@resource[:name] =~ %r{^#{Puppet[:environmentpath]}})
         value = Puppet[:group]
       end
 
@@ -144,14 +146,14 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
   end
 
   newparam(:realms, :array_matching => :all) do
-    desc <<-EOM
+    desc <<~DESC
       The realms under which the hosts should be generated
-    EOM
+    DESC
 
     defaultto(Facter.value(:domain))
 
     validate do |value|
-      unless (value.is_a?(String) || value.is_a?(Array)) || (Array(value).count{|x| !x.is_a?(String)} == 0)
+      unless (value.is_a?(String) || value.is_a?(Array)) || Array(value).count { |x| !x.is_a?(String) }.zero?
         raise(Puppet::Error, "'$realms' must be a String or Array of Strings, not '#{value.class}'")
       end
     end
@@ -162,12 +164,12 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
   end
 
   newparam(:global_services, :array_matching => :all) do
-    desc <<-EOM
+    desc <<~DESC
       The global services that should be applied to *every* auto-generated principal
-    EOM
+    DESC
 
     validate do |value|
-      unless (value.is_a?(String) || value.is_a?(Array)) || (Array(value).count{|x| !x.is_a?(String)} == 0)
+      unless (value.is_a?(String) || value.is_a?(Array)) || Array(value).count { |x| !x.is_a?(String) }.zero?
         raise(Puppet::Error, "'$global_services' must be a String or Array, not '#{value.class}'")
       end
     end
@@ -178,7 +180,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
   end
 
   newparam(:hosts) do
-    desc <<-EOM
+    desc <<~DESC
       A Hash of hosts that should be managed in the KDC.
 
       The Hash format should be as follows:
@@ -192,7 +194,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
       }
 
       If '$global_services' is set, it will be added to the list of services for each host here.
-    EOM
+    DESC
 
     validate do |value|
       unless value.is_a?(Hash)
@@ -200,15 +202,15 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
       end
 
       value.each_key do |host|
-        unless ['absent','present'].include?(value[host]['ensure'])
+        unless ['absent', 'present'].include?(value[host]['ensure'])
           raise(Puppet::Error, "'#{host} => 'ensure' must be either 'absent' or 'present'")
         end
 
-        if value[host]['realms'] && (Array(value[host]['realms']).count{|x| !x.is_a?(String)} != 0)
+        if value[host]['realms'] && (Array(value[host]['realms']).count { |x| !x.is_a?(String) } != 0)
           raise(Puppet::Error, "'#{host} => 'realms' must be an Array of Strings")
         end
 
-        if value[host]['services'] &&(Array(value[host]['services']).count{|x| !x.is_a?(String)} != 0)
+        if value[host]['services'] && (Array(value[host]['services']).count { |x| !x.is_a?(String) } != 0)
           raise(Puppet::Error, "'#{host} => 'services' must be an Array of Strings")
         end
       end
@@ -216,13 +218,13 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
 
     munge do |value|
       value.each_key do |host|
-        if value[host]['realms']
-          value[host]['realms'] = value[host]['realms'].flatten.map(&:upcase)
-        else
-          value[host]['realms'] = []
-        end
+        value[host]['realms'] = if value[host]['realms']
+                                  value[host]['realms'].flatten.map(&:upcase)
+                                else
+                                  []
+                                end
 
-        value[host]['services'].flatten! if value[host]['services']
+        value[host]['services']&.flatten!
 
         if @resource[:global_services] && !@resource[:global_services].empty?
           value[host]['services'] ||= []
@@ -237,9 +239,9 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
   end
 
   newparam(:purge, :boolean => true, :parent => Puppet::Parameter::Boolean) do
-    desc <<-EOM
+    desc <<~DESC
       Remove all unmanaged keytabs from the '$name' directory
-    EOM
-    defaultto(:true)
+    DESC
+    defaultto(true)
   end
 end

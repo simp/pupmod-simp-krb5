@@ -54,6 +54,7 @@ RSpec/NamedSubject:
   Exclude:
   - spec/classes/**/*
   - spec/defines/**/*
+  - spec/functions/**/*
 Style/BlockDelimiters:
   Description: Prefer braces for chaining. Mostly an aesthetical choice. Better to
     be consistent then.
@@ -129,6 +130,8 @@ I18n/GetText/DecorateFunctionMessage:
 I18n/GetText/DecorateStringFormattingUsingInterpolation:
   Enabled: false
 I18n/GetText/DecorateStringFormattingUsingPercent:
+  Enabled: false
+I18n/RailsI18n/DecorateString:
   Enabled: false
 Layout/EndOfLine:
   Enabled: false
