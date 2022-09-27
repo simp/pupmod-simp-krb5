@@ -2,7 +2,7 @@
 fixtures:
   repositories:
     augeas_core: https://github.com/simp/pupmod-puppetlabs-augeas_core.git
-    #haveged: https://github.com/simp/pupmod-simp-haveged.git
+    haveged: https://github.com/simp/pupmod-simp-haveged.git
     firewalld: https://github.com/simp/pupmod-voxpupuli-firewalld.git
     iptables: https://github.com/simp/pupmod-simp-iptables.git
     selinux: https://github.com/simp/pupmod-simp-selinux.git
@@ -17,4 +17,3 @@ fixtures:
       branch: simp-master
   symlinks:
     krb5: "#{source_dir}"
-    haveged: "#{source_dir}/../haveged"
