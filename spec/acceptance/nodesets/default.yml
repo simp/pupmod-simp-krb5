@@ -19,7 +19,7 @@ HOSTS:
     roles:
       - client
     platform: el-8-x86_64
-    box: centos/stream8
+    box: generic/centos8s
     hypervisor: <%= hypervisor %>
 
 CONFIG:
