@@ -6,20 +6,20 @@
   end
 -%>
 HOSTS:
-  oel7.test:
+  amzn.test:
     roles:
       - default
       - master
       - client
     platform: el-7-x86_64
-    box: generic/oracle7
+    box: gbailey/amzn2
     hypervisor: <%= hypervisor %>
 
-  el8.test:
+  amzn-client.test:
     roles:
       - client
-    platform: el-8-x86_64
-    box: generic/oracle8
+    platform: el-7-x86_64
+    box: gbailey/amzn2
     hypervisor: <%= hypervisor %>
 
 CONFIG:

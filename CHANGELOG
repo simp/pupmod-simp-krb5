@@ -1,3 +1,10 @@
+* Mon Sep 26 2022 Trevor Vaughan <trevor@sicura.us> - 7.3.0
+- Added:
+  - The module now supports Amazon Linux 2
+- Changed:
+  - Added a `.rubocop.yml`
+  - Rubocop'd the Ruby
+
 * Tue Jun 15 2021 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.2.0
 - Removed
   - Removed support for Puppet 5

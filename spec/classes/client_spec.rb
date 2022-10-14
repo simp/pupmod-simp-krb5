@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe 'krb5::client' do
@@ -6,17 +8,17 @@ describe 'krb5::client' do
     it { is_expected.to create_class('krb5') }
   end
 
-  context 'supported operating systems' do
+  context 'with supported operating systems' do
     on_supported_os.each do |os, os_facts|
       context "on #{os}" do
         let(:facts) do
           # to workaround service provider issues related to masking haveged
           # when tests are run on GitLab runners which are docker containers
-          os_facts.merge( { :haveged__rngd_enabled => false } )
+          os_facts.merge({ :haveged__rngd_enabled => false })
         end
 
         context 'with default parameters' do
-          it_should_behave_like 'common config'
+          it_behaves_like 'common config'
 
           # Based on the Hiera default.yaml
           it { is_expected.to create_krb5__setting__realm(facts[:domain]).with_admin_server(facts[:fqdn]) }
@@ -27,29 +29,31 @@ describe 'krb5::client' do
             'include krb5::kdc'
           end
 
-          it_should_behave_like 'common config'
+          it_behaves_like 'common config'
 
           # Based on the Hiera default.yaml
           it { is_expected.to create_krb5__setting__realm(facts[:domain]).with_admin_server(facts[:fqdn]) }
         end
 
         context 'when passed a custom set of realms' do
-          let(:params) {{
-            :realms => {
-              'realm.one' => {
-                'admin_server' => 'admin.server.one'
-              },
-              'realm.two' => {
-                'admin_server' => 'admin.server.two',
-                'kdc'          => 'kdc.server.two'
+          let(:params) do
+            {
+              :realms => {
+                'realm.one' => {
+                  'admin_server' => 'admin.server.one'
+                },
+                'realm.two' => {
+                  'admin_server' => 'admin.server.two',
+                  'kdc' => 'kdc.server.two'
+                }
               }
             }
-          }}
+          end
 
-          it_should_behave_like 'common config'
+          it_behaves_like 'common config'
 
           # Based on the Hiera default.yaml
-          it { is_expected.to_not create_krb5__setting__realm(facts[:domain]).with_admin_server(facts[:fqdn]) }
+          it { is_expected.not_to create_krb5__setting__realm(facts[:domain]).with_admin_server(facts[:fqdn]) }
 
           it { is_expected.to create_krb5__setting__realm('realm.one').with_admin_server('admin.server.one') }
 

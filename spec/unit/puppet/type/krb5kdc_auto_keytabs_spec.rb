@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
@@ -6,128 +8,128 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
       Puppet::Type.type(:krb5kdc_auto_keytabs).new(:name => '/var/kerberos/krb5kdc/auto_keytabs')
     end
 
-    it 'should successfully activate' do
-      expect { krb5kdc_auto_keytabs }.to_not raise_error
+    it 'successfullies activate' do
+      expect { krb5kdc_auto_keytabs }.not_to raise_error
     end
 
     [:user, :group].each do |var|
-      it "should require a string for the #{var}" do
+      it "requires a string for the #{var}" do
         expect {
           Puppet::Type.type(:krb5kdc_auto_keytabs).new(
             :name => '/var/kerberos/krb5kdc/auto_keytabs',
-            var   => 'bob'
+            var => 'bob',
           )
-        }.to_not raise_error
+        }.not_to raise_error
 
         expect {
           Puppet::Type.type(:krb5kdc_auto_keytabs).new(
             :name => '/var/kerberos/krb5kdc/auto_keytabs',
-            var   => ['bob']
+            var => ['bob'],
           )
-        }.to raise_error(/must be a String/)
+        }.to raise_error(%r{must be a String})
       end
     end
 
     [:realms, :global_services].each do |var|
-      it "should require a string or array for the #{var}" do
+      it "requires a string or array for the #{var}" do
         expect {
           Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-            :name  => '/var/kerberos/krb5kdc/auto_keytabs',
-            var    => 'bob'
+            :name => '/var/kerberos/krb5kdc/auto_keytabs',
+            var => 'bob',
           )
-        }.to_not raise_error
+        }.not_to raise_error
 
         expect {
           Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-            :name  => '/var/kerberos/krb5kdc/auto_keytabs',
-            var    => ['bob']
+            :name => '/var/kerberos/krb5kdc/auto_keytabs',
+            var => ['bob'],
           )
-        }.to_not raise_error
+        }.not_to raise_error
 
         expect {
           Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-            :name  => '/var/kerberos/krb5kdc/auto_keytabs',
-            var    => {'bob' => 'baz'}
+            :name => '/var/kerberos/krb5kdc/auto_keytabs',
+            var => { 'bob' => 'baz' },
           )
-        }.to raise_error(/must be a String or Array/)
+        }.to raise_error(%r{must be a String or Array})
       end
     end
 
-    it 'should auto-upcase all realms' do
+    it 'auto-upcases all realms' do
       expect(
         Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-          :name   => '/var/kerberos/krb5kdc/auto_keytabs',
-          :realms => ['realm','ReAlm2','REALM3']
-        )[:realms]
-      ).to eql(['REALM','REALM2','REALM3'])
+          :name => '/var/kerberos/krb5kdc/auto_keytabs',
+          :realms => ['realm', 'ReAlm2', 'REALM3'],
+        )[:realms],
+      ).to eql(['REALM', 'REALM2', 'REALM3'])
     end
 
-    it "should require a hash for the :hosts" do
+    it 'requires a hash for the :hosts' do
       expect {
         Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-          :name  => '/var/kerberos/krb5kdc/auto_keytabs',
-          :hosts =>  {
+          :name => '/var/kerberos/krb5kdc/auto_keytabs',
+          :hosts => {
             'foo.bar.baz' => {
               'ensure' => 'present'
             }
-          }
+          },
         )
-      }.to_not raise_error
+      }.not_to raise_error
     end
 
-    it "should require a valid ensure value for the :hosts hash" do
+    it 'requires a valid ensure value for the :hosts hash' do
       expect {
         Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-          :name  => '/var/kerberos/krb5kdc/auto_keytabs',
-          :hosts =>  {
+          :name => '/var/kerberos/krb5kdc/auto_keytabs',
+          :hosts => {
             'foo.bar.baz' => {
               'ensure' => 'garbage'
             }
-          }
+          },
         )
-      }.to raise_error(/must be/)
+      }.to raise_error(%r{must be})
     end
 
-    it "should require a valid realms value for the :hosts hash" do
+    it 'requires a valid realms value for the :hosts hash' do
       expect {
         Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-          :name  => '/var/kerberos/krb5kdc/auto_keytabs',
-          :hosts =>  {
+          :name => '/var/kerberos/krb5kdc/auto_keytabs',
+          :hosts => {
             'foo.bar.baz' => {
               'ensure' => 'present',
-              'realms' => ['FOO','BAR']
+              'realms' => ['FOO', 'BAR']
             }
-          }
+          },
         )
-      }.to_not raise_error
+      }.not_to raise_error
     end
 
-    it "should require a valid services value for the :hosts hash" do
+    it 'requires a valid services value for the :hosts hash' do
       expect {
         Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-          :name  => '/var/kerberos/krb5kdc/auto_keytabs',
-          :hosts =>  {
+          :name => '/var/kerberos/krb5kdc/auto_keytabs',
+          :hosts => {
             'foo.bar.baz' => {
               'ensure' => 'present',
-              'services' => ['nfs','dns']
+              'services' => ['nfs', 'dns']
             }
-          }
+          },
         )
-      }.to_not raise_error
+      }.not_to raise_error
     end
 
-    it "should upcase all realms in the :hosts hash" do
-     expect(
+    it 'upcases all realms in the :hosts hash' do
+      expect(
         Puppet::Type.type(:krb5kdc_auto_keytabs).new(
-          :name  => '/var/kerberos/krb5kdc/auto_keytabs',
-          :hosts =>  {
+          :name => '/var/kerberos/krb5kdc/auto_keytabs',
+          :hosts => {
             'foo.bar.baz' => {
               'ensure' => 'present',
-              'realms' => ['realm','ReAlm2','REALM3']
+              'realms' => ['realm', 'ReAlm2', 'REALM3']
             }
-          }
-        )[:hosts]['foo.bar.baz']['realms']
-      ).to eql(['REALM','REALM2','REALM3'])
+          },
+        )[:hosts]['foo.bar.baz']['realms'],
+      ).to eql(['REALM', 'REALM2', 'REALM3'])
     end
   end
 
@@ -136,12 +138,12 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
       Puppet::Type.type(:krb5kdc_auto_keytabs).new(:name => '__default__')
     end
 
-    it 'should successfully activate' do
-      expect { krb5kdc_auto_keytabs }.to_not raise_error
+    it 'successfullies activate' do
+      expect { krb5kdc_auto_keytabs }.not_to raise_error
     end
 
     auto_dir = '/var/kerberos/krb5kdc/generated_keytabs'
-    it "should translate __default__ to #{auto_dir}" do
+    it "translates __default__ to #{auto_dir}" do
       expect(krb5kdc_auto_keytabs[:name]).to eql(auto_dir)
     end
   end
