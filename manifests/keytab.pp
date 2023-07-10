@@ -17,7 +17,7 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::keytab (
-  $keytab_source = "puppet:///modules/krb5_files/keytabs/${facts['fqdn']}",
+  $keytab_source = "puppet:///modules/krb5_files/keytabs/${facts['networking']['fqdn']}",
   $owner         = 'root',
   $group         = 'root',
   $mode          = '0400'

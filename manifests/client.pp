@@ -27,7 +27,7 @@ class krb5::client (
   # There's a possibility that the krb5::kdc class has already created the
   # default one and you can only declare one realm with a given name.
 
-  if getvar('krb5::kdc::auto_initialize') and (getvar('krb5::kdc::auto_realm') == $facts['domain']) {
+  if getvar('krb5::kdc::auto_initialize') and (getvar('krb5::kdc::auto_realm') == $facts['networking']['domain']) {
     $_use_default = false
   }
   else {
@@ -42,7 +42,7 @@ class krb5::client (
     }
 
     $_realms = {
-      $facts['domain'] => {
+      $facts['networking']['domain'] => {
         admin_server => $_default_kdc
       }
     }
