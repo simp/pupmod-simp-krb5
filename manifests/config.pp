@@ -26,7 +26,7 @@
 class krb5::config (
   Stdlib::Absolutepath $config_dir               = '/etc/krb5.conf.simp.d',
   String               $default_realm            = inline_template('<%= @domain.upcase %>'),
-  Array[String]        $realm_domains            = [ ".${facts['domain']}", $facts['domain'] ],
+  Array[String]        $realm_domains            = [ ".${facts['networking']['domain']}", $facts['networking']['domain'] ],
   Boolean              $dns_lookup_realm         = false,
   Boolean              $dns_lookup_kdc           = true,
   String               $renew_lifetime           = '7d',

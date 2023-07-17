@@ -63,7 +63,7 @@ class krb5::kdc::auto_keytabs (
   Boolean                        $all_known       = false,
   String                         $user            = 'root',
   String                         $group           = 'puppet',
-  String                         $realms          = simplib::lookup('krb5::kdc::auto_realm', { 'default_value' => $facts['domain'] }),
+  String                         $realms          = simplib::lookup('krb5::kdc::auto_realm', { 'default_value' => $facts['networking']['domain'] }),
   Array[String]                  $global_services = [],
   Boolean                        $purge           = true,
   Hash[String,

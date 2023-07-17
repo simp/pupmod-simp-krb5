@@ -1,3 +1,6 @@
+* Mon Jun 12 2023 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.4.0
+- Add RockyLinux 8 support
+
 * Mon Sep 26 2022 Trevor Vaughan <trevor@sicura.us> - 7.3.0
 - Added:
   - The module now supports Amazon Linux 2

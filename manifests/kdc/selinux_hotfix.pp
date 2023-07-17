@@ -7,7 +7,7 @@
 class krb5::kdc::selinux_hotfix {
   assert_private()
 
-  if $facts['selinux_current_mode'] and ($facts['selinux_current_mode'] != 'disabled') {
+  if $facts['os']['selinux']['current_mode'] and ($facts['os']['selinux']['current_mode'] != 'disabled') {
     simplib::assert_optional_dependency($module_name, 'vox_selinux')
 
     $_config_dir = $krb5::kdc::config_dir

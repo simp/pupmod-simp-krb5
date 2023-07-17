@@ -72,7 +72,7 @@ class krb5::kdc (
   Boolean              $firewall                   = $krb5::firewall,
   Boolean              $haveged                    = $krb5::haveged,
   Boolean              $auto_initialize            = true,
-  String               $auto_realm                 = $facts['domain'],
+  String               $auto_realm                 = $facts['networking']['domain'],
   String               $auto_management_principal  = 'puppet_auto',
   Boolean              $auto_generate_host_keytabs = true
 ) inherits krb5 {
@@ -107,7 +107,7 @@ class krb5::kdc (
 
     if !defined(Krb5::Setting::Realm[$auto_realm]) {
       krb5::setting::realm { $auto_realm:
-        admin_server => $facts['fqdn']
+        admin_server => $facts['networking']['fqdn']
       }
     }
 
