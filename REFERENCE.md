@@ -7,25 +7,25 @@
 ### Classes
 
 * [`krb5`](#krb5): Kerberos 5 management and manipulation
-* [`krb5::client`](#krb5client): A client class that will connect with the given KDC
-* [`krb5::config`](#krb5config): **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**  Basic configuration of the MIT Kerberos 
-* [`krb5::config::default_settings`](#krb5configdefault_settings): Default System Settings
-* [`krb5::install`](#krb5install): Install the MIT Kerberos client
-* [`krb5::kdc`](#krb5kdc): The necessary structure to manage the Kerberos 5 KDC on a given system.
-* [`krb5::kdc::auto_keytabs`](#krb5kdcauto_keytabs): Provides a mechanism for auto-generating keytabs on the KDC as well as provisioning those keytabs for distribution via Puppet if possible.
-* [`krb5::kdc::config`](#krb5kdcconfig): Provides the necessary structure to manage the Kerberos 5 KDC on a given system.
-* [`krb5::kdc::firewall`](#krb5kdcfirewall): Set up the firewall for the KDC
-* [`krb5::kdc::install`](#krb5kdcinstall): Install the krb5kdc packages
-* [`krb5::kdc::selinux_hotfix`](#krb5kdcselinux_hotfix): This class provides a hotfix for a broken SELinux policy in EL7
-* [`krb5::kdc::service`](#krb5kdcservice): Manage the KRB5 services
-* [`krb5::keytab`](#krb5keytab): Distribute Kerberos keytabs in a sane manner
+* [`krb5::client`](#krb5--client): A client class that will connect with the given KDC
+* [`krb5::config`](#krb5--config): **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**  Basic configuration of the MIT Kerberos 
+* [`krb5::config::default_settings`](#krb5--config--default_settings): Default System Settings
+* [`krb5::install`](#krb5--install): Install the MIT Kerberos client
+* [`krb5::kdc`](#krb5--kdc): The necessary structure to manage the Kerberos 5 KDC on a given system.
+* [`krb5::kdc::auto_keytabs`](#krb5--kdc--auto_keytabs): Provides a mechanism for auto-generating keytabs on the KDC as well as provisioning those keytabs for distribution via Puppet if possible.
+* [`krb5::kdc::config`](#krb5--kdc--config): Provides the necessary structure to manage the Kerberos 5 KDC on a given system.
+* [`krb5::kdc::firewall`](#krb5--kdc--firewall): Set up the firewall for the KDC
+* [`krb5::kdc::install`](#krb5--kdc--install): Install the krb5kdc packages
+* [`krb5::kdc::selinux_hotfix`](#krb5--kdc--selinux_hotfix): This class provides a hotfix for a broken SELinux policy in EL7
+* [`krb5::kdc::service`](#krb5--kdc--service): Manage the KRB5 services
+* [`krb5::keytab`](#krb5--keytab): Distribute Kerberos keytabs in a sane manner
 
 ### Defined types
 
-* [`krb5::kdc::realm`](#krb5kdcrealm): Allows you to add a realm to the ``[realms]`` section of ``/var/kerberos/krb5kdc/kdc.conf``.
-* [`krb5::setting`](#krb5setting): Allows you to set individual configuration elements in ``/etc/krb5.conf``.
-* [`krb5::setting::domain_realm`](#krb5settingdomain_realm): Allows you to configure individual domain => realm mappings.
-* [`krb5::setting::realm`](#krb5settingrealm): Allows you to add a realm to the ``[realms]`` section of ``/etc/krb5.conf``.
+* [`krb5::kdc::realm`](#krb5--kdc--realm): Allows you to add a realm to the ``[realms]`` section of ``/var/kerberos/krb5kdc/kdc.conf``.
+* [`krb5::setting`](#krb5--setting): Allows you to set individual configuration elements in ``/etc/krb5.conf``.
+* [`krb5::setting::domain_realm`](#krb5--setting--domain_realm): Allows you to configure individual domain => realm mappings.
+* [`krb5::setting::realm`](#krb5--setting--realm): Allows you to add a realm to the ``[realms]`` section of ``/etc/krb5.conf``.
 
 ### Resource types
 
@@ -34,8 +34,8 @@
 
 ### Functions
 
-* [`krb5::munge_conf_filename`](#krb5munge_conf_filename): Returns a string that is safe to use as a filename for including in  krb5 configuration files.
-* [`krb5::validate_time_duration`](#krb5validate_time_duration): Validates that the passed string is a valid krb5 time duration per http://web.mit.edu/kerberos/krb5-1.13/doc/basic/date_format.html#duration.
+* [`krb5::munge_conf_filename`](#krb5--munge_conf_filename): Returns a string that is safe to use as a filename for including in  krb5 configuration files.
+* [`krb5::validate_time_duration`](#krb5--validate_time_duration): Validates that the passed string is a valid krb5 time duration per http://web.mit.edu/kerberos/krb5-1.13/doc/basic/date_format.html#duration.
 
 ## Classes
 
@@ -51,12 +51,12 @@ separate directory and all files in that directory are included.
 
 The following parameters are available in the `krb5` class:
 
-* [`ldap`](#ldap)
-* [`firewall`](#firewall)
-* [`haveged`](#haveged)
-* [`enctypes`](#enctypes)
+* [`ldap`](#-krb5--ldap)
+* [`firewall`](#-krb5--firewall)
+* [`haveged`](#-krb5--haveged)
+* [`enctypes`](#-krb5--enctypes)
 
-##### <a name="ldap"></a>`ldap`
+##### <a name="-krb5--ldap"></a>`ldap`
 
 Data type: `Boolean`
 
@@ -66,7 +66,7 @@ Configure the system to incorporate LDAP components
 
 Default value: `simplib::lookup('simp_options::ldap', { 'default_value' => false })`
 
-##### <a name="firewall"></a>`firewall`
+##### <a name="-krb5--firewall"></a>`firewall`
 
 Data type: `Boolean`
 
@@ -74,7 +74,7 @@ Use the SIMP iptables module
 
 Default value: `simplib::lookup('simp_options::firewall', { 'default_value' => false })`
 
-##### <a name="haveged"></a>`haveged`
+##### <a name="-krb5--haveged"></a>`haveged`
 
 Data type: `Boolean`
 
@@ -82,7 +82,7 @@ Use the SIMP haveged module
 
 Default value: `simplib::lookup('simp_options::haveged', { 'default_value' => true })`
 
-##### <a name="enctypes"></a>`enctypes`
+##### <a name="-krb5--enctypes"></a>`enctypes`
 
 Data type: `Array[String]`
 
@@ -90,7 +90,7 @@ An Array of default permitted encryption types
 
 Default value: `[ 'aes256-cts-hmac-sha1-96', 'aes128-cts-hmac-sha1-96' ]`
 
-### <a name="krb5client"></a>`krb5::client`
+### <a name="krb5--client"></a>`krb5::client`
 
 By default, this is set up to connect with the KDC that would be configured
 if you use the default options.
@@ -99,17 +99,21 @@ if you use the default options.
 
 The following parameters are available in the `krb5::client` class:
 
-* [`realms`](#realms)
+* [`realms`](#-krb5--client--realms)
 
-##### <a name="realms"></a>`realms`
+##### <a name="-krb5--client--realms"></a>`realms`
 
-Data type: `Hash[
+Data type:
+
+```puppet
+Hash[
     String,
     Struct[{
       admin_server  => Simplib::Host,
       Optional[kdc] => Simplib::Host
     }]
-  ]`
+  ]
+```
 
 A Hash of Kerberos Realms that provide a Realm paired with an Admin Server
 and a KDC
@@ -120,7 +124,7 @@ and a KDC
 
 Default value: `{}`
 
-### <a name="krb5config"></a>`krb5::config`
+### <a name="krb5--config"></a>`krb5::config`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
@@ -130,20 +134,20 @@ Basic configuration of the MIT Kerberos client
 
 The following parameters are available in the `krb5::config` class:
 
-* [`config_dir`](#config_dir)
-* [`default_realm`](#default_realm)
-* [`realm_domains`](#realm_domains)
-* [`dns_lookup_realm`](#dns_lookup_realm)
-* [`dns_lookup_kdc`](#dns_lookup_kdc)
-* [`renew_lifetime`](#renew_lifetime)
-* [`forwardable`](#forwardable)
-* [`clockskew`](#clockskew)
-* [`permitted_tgs_enctypes`](#permitted_tgs_enctypes)
-* [`permitted_tkt_enctypes`](#permitted_tkt_enctypes)
-* [`permitted_enctypes`](#permitted_enctypes)
-* [`puppet_exclusive_managed`](#puppet_exclusive_managed)
+* [`config_dir`](#-krb5--config--config_dir)
+* [`default_realm`](#-krb5--config--default_realm)
+* [`realm_domains`](#-krb5--config--realm_domains)
+* [`dns_lookup_realm`](#-krb5--config--dns_lookup_realm)
+* [`dns_lookup_kdc`](#-krb5--config--dns_lookup_kdc)
+* [`renew_lifetime`](#-krb5--config--renew_lifetime)
+* [`forwardable`](#-krb5--config--forwardable)
+* [`clockskew`](#-krb5--config--clockskew)
+* [`permitted_tgs_enctypes`](#-krb5--config--permitted_tgs_enctypes)
+* [`permitted_tkt_enctypes`](#-krb5--config--permitted_tkt_enctypes)
+* [`permitted_enctypes`](#-krb5--config--permitted_enctypes)
+* [`puppet_exclusive_managed`](#-krb5--config--puppet_exclusive_managed)
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-krb5--config--config_dir"></a>`config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -151,7 +155,7 @@ The path to the Puppet managed config files.
 
 Default value: `'/etc/krb5.conf.simp.d'`
 
-##### <a name="default_realm"></a>`default_realm`
+##### <a name="-krb5--config--default_realm"></a>`default_realm`
 
 Data type: `String`
 
@@ -159,32 +163,32 @@ Default realm to which to bind.
 
 Default value: `inline_template('<%= @domain.upcase %>')`
 
-##### <a name="realm_domains"></a>`realm_domains`
+##### <a name="-krb5--config--realm_domains"></a>`realm_domains`
 
 Data type: `Array[String]`
 
 Array of domains bound to the default realm set
 in $default_realm.
 
-Default value: `[ ".${facts['domain']}", $facts['domain'] ]`
+Default value: `[ ".${facts['networking']['domain']}", $facts['networking']['domain'] ]`
 
-##### <a name="dns_lookup_realm"></a>`dns_lookup_realm`
+##### <a name="-krb5--config--dns_lookup_realm"></a>`dns_lookup_realm`
 
 Data type: `Boolean`
 
 Use DNS TXT records to lookup the realm.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="dns_lookup_kdc"></a>`dns_lookup_kdc`
+##### <a name="-krb5--config--dns_lookup_kdc"></a>`dns_lookup_kdc`
 
 Data type: `Boolean`
 
 Use DNS SRV records to lookup the KDC.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="renew_lifetime"></a>`renew_lifetime`
+##### <a name="-krb5--config--renew_lifetime"></a>`renew_lifetime`
 
 Data type: `String`
 
@@ -194,16 +198,16 @@ tickets. Should be a valid krb5 Time Duration string.
 
 Default value: `'7d'`
 
-##### <a name="forwardable"></a>`forwardable`
+##### <a name="-krb5--config--forwardable"></a>`forwardable`
 
 Data type: `Boolean`
 
 Whether or not to make initial tickets
 forwardable by default. This is needed for SSH GSSAPI.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="clockskew"></a>`clockskew`
+##### <a name="-krb5--config--clockskew"></a>`clockskew`
 
 Data type: `Integer[0]`
 
@@ -212,7 +216,7 @@ before assuming that a message is invalid.
 
 Default value: `500`
 
-##### <a name="permitted_tgs_enctypes"></a>`permitted_tgs_enctypes`
+##### <a name="-krb5--config--permitted_tgs_enctypes"></a>`permitted_tgs_enctypes`
 
 Data type: `Array[String]`
 
@@ -220,7 +224,7 @@ Supported encryption types reported by the KDC.
 
 Default value: `$krb5::enctypes`
 
-##### <a name="permitted_tkt_enctypes"></a>`permitted_tkt_enctypes`
+##### <a name="-krb5--config--permitted_tkt_enctypes"></a>`permitted_tkt_enctypes`
 
 Data type: `Array[String]`
 
@@ -228,7 +232,7 @@ Permitted client encryption types.
 
 Default value: `$krb5::enctypes`
 
-##### <a name="permitted_enctypes"></a>`permitted_enctypes`
+##### <a name="-krb5--config--permitted_enctypes"></a>`permitted_enctypes`
 
 Data type: `Array[String]`
 
@@ -236,20 +240,20 @@ Permitted session key encryption types.
 
 Default value: `$krb5::enctypes`
 
-##### <a name="puppet_exclusive_managed"></a>`puppet_exclusive_managed`
+##### <a name="-krb5--config--puppet_exclusive_managed"></a>`puppet_exclusive_managed`
 
 Data type: `Boolean`
 
 Set to false to allow users to add files
 to the /etc/krb5.conf.d directory manually.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="krb5configdefault_settings"></a>`krb5::config::default_settings`
+### <a name="krb5--config--default_settings"></a>`krb5::config::default_settings`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
-### <a name="krb5install"></a>`krb5::install`
+### <a name="krb5--install"></a>`krb5::install`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
@@ -257,11 +261,11 @@ Default value: ``true``
 
 The following parameters are available in the `krb5::install` class:
 
-* [`packages`](#packages)
-* [`ensure`](#ensure)
-* [`haveged`](#haveged)
+* [`packages`](#-krb5--install--packages)
+* [`ensure`](#-krb5--install--ensure)
+* [`haveged`](#-krb5--install--haveged)
 
-##### <a name="packages"></a>`packages`
+##### <a name="-krb5--install--packages"></a>`packages`
 
 Data type: `Array[String[1]]`
 
@@ -269,7 +273,7 @@ The list of pakages to install
 
 * Provided by module data
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-krb5--install--ensure"></a>`ensure`
 
 Data type: `String[1]`
 
@@ -279,7 +283,7 @@ The package state to ensure
 
 Default value: `simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })`
 
-##### <a name="haveged"></a>`haveged`
+##### <a name="-krb5--install--haveged"></a>`haveged`
 
 Data type: `Boolean`
 
@@ -287,7 +291,7 @@ Include ``haveged`` for entropy generation.
 
 Default value: `$krb5::haveged`
 
-### <a name="krb5kdc"></a>`krb5::kdc`
+### <a name="krb5--kdc"></a>`krb5::kdc`
 
 The variables used here can be found in ``kdc.conf(5)``.
 
@@ -314,17 +318,17 @@ class my_krb5kdc {
 
 The following parameters are available in the `krb5::kdc` class:
 
-* [`trusted_nets`](#trusted_nets)
-* [`config_dir`](#config_dir)
-* [`ldap`](#ldap)
-* [`firewall`](#firewall)
-* [`haveged`](#haveged)
-* [`auto_initialize`](#auto_initialize)
-* [`auto_realm`](#auto_realm)
-* [`auto_management_principal`](#auto_management_principal)
-* [`auto_generate_host_keytabs`](#auto_generate_host_keytabs)
+* [`trusted_nets`](#-krb5--kdc--trusted_nets)
+* [`config_dir`](#-krb5--kdc--config_dir)
+* [`ldap`](#-krb5--kdc--ldap)
+* [`firewall`](#-krb5--kdc--firewall)
+* [`haveged`](#-krb5--kdc--haveged)
+* [`auto_initialize`](#-krb5--kdc--auto_initialize)
+* [`auto_realm`](#-krb5--kdc--auto_realm)
+* [`auto_management_principal`](#-krb5--kdc--auto_management_principal)
+* [`auto_generate_host_keytabs`](#-krb5--kdc--auto_generate_host_keytabs)
 
-##### <a name="trusted_nets"></a>`trusted_nets`
+##### <a name="-krb5--kdc--trusted_nets"></a>`trusted_nets`
 
 Data type: `Simplib::Netlist`
 
@@ -334,7 +338,7 @@ settings.
 
 Default value: `simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1', '::1'] })`
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-krb5--kdc--config_dir"></a>`config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -342,7 +346,7 @@ The path to the Puppet managed config files.
 
 Default value: `'/var/kerberos/krb5kdc/kdc.conf.simp.d'`
 
-##### <a name="ldap"></a>`ldap`
+##### <a name="-krb5--kdc--ldap"></a>`ldap`
 
 Data type: `Boolean`
 
@@ -352,7 +356,7 @@ components.
 
 Default value: `$krb5::ldap`
 
-##### <a name="firewall"></a>`firewall`
+##### <a name="-krb5--kdc--firewall"></a>`firewall`
 
 Data type: `Boolean`
 
@@ -360,7 +364,7 @@ If set, use the SIMP iptables module.
 
 Default value: `$krb5::firewall`
 
-##### <a name="haveged"></a>`haveged`
+##### <a name="-krb5--kdc--haveged"></a>`haveged`
 
 Data type: `Boolean`
 
@@ -368,7 +372,7 @@ If set, enable the HAVEGE daemon for entropy
 
 Default value: `$krb5::haveged`
 
-##### <a name="auto_initialize"></a>`auto_initialize`
+##### <a name="-krb5--kdc--auto_initialize"></a>`auto_initialize`
 
 Data type: `Boolean`
 
@@ -380,18 +384,18 @@ necessary work to set up the environment for production.
   If you select this, this *will* automatically initialize your Kerberos
   database and prepare your system to run.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="auto_realm"></a>`auto_realm`
+##### <a name="-krb5--kdc--auto_realm"></a>`auto_realm`
 
 Data type: `String`
 
 If $auto_initialize is set, then use this string
 as your default Kerberos Realm.
 
-Default value: `$facts['domain']`
+Default value: `$facts['networking']['domain']`
 
-##### <a name="auto_management_principal"></a>`auto_management_principal`
+##### <a name="-krb5--kdc--auto_management_principal"></a>`auto_management_principal`
 
 Data type: `String`
 
@@ -400,7 +404,7 @@ use this string as the primary Kerberos principal name for the default Realm.
 
 Default value: `'puppet_auto'`
 
-##### <a name="auto_generate_host_keytabs"></a>`auto_generate_host_keytabs`
+##### <a name="-krb5--kdc--auto_generate_host_keytabs"></a>`auto_generate_host_keytabs`
 
 Data type: `Boolean`
 
@@ -431,9 +435,9 @@ hosts that Puppet currently knows about.
     path ~ ^/file_(metadata|content)/modules/krb5_files/([^/]+)
     allow $2
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="krb5kdcauto_keytabs"></a>`krb5::kdc::auto_keytabs`
+### <a name="krb5--kdc--auto_keytabs"></a>`krb5::kdc::auto_keytabs`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
@@ -464,17 +468,17 @@ in one of the following two directories:
 
 The following parameters are available in the `krb5::kdc::auto_keytabs` class:
 
-* [`introspect`](#introspect)
-* [`output_dir`](#output_dir)
-* [`all_known`](#all_known)
-* [`user`](#user)
-* [`group`](#group)
-* [`realms`](#realms)
-* [`global_services`](#global_services)
-* [`hosts`](#hosts)
-* [`purge`](#purge)
+* [`introspect`](#-krb5--kdc--auto_keytabs--introspect)
+* [`output_dir`](#-krb5--kdc--auto_keytabs--output_dir)
+* [`all_known`](#-krb5--kdc--auto_keytabs--all_known)
+* [`user`](#-krb5--kdc--auto_keytabs--user)
+* [`group`](#-krb5--kdc--auto_keytabs--group)
+* [`realms`](#-krb5--kdc--auto_keytabs--realms)
+* [`global_services`](#-krb5--kdc--auto_keytabs--global_services)
+* [`hosts`](#-krb5--kdc--auto_keytabs--hosts)
+* [`purge`](#-krb5--kdc--auto_keytabs--purge)
 
-##### <a name="introspect"></a>`introspect`
+##### <a name="-krb5--kdc--auto_keytabs--introspect"></a>`introspect`
 
 Data type: `Boolean`
 
@@ -482,27 +486,27 @@ If set, attempt to discover, and create all
 relevant keytabs from data on the Puppet server.
 @note This has no effect if you aren't running on a Puppet server.
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="output_dir"></a>`output_dir`
+##### <a name="-krb5--kdc--auto_keytabs--output_dir"></a>`output_dir`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 The directory into which to install the
 keytabs.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="all_known"></a>`all_known`
+##### <a name="-krb5--kdc--auto_keytabs--all_known"></a>`all_known`
 
 Data type: `Boolean`
 
 If set, generate keytabs for any 'host/.*' entries
 known to the KDC.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="user"></a>`user`
+##### <a name="-krb5--kdc--auto_keytabs--user"></a>`user`
 
 Data type: `String`
 
@@ -510,7 +514,7 @@ The user that should own the keytab files.
 
 Default value: `'root'`
 
-##### <a name="group"></a>`group`
+##### <a name="-krb5--kdc--auto_keytabs--group"></a>`group`
 
 Data type: `String`
 
@@ -518,16 +522,16 @@ The group that should own the keytab files.
 
 Default value: `'puppet'`
 
-##### <a name="realms"></a>`realms`
+##### <a name="-krb5--kdc--auto_keytabs--realms"></a>`realms`
 
 Data type: `String`
 
 The REALMs into which the hosts should be added unless
 otherwise specified in the `$hosts` Hash. Will be auto-upcased.
 
-Default value: `simplib::lookup('krb5::kdc::auto_realm', { 'default_value' => $facts['domain'] })`
+Default value: `simplib::lookup('krb5::kdc::auto_realm', { 'default_value' => $facts['networking']['domain'] })`
 
-##### <a name="global_services"></a>`global_services`
+##### <a name="-krb5--kdc--auto_keytabs--global_services"></a>`global_services`
 
 Data type: `Array[String]`
 
@@ -536,14 +540,18 @@ should be added to *all* hosts.
 
 Default value: `[]`
 
-##### <a name="hosts"></a>`hosts`
+##### <a name="-krb5--kdc--auto_keytabs--hosts"></a>`hosts`
 
-Data type: `Hash[String,
+Data type:
+
+```puppet
+Hash[String,
     Struct[{'ensure'             => Enum['absent','present'],
             Optional['realms']   => Array[String],
             Optional['services'] => Array[String]
     }]
-  ]`
+  ]
+```
 
 A Hash of hosts for which keytabs should be
 generated, and kept in the KDC by Puppet.
@@ -562,16 +570,16 @@ resources in your catalog.
 
 Default value: `{}`
 
-##### <a name="purge"></a>`purge`
+##### <a name="-krb5--kdc--auto_keytabs--purge"></a>`purge`
 
 Data type: `Boolean`
 
 If set, purge any keytab directories for systems that
 we don't know about.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="krb5kdcconfig"></a>`krb5::kdc::config`
+### <a name="krb5--kdc--config"></a>`krb5::kdc::config`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
@@ -600,11 +608,11 @@ class my_krb5kdc {
 
 The following parameters are available in the `krb5::kdc::config` class:
 
-* [`kdb5_password`](#kdb5_password)
-* [`kdc_ports`](#kdc_ports)
-* [`kdc_tcp_ports`](#kdc_tcp_ports)
+* [`kdb5_password`](#-krb5--kdc--config--kdb5_password)
+* [`kdc_ports`](#-krb5--kdc--config--kdc_ports)
+* [`kdc_tcp_ports`](#-krb5--kdc--config--kdc_tcp_ports)
 
-##### <a name="kdb5_password"></a>`kdb5_password`
+##### <a name="-krb5--kdc--config--kdb5_password"></a>`kdb5_password`
 
 Data type: `String`
 
@@ -619,7 +627,7 @@ database
 
 Default value: `simplib::passgen('kdb5kdc', { 'length' => 1024 })`
 
-##### <a name="kdc_ports"></a>`kdc_ports`
+##### <a name="-krb5--kdc--config--kdc_ports"></a>`kdc_ports`
 
 Data type: `Array[Simplib::Port]`
 
@@ -627,7 +635,7 @@ The ``UDP`` ports on which the KDC should listen
 
 Default value: `[88, 750]`
 
-##### <a name="kdc_tcp_ports"></a>`kdc_tcp_ports`
+##### <a name="-krb5--kdc--config--kdc_tcp_ports"></a>`kdc_tcp_ports`
 
 Data type: `Array[Simplib::Port]`
 
@@ -635,7 +643,7 @@ The ``TCP`` ports on which the KDC should listen
 
 Default value: `[88, 750]`
 
-### <a name="krb5kdcfirewall"></a>`krb5::kdc::firewall`
+### <a name="krb5--kdc--firewall"></a>`krb5::kdc::firewall`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
@@ -643,14 +651,14 @@ Default value: `[88, 750]`
 
 The following parameters are available in the `krb5::kdc::firewall` class:
 
-* [`kdc_ports`](#kdc_ports)
-* [`kdc_tcp_ports`](#kdc_tcp_ports)
-* [`trusted_nets`](#trusted_nets)
-* [`allow_kadmind`](#allow_kadmind)
-* [`kadmind_udp_ports`](#kadmind_udp_ports)
-* [`kadmind_tcp_ports`](#kadmind_tcp_ports)
+* [`kdc_ports`](#-krb5--kdc--firewall--kdc_ports)
+* [`kdc_tcp_ports`](#-krb5--kdc--firewall--kdc_tcp_ports)
+* [`trusted_nets`](#-krb5--kdc--firewall--trusted_nets)
+* [`allow_kadmind`](#-krb5--kdc--firewall--allow_kadmind)
+* [`kadmind_udp_ports`](#-krb5--kdc--firewall--kadmind_udp_ports)
+* [`kadmind_tcp_ports`](#-krb5--kdc--firewall--kadmind_tcp_ports)
 
-##### <a name="kdc_ports"></a>`kdc_ports`
+##### <a name="-krb5--kdc--firewall--kdc_ports"></a>`kdc_ports`
 
 Data type: `Array[Simplib::Port]`
 
@@ -658,7 +666,7 @@ The ``UDP`` ports on which the KDC should listen
 
 Default value: `$krb5::kdc::config::kdc_ports`
 
-##### <a name="kdc_tcp_ports"></a>`kdc_tcp_ports`
+##### <a name="-krb5--kdc--firewall--kdc_tcp_ports"></a>`kdc_tcp_ports`
 
 Data type: `Array[Simplib::Port]`
 
@@ -666,7 +674,7 @@ The ``TCP`` ports on which the KDC should listen
 
 Default value: `$krb5::kdc::config::kdc_tcp_ports`
 
-##### <a name="trusted_nets"></a>`trusted_nets`
+##### <a name="-krb5--kdc--firewall--trusted_nets"></a>`trusted_nets`
 
 Data type: `Simplib::Netlist`
 
@@ -676,7 +684,7 @@ Hostnames and/or IP addresses that are allowed into this system
 
 Default value: `$krb5::kdc::config::_trusted_nets`
 
-##### <a name="allow_kadmind"></a>`allow_kadmind`
+##### <a name="-krb5--kdc--firewall--allow_kadmind"></a>`allow_kadmind`
 
 Data type: `Boolean`
 
@@ -684,9 +692,9 @@ Allow remote connections to ``kadmind``
 
 * You should probably always allow this
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="kadmind_udp_ports"></a>`kadmind_udp_ports`
+##### <a name="-krb5--kdc--firewall--kadmind_udp_ports"></a>`kadmind_udp_ports`
 
 Data type: `Array[Simplib::Port]`
 
@@ -694,7 +702,7 @@ The ``UDP`` ports on which kadmind should listen
 
 Default value: `[464]`
 
-##### <a name="kadmind_tcp_ports"></a>`kadmind_tcp_ports`
+##### <a name="-krb5--kdc--firewall--kadmind_tcp_ports"></a>`kadmind_tcp_ports`
 
 Data type: `Array[Simplib::Port]`
 
@@ -702,7 +710,7 @@ The ``TCP`` ports on which kadmind should listen
 
 Default value: `[464, 749]`
 
-### <a name="krb5kdcinstall"></a>`krb5::kdc::install`
+### <a name="krb5--kdc--install"></a>`krb5::kdc::install`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
@@ -710,9 +718,9 @@ Default value: `[464, 749]`
 
 The following parameters are available in the `krb5::kdc::install` class:
 
-* [`ensure`](#ensure)
+* [`ensure`](#-krb5--kdc--install--ensure)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-krb5--kdc--install--ensure"></a>`ensure`
 
 Data type: `String`
 
@@ -723,13 +731,13 @@ The package state to ensure
 
 Default value: `simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' })`
 
-### <a name="krb5kdcselinux_hotfix"></a>`krb5::kdc::selinux_hotfix`
+### <a name="krb5--kdc--selinux_hotfix"></a>`krb5::kdc::selinux_hotfix`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
 The OS confinement of this class should be done elsewhere.
 
-### <a name="krb5kdcservice"></a>`krb5::kdc::service`
+### <a name="krb5--kdc--service"></a>`krb5::kdc::service`
 
 **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**
 
@@ -737,10 +745,10 @@ The OS confinement of this class should be done elsewhere.
 
 The following parameters are available in the `krb5::kdc::service` class:
 
-* [`ensure`](#ensure)
-* [`enable`](#enable)
+* [`ensure`](#-krb5--kdc--service--ensure)
+* [`enable`](#-krb5--kdc--service--enable)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-krb5--kdc--service--ensure"></a>`ensure`
 
 Data type: `String`
 
@@ -748,15 +756,15 @@ May be one of 'running' or 'stopped'.
 
 Default value: `'running'`
 
-##### <a name="enable"></a>`enable`
+##### <a name="-krb5--kdc--service--enable"></a>`enable`
 
 Data type: `Boolean`
 
 If true, enable the services at boot time.
 
-Default value: ``true``
+Default value: `true`
 
-### <a name="krb5keytab"></a>`krb5::keytab`
+### <a name="krb5--keytab"></a>`krb5::keytab`
 
 Users should feel free to do what they like, but this will be consistent
 
@@ -764,20 +772,20 @@ Users should feel free to do what they like, but this will be consistent
 
 The following parameters are available in the `krb5::keytab` class:
 
-* [`keytab_source`](#keytab_source)
-* [`owner`](#owner)
-* [`group`](#group)
-* [`mode`](#mode)
+* [`keytab_source`](#-krb5--keytab--keytab_source)
+* [`owner`](#-krb5--keytab--owner)
+* [`group`](#-krb5--keytab--group)
+* [`mode`](#-krb5--keytab--mode)
 
-##### <a name="keytab_source"></a>`keytab_source`
+##### <a name="-krb5--keytab--keytab_source"></a>`keytab_source`
 
 Data type: `Any`
 
 The `File` resource compatible source for the system keytab
 
-Default value: `"puppet:///modules/krb5_files/keytabs/${facts['fqdn']}"`
+Default value: `"puppet:///modules/krb5_files/keytabs/${facts['networking']['fqdn']}"`
 
-##### <a name="owner"></a>`owner`
+##### <a name="-krb5--keytab--owner"></a>`owner`
 
 Data type: `Any`
 
@@ -785,7 +793,7 @@ The keytab file owner
 
 Default value: `'root'`
 
-##### <a name="group"></a>`group`
+##### <a name="-krb5--keytab--group"></a>`group`
 
 Data type: `Any`
 
@@ -793,7 +801,7 @@ The keytab file group
 
 Default value: `'root'`
 
-##### <a name="mode"></a>`mode`
+##### <a name="-krb5--keytab--mode"></a>`mode`
 
 Data type: `Any`
 
@@ -803,7 +811,7 @@ Default value: `'0400'`
 
 ## Defined types
 
-### <a name="krb5kdcrealm"></a>`krb5::kdc::realm`
+### <a name="krb5--kdc--realm"></a>`krb5::kdc::realm`
 
 Note: The kdc.conf file is *fully managed* by Puppet
 
@@ -815,43 +823,43 @@ Note: The kdc.conf file is *fully managed* by Puppet
 
 The following parameters are available in the `krb5::kdc::realm` defined type:
 
-* [`initialize`](#initialize)
-* [`auto_principal`](#auto_principal)
-* [`trusted_nets`](#trusted_nets)
-* [`acl_file`](#acl_file)
-* [`admin_keytab`](#admin_keytab)
-* [`database_name`](#database_name)
-* [`default_principal_expiration`](#default_principal_expiration)
-* [`default_principal_flags`](#default_principal_flags)
-* [`dict_file`](#dict_file)
-* [`kadmind_port`](#kadmind_port)
-* [`kpasswd_port`](#kpasswd_port)
-* [`key_stash_file`](#key_stash_file)
-* [`kdc_ports`](#kdc_ports)
-* [`kdc_tcp_ports`](#kdc_tcp_ports)
-* [`master_key_name`](#master_key_name)
-* [`master_key_type`](#master_key_type)
-* [`max_life`](#max_life)
-* [`max_renewable_life`](#max_renewable_life)
-* [`iprop_enable`](#iprop_enable)
-* [`iprop_master_ulogsize`](#iprop_master_ulogsize)
-* [`iprop_slave_poll`](#iprop_slave_poll)
-* [`supported_enctypes`](#supported_enctypes)
-* [`reject_bad_transit`](#reject_bad_transit)
-* [`config_dir`](#config_dir)
-* [`ensure`](#ensure)
-* [`firewall`](#firewall)
+* [`initialize`](#-krb5--kdc--realm--initialize)
+* [`auto_principal`](#-krb5--kdc--realm--auto_principal)
+* [`trusted_nets`](#-krb5--kdc--realm--trusted_nets)
+* [`acl_file`](#-krb5--kdc--realm--acl_file)
+* [`admin_keytab`](#-krb5--kdc--realm--admin_keytab)
+* [`database_name`](#-krb5--kdc--realm--database_name)
+* [`default_principal_expiration`](#-krb5--kdc--realm--default_principal_expiration)
+* [`default_principal_flags`](#-krb5--kdc--realm--default_principal_flags)
+* [`dict_file`](#-krb5--kdc--realm--dict_file)
+* [`kadmind_port`](#-krb5--kdc--realm--kadmind_port)
+* [`kpasswd_port`](#-krb5--kdc--realm--kpasswd_port)
+* [`key_stash_file`](#-krb5--kdc--realm--key_stash_file)
+* [`kdc_ports`](#-krb5--kdc--realm--kdc_ports)
+* [`kdc_tcp_ports`](#-krb5--kdc--realm--kdc_tcp_ports)
+* [`master_key_name`](#-krb5--kdc--realm--master_key_name)
+* [`master_key_type`](#-krb5--kdc--realm--master_key_type)
+* [`max_life`](#-krb5--kdc--realm--max_life)
+* [`max_renewable_life`](#-krb5--kdc--realm--max_renewable_life)
+* [`iprop_enable`](#-krb5--kdc--realm--iprop_enable)
+* [`iprop_master_ulogsize`](#-krb5--kdc--realm--iprop_master_ulogsize)
+* [`iprop_slave_poll`](#-krb5--kdc--realm--iprop_slave_poll)
+* [`supported_enctypes`](#-krb5--kdc--realm--supported_enctypes)
+* [`reject_bad_transit`](#-krb5--kdc--realm--reject_bad_transit)
+* [`config_dir`](#-krb5--kdc--realm--config_dir)
+* [`ensure`](#-krb5--kdc--realm--ensure)
+* [`firewall`](#-krb5--kdc--realm--firewall)
 
-##### <a name="initialize"></a>`initialize`
+##### <a name="-krb5--kdc--realm--initialize"></a>`initialize`
 
 Data type: `Boolean`
 
 If set, auto-initialize the Realm. This will
 add an initial Principal for this Realm.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="auto_principal"></a>`auto_principal`
+##### <a name="-krb5--kdc--realm--auto_principal"></a>`auto_principal`
 
 Data type: `String`
 
@@ -860,18 +868,22 @@ be created as an administrative Principal on the Realm.
 
 Default value: `'puppet_auto'`
 
-##### <a name="trusted_nets"></a>`trusted_nets`
+##### <a name="-krb5--kdc--realm--trusted_nets"></a>`trusted_nets`
 
 Data type: `Simplib::Netlist`
 
 networks to allow access into the KDC realm.
 
-Default value: `pick(
+Default value:
+
+```puppet
+pick(
                                                                     getvar('krb5::kdc::trusted_nets'),
                                                                     simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1']})
-                                                                  )`
+                                                                  )
+```
 
-##### <a name="acl_file"></a>`acl_file`
+##### <a name="-krb5--kdc--realm--acl_file"></a>`acl_file`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -879,7 +891,7 @@ The path to the KDC realm ACL file.
 
 Default value: `"/var/kerberos/krb5kdc/kadm5_${name}.acl"`
 
-##### <a name="admin_keytab"></a>`admin_keytab`
+##### <a name="-krb5--kdc--realm--admin_keytab"></a>`admin_keytab`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -887,15 +899,15 @@ The path to the KDC realm keytab.
 
 Default value: `"/var/kerberos/krb5kdc/kadm5_${name}.keytab"`
 
-##### <a name="database_name"></a>`database_name`
+##### <a name="-krb5--kdc--realm--database_name"></a>`database_name`
 
 Data type: `Optional[String]`
 
 The path to the KDC realm database.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_principal_expiration"></a>`default_principal_expiration`
+##### <a name="-krb5--kdc--realm--default_principal_expiration"></a>`default_principal_expiration`
 
 Data type: `Optional[String]`
 
@@ -903,9 +915,9 @@ The Absolute Time for
 expiring the principal expiration date for this realm.
 @see http://web.mit.edu/kerberos/krb5-devel/doc/basic/date_format.html#abstime
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_principal_flags"></a>`default_principal_flags`
+##### <a name="-krb5--kdc--realm--default_principal_flags"></a>`default_principal_flags`
 
 Data type: `Array[String]`
 
@@ -915,7 +927,7 @@ entry implies that a '+' will be added.
 
 Default value: `[]`
 
-##### <a name="dict_file"></a>`dict_file`
+##### <a name="-krb5--kdc--realm--dict_file"></a>`dict_file`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -924,31 +936,31 @@ that are not allowed as passwords.
 
 Default value: `'/usr/share/dict/words'`
 
-##### <a name="kadmind_port"></a>`kadmind_port`
+##### <a name="-krb5--kdc--realm--kadmind_port"></a>`kadmind_port`
 
 Data type: `Optional[Simplib::Port]`
 
 The port on which kadmind should listen.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="kpasswd_port"></a>`kpasswd_port`
+##### <a name="-krb5--kdc--realm--kpasswd_port"></a>`kpasswd_port`
 
 Data type: `Optional[Simplib::Port]`
 
 The port on which kpasswd should listen.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="key_stash_file"></a>`key_stash_file`
+##### <a name="-krb5--kdc--realm--key_stash_file"></a>`key_stash_file`
 
 Data type: `Optional[Stdlib::Absolutepath]`
 
 The path to the KDC realm master key.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="kdc_ports"></a>`kdc_ports`
+##### <a name="-krb5--kdc--realm--kdc_ports"></a>`kdc_ports`
 
 Data type: `Array[Simplib::Port]`
 
@@ -956,7 +968,7 @@ UDP ports upon which the KDC should listen.
 
 Default value: `[]`
 
-##### <a name="kdc_tcp_ports"></a>`kdc_tcp_ports`
+##### <a name="-krb5--kdc--realm--kdc_tcp_ports"></a>`kdc_tcp_ports`
 
 Data type: `Array[Simplib::Port]`
 
@@ -964,15 +976,15 @@ TCP ports upon which the KDC should listen.
 
 Default value: `[]`
 
-##### <a name="master_key_name"></a>`master_key_name`
+##### <a name="-krb5--kdc--realm--master_key_name"></a>`master_key_name`
 
 Data type: `Optional[String]`
 
 The principal associated with the master key.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="master_key_type"></a>`master_key_type`
+##### <a name="-krb5--kdc--realm--master_key_type"></a>`master_key_type`
 
 Data type: `String`
 
@@ -980,7 +992,7 @@ The master key's key type.
 
 Default value: `'aes256-cts'`
 
-##### <a name="max_life"></a>`max_life`
+##### <a name="-krb5--kdc--realm--max_life"></a>`max_life`
 
 Data type: `Optional[String]`
 
@@ -988,44 +1000,44 @@ The maximum time period for which a ticket may be valid.
 Should be a valid krb5 Time Duration string.
 @see http://web.mit.edu/kerberos/krb5-1.13/doc/basic/date_format.html#duration
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="max_renewable_life"></a>`max_renewable_life`
+##### <a name="-krb5--kdc--realm--max_renewable_life"></a>`max_renewable_life`
 
 Data type: `Optional[String]`
 
 The maximum time period during which
 a valid ticket may be renewed.  Should be a valid krb5 Time Duration string.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="iprop_enable"></a>`iprop_enable`
+##### <a name="-krb5--kdc--realm--iprop_enable"></a>`iprop_enable`
 
 Data type: `Optional[Boolean]`
 
 Whether incremental database propogation is enabled.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="iprop_master_ulogsize"></a>`iprop_master_ulogsize`
+##### <a name="-krb5--kdc--realm--iprop_master_ulogsize"></a>`iprop_master_ulogsize`
 
 Data type: `Optional[Integer]`
 
 The maximum number of log entries for
 incremental propogation.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="iprop_slave_poll"></a>`iprop_slave_poll`
+##### <a name="-krb5--kdc--realm--iprop_slave_poll"></a>`iprop_slave_poll`
 
 Data type: `Optional[String]`
 
 How often the KDC polls for new updates
 from the master.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="supported_enctypes"></a>`supported_enctypes`
+##### <a name="-krb5--kdc--realm--supported_enctypes"></a>`supported_enctypes`
 
 Data type: `Array[String]`
 
@@ -1033,16 +1045,16 @@ The default key/salt combinations for this realm.
 
 Default value: `[ 'aes256-cts:normal', 'aes128-cts:normal' ]`
 
-##### <a name="reject_bad_transit"></a>`reject_bad_transit`
+##### <a name="-krb5--kdc--realm--reject_bad_transit"></a>`reject_bad_transit`
 
 Data type: `Optional[Boolean]`
 
 Whether to check the list of transited
 realms for cross-realm tickets.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="config_dir"></a>`config_dir`
+##### <a name="-krb5--kdc--realm--config_dir"></a>`config_dir`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1050,7 +1062,7 @@ The path to the Puppet managed config files.
 
 Default value: `simplib::lookup('krb5::kdc::config_dir', { 'default_value' => '/var/kerberos/krb5kdc/kdc.conf.simp.d' })`
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-krb5--kdc--realm--ensure"></a>`ensure`
 
 Data type: `String`
 
@@ -1060,7 +1072,7 @@ will default to 'present'.
 
 Default value: `'present'`
 
-##### <a name="firewall"></a>`firewall`
+##### <a name="-krb5--kdc--realm--firewall"></a>`firewall`
 
 Data type: `Boolean`
 
@@ -1068,7 +1080,7 @@ Whether to add appropriate iptables rules for KDC
 
 Default value: `simplib::lookup('krb5::kdc::firewall', { 'default_value' => false })`
 
-### <a name="krb5setting"></a>`krb5::setting`
+### <a name="krb5--setting"></a>`krb5::setting`
 
 Sections with nested sub-sections or allowed repeated keys have their own
 specialized defines.
@@ -1080,13 +1092,13 @@ specialized defines.
 
 The following parameters are available in the `krb5::setting` defined type:
 
-* [`value`](#value)
-* [`target`](#target)
-* [`ensure`](#ensure)
-* [`filemode`](#filemode)
-* [`seltype`](#seltype)
+* [`value`](#-krb5--setting--value)
+* [`target`](#-krb5--setting--target)
+* [`ensure`](#-krb5--setting--ensure)
+* [`filemode`](#-krb5--setting--filemode)
+* [`seltype`](#-krb5--setting--seltype)
 
-##### <a name="value"></a>`value`
+##### <a name="-krb5--setting--value"></a>`value`
 
 Data type: `Scalar`
 
@@ -1094,7 +1106,7 @@ The number/string/boolean that should be used to set the
 designated value. This will *not* be processed so make sure that it's
 what you want to output to the system.
 
-##### <a name="target"></a>`target`
+##### <a name="-krb5--setting--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1102,7 +1114,7 @@ The target *directory* to which to add setting files.
 
 Default value: `pick(getvar('krb5::config::config_dir'), '/etc/krb5.conf.d')`
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-krb5--setting--ensure"></a>`ensure`
 
 Data type: `String`
 
@@ -1112,7 +1124,7 @@ Whether to set or clear the key. Valid values are
 
 Default value: `'present'`
 
-##### <a name="filemode"></a>`filemode`
+##### <a name="-krb5--setting--filemode"></a>`filemode`
 
 Data type: `String`
 
@@ -1121,7 +1133,7 @@ should be set on the settings files.
 
 Default value: `'0644'`
 
-##### <a name="seltype"></a>`seltype`
+##### <a name="-krb5--setting--seltype"></a>`seltype`
 
 Data type: `String`
 
@@ -1130,7 +1142,7 @@ the setting.
 
 Default value: `'krb5_conf_t'`
 
-### <a name="krb5settingdomain_realm"></a>`krb5::setting::domain_realm`
+### <a name="krb5--setting--domain_realm"></a>`krb5::setting::domain_realm`
 
 It was specifically created so that you could pass in your domains as a name
 array and then your realm as a value.
@@ -1142,11 +1154,11 @@ array and then your realm as a value.
 
 The following parameters are available in the `krb5::setting::domain_realm` defined type:
 
-* [`ensure`](#ensure)
-* [`realm`](#realm)
-* [`target`](#target)
+* [`ensure`](#-krb5--setting--domain_realm--ensure)
+* [`realm`](#-krb5--setting--domain_realm--realm)
+* [`target`](#-krb5--setting--domain_realm--target)
 
-##### <a name="ensure"></a>`ensure`
+##### <a name="-krb5--setting--domain_realm--ensure"></a>`ensure`
 
 Data type: `String`
 
@@ -1156,13 +1168,13 @@ Whether to set or clear the key. Valid values are
 
 Default value: `'present'`
 
-##### <a name="realm"></a>`realm`
+##### <a name="-krb5--setting--domain_realm--realm"></a>`realm`
 
 Data type: `String`
 
 The realm to which to map your domain.
 
-##### <a name="target"></a>`target`
+##### <a name="-krb5--setting--domain_realm--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1170,7 +1182,7 @@ The target *directory* to which to add setting files.
 
 Default value: `pick(getvar('krb5::config::config_dir'), '/etc/krb5.conf.d')`
 
-### <a name="krb5settingrealm"></a>`krb5::setting::realm`
+### <a name="krb5--setting--realm"></a>`krb5::setting::realm`
 
 Allows you to add a realm to the ``[realms]`` section of ``/etc/krb5.conf``.
 
@@ -1182,42 +1194,42 @@ Allows you to add a realm to the ``[realms]`` section of ``/etc/krb5.conf``.
 
 The following parameters are available in the `krb5::setting::realm` defined type:
 
-* [`admin_server`](#admin_server)
-* [`kdc`](#kdc)
-* [`default_domain`](#default_domain)
-* [`v4_instance_convert`](#v4_instance_convert)
-* [`v4_realm`](#v4_realm)
-* [`auth_to_local_names`](#auth_to_local_names)
-* [`auth_to_local`](#auth_to_local)
-* [`target`](#target)
-* [`owner`](#owner)
-* [`group`](#group)
-* [`mode`](#mode)
+* [`admin_server`](#-krb5--setting--realm--admin_server)
+* [`kdc`](#-krb5--setting--realm--kdc)
+* [`default_domain`](#-krb5--setting--realm--default_domain)
+* [`v4_instance_convert`](#-krb5--setting--realm--v4_instance_convert)
+* [`v4_realm`](#-krb5--setting--realm--v4_realm)
+* [`auth_to_local_names`](#-krb5--setting--realm--auth_to_local_names)
+* [`auth_to_local`](#-krb5--setting--realm--auth_to_local)
+* [`target`](#-krb5--setting--realm--target)
+* [`owner`](#-krb5--setting--realm--owner)
+* [`group`](#-krb5--setting--realm--group)
+* [`mode`](#-krb5--setting--realm--mode)
 
-##### <a name="admin_server"></a>`admin_server`
+##### <a name="-krb5--setting--realm--admin_server"></a>`admin_server`
 
 Data type: `Simplib::Host`
 
 The host where the admin server is running.
 
-##### <a name="kdc"></a>`kdc`
+##### <a name="-krb5--setting--realm--kdc"></a>`kdc`
 
 Data type: `Optional[Simplib::Host]`
 
 The host where the KDC is running.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="default_domain"></a>`default_domain`
+##### <a name="-krb5--setting--realm--default_domain"></a>`default_domain`
 
 Data type: `Optional[String]`
 
 The default domain in which hosts are assumed
 to be present.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="v4_instance_convert"></a>`v4_instance_convert`
+##### <a name="-krb5--setting--realm--v4_instance_convert"></a>`v4_instance_convert`
 
 Data type: `Hash[String,String]`
 
@@ -1226,16 +1238,16 @@ mappings for default domain mapping translations.
 
 Default value: `{}`
 
-##### <a name="v4_realm"></a>`v4_realm`
+##### <a name="-krb5--setting--realm--v4_realm"></a>`v4_realm`
 
 Data type: `Optional[String]`
 
 The v4 realm to be used when talking to legacy
 systems.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="auth_to_local_names"></a>`auth_to_local_names`
+##### <a name="-krb5--setting--realm--auth_to_local_names"></a>`auth_to_local_names`
 
 Data type: `Hash[String,String]`
 
@@ -1244,7 +1256,7 @@ names' per the man page.
 
 Default value: `{}`
 
-##### <a name="auth_to_local"></a>`auth_to_local`
+##### <a name="-krb5--setting--realm--auth_to_local"></a>`auth_to_local`
 
 Data type: `Optional[String]`
 
@@ -1254,9 +1266,9 @@ The following values are allowed:
   RULE:<exp>
   DEFAULT
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="target"></a>`target`
+##### <a name="-krb5--setting--realm--target"></a>`target`
 
 Data type: `Stdlib::Absolutepath`
 
@@ -1264,7 +1276,7 @@ The path to the Puppet managed config files.
 
 Default value: `pick(getvar('krb5::config::config_dir'), '/etc/krb5.conf.d')`
 
-##### <a name="owner"></a>`owner`
+##### <a name="-krb5--setting--realm--owner"></a>`owner`
 
 Data type: `String`
 
@@ -1272,7 +1284,7 @@ Data type: `String`
 
 Default value: `'root'`
 
-##### <a name="group"></a>`group`
+##### <a name="-krb5--setting--realm--group"></a>`group`
 
 Data type: `String`
 
@@ -1280,7 +1292,7 @@ Data type: `String`
 
 Default value: `'root'`
 
-##### <a name="mode"></a>`mode`
+##### <a name="-krb5--setting--realm--mode"></a>`mode`
 
 Data type: `String`
 
@@ -1310,27 +1322,27 @@ Default value: `present`
 
 ##### `operation_mask`
 
-Valid values: `/^([admcilpADMCILP]+|[x*])$/`
+Valid values: `%r{^([admcilpADMCILP]+|[x*])$}`
 
-The operation mask per kadmind(8). Be aware that lower case activates a mask and upper case deactivates it.
+The operation mask per kadmind(8). Be aware that lower case activates a mask and upper case deactivates it
 
 #### Parameters
 
 The following parameters are available in the `krb5_acl` type.
 
-* [`name`](#name)
-* [`operation_target`](#operation_target)
-* [`principal`](#principal)
-* [`provider`](#provider)
-* [`target`](#target)
+* [`name`](#-krb5_acl--name)
+* [`operation_target`](#-krb5_acl--operation_target)
+* [`principal`](#-krb5_acl--principal)
+* [`provider`](#-krb5_acl--provider)
+* [`target`](#-krb5_acl--target)
 
-##### <a name="name"></a>`name`
+##### <a name="-krb5_acl--name"></a>`name`
 
 namevar
 
-A required, but meaningless, name.
+A required, but meaningless, name
 
-##### <a name="operation_target"></a>`operation_target`
+##### <a name="-krb5_acl--operation_target"></a>`operation_target`
 
 An optional partially, or fully, qualified Kerberos 5 principal
 name upon which 'principal' is allowed to operate. If this is
@@ -1338,19 +1350,19 @@ specified, the 'principal', 'operation_mask', and 'ensure' options
 will be restricted. This must be specified as a ruby regex without
 '/' in the case of ensure => 'absent'.
 
-Default value: ``undef``
+Default value: `undef`
 
-##### <a name="principal"></a>`principal`
+##### <a name="-krb5_acl--principal"></a>`principal`
 
 The partially, or fully, qualified Kerberos 5 principal name. This
 is what must appear as the usual 'name' of the resource.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-krb5_acl--provider"></a>`provider`
 
 The specific backend to use for this `krb5_acl` resource. You will seldom need to specify this --- Puppet will usually
 discover the appropriate provider for your platform.
 
-##### <a name="target"></a>`target`
+##### <a name="-krb5_acl--target"></a>`target`
 
 The ACL file upon which to operate
 
@@ -1381,30 +1393,30 @@ Default value: `present`
 
 The following parameters are available in the `krb5kdc_auto_keytabs` type.
 
-* [`all_known`](#all_known)
-* [`global_services`](#global_services)
-* [`group`](#group)
-* [`hosts`](#hosts)
-* [`introspect`](#introspect)
-* [`name`](#name)
-* [`provider`](#provider)
-* [`purge`](#purge)
-* [`realms`](#realms)
-* [`user`](#user)
+* [`all_known`](#-krb5kdc_auto_keytabs--all_known)
+* [`global_services`](#-krb5kdc_auto_keytabs--global_services)
+* [`group`](#-krb5kdc_auto_keytabs--group)
+* [`hosts`](#-krb5kdc_auto_keytabs--hosts)
+* [`introspect`](#-krb5kdc_auto_keytabs--introspect)
+* [`name`](#-krb5kdc_auto_keytabs--name)
+* [`provider`](#-krb5kdc_auto_keytabs--provider)
+* [`purge`](#-krb5kdc_auto_keytabs--purge)
+* [`realms`](#-krb5kdc_auto_keytabs--realms)
+* [`user`](#-krb5kdc_auto_keytabs--user)
 
-##### <a name="all_known"></a>`all_known`
+##### <a name="-krb5kdc_auto_keytabs--all_known"></a>`all_known`
 
-Valid values: ``true``, ``false``, `yes`, `no`
+Valid values: `true`, `false`, `yes`, `no`
 
 Generate keytabs for any 'host/.*' entires known to the KDC.
 
-Default value: ``false``
+Default value: `false`
 
-##### <a name="global_services"></a>`global_services`
+##### <a name="-krb5kdc_auto_keytabs--global_services"></a>`global_services`
 
 The global services that should be applied to *every* auto-generated principal
 
-##### <a name="group"></a>`group`
+##### <a name="-krb5kdc_auto_keytabs--group"></a>`group`
 
 The group that should own the generated keytabs, defaults to
 '#{Puppet[:group]}' when installing into a Puppet Environment and 'root'
@@ -1412,7 +1424,7 @@ otherwise.
 
 Default value: `group`
 
-##### <a name="hosts"></a>`hosts`
+##### <a name="-krb5kdc_auto_keytabs--hosts"></a>`hosts`
 
 A Hash of hosts that should be managed in the KDC.
 
@@ -1428,9 +1440,9 @@ The Hash format should be as follows:
 
 If '$global_services' is set, it will be added to the list of services for each host here.
 
-##### <a name="introspect"></a>`introspect`
+##### <a name="-krb5kdc_auto_keytabs--introspect"></a>`introspect`
 
-Valid values: ``true``, ``false``, `yes`, `no`
+Valid values: `true`, `false`, `yes`, `no`
 
 Attempt to discover, and create, all relevant keytabs from data on the
 Puppet server.
@@ -1445,9 +1457,9 @@ This takes a best guess from the SIMP default PKI key locations:
 If `$environmentpath` is not set, then `$confdir` will be substituted for
 `${environmentpath}/${environment}`
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="name"></a>`name`
+##### <a name="-krb5kdc_auto_keytabs--name"></a>`name`
 
 namevar
 
@@ -1458,26 +1470,26 @@ If '__default__' will be set to either
 `/var/kerberos/krb5kdc/generated_keytabs` depending on which target path
 exists.
 
-##### <a name="provider"></a>`provider`
+##### <a name="-krb5kdc_auto_keytabs--provider"></a>`provider`
 
 The specific backend to use for this `krb5kdc_auto_keytabs` resource. You will seldom need to specify this --- Puppet
 will usually discover the appropriate provider for your platform.
 
-##### <a name="purge"></a>`purge`
+##### <a name="-krb5kdc_auto_keytabs--purge"></a>`purge`
 
-Valid values: ``true``, ``false``, `yes`, `no`
+Valid values: `true`, `false`, `yes`, `no`
 
 Remove all unmanaged keytabs from the '$name' directory
 
-Default value: ``true``
+Default value: `true`
 
-##### <a name="realms"></a>`realms`
+##### <a name="-krb5kdc_auto_keytabs--realms"></a>`realms`
 
 The realms under which the hosts should be generated
 
 Default value: `Facter.value(:domain)`
 
-##### <a name="user"></a>`user`
+##### <a name="-krb5kdc_auto_keytabs--user"></a>`user`
 
 The user that should own the generated keytabs, defaults to
 '#{Puppet[:user]}' when installing into a Puppet Environment and 'root'
@@ -1487,7 +1499,7 @@ Default value: `root`
 
 ## Functions
 
-### <a name="krb5munge_conf_filename"></a>`krb5::munge_conf_filename`
+### <a name="krb5--munge_conf_filename"></a>`krb5::munge_conf_filename`
 
 Type: Ruby 4.x API
 
@@ -1507,7 +1519,7 @@ Data type: `String`
 
 String to be converted to a k4b6 configuration filename
 
-### <a name="krb5validate_time_duration"></a>`krb5::validate_time_duration`
+### <a name="krb5--validate_time_duration"></a>`krb5::validate_time_duration`
 
 Type: Ruby 4.x API
 
