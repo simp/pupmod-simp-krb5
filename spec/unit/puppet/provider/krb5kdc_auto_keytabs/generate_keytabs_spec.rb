@@ -75,17 +75,17 @@ describe provider_class do
     allow(Puppet).to receive(:[]).with(:environment).and_return('')
     allow(Puppet::Util).to receive(:which).with('kadmin.local').and_return('/usr/sbin/kadmin.local')
 
-    allow(provider).to receive(:execute).with(regexp_matches(%r{list_principals})).and_return(list_principals)
-    allow(provider).to receive(:execute).with(regexp_matches(%r{get_principal})).and_return(get_principal)
-    allow(provider).to receive(:execute).with(regexp_matches(%r{add_principal})).and_return(add_principal)
-    allow(provider).to receive(:execute).with(regexp_matches(%r{ktadd})).and_return(add_keytab)
+    allow(provider).to receive(:execute).with(%r{list_principals}).and_return(list_principals)
+    allow(provider).to receive(:execute).with(%r{get_principal}).and_return(get_principal)
+    allow(provider).to receive(:execute).with(%r{add_principal}).and_return(add_principal)
+    allow(provider).to receive(:execute).with(%r{ktadd}).and_return(add_keytab)
 
     allow(provider).to receive(:introspect_hosts).and_return([test_host])
     allow(provider).to receive(:clean_files).and_return(true)
 
-    allow(File).to receive(:exist?).with(regexp_matches(%r{\.keytab})).and_return(true)
-    allow(File).to receive(:exist?).with(regexp_matches(%r{\.kvno})).and_return(false)
-    allow(File).to receive(:open).with(regexp_matches(%r{\.kvno}), 'w').and_return(true)
+    allow(File).to receive(:exist?).with(%r{\.keytab}).and_return(true)
+    allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(false)
+    allow(File).to receive(:open).with(%r{\.kvno}, 'w').and_return(true)
 
     allow(FileUtils).to receive(:mkdir_p).and_return(true)
     allow(FileUtils).to receive(:chmod).and_return(true)
@@ -95,8 +95,8 @@ describe provider_class do
 
   context 'when generating keytabs' do
     it 'does not have any errors' do
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}}))
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).never
+      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
+      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
 
       provider.exists?
       provider.sync_keytabs
@@ -105,11 +105,11 @@ describe provider_class do
 
   context 'with a matching kvno file' do
     it 'does not have any errors' do
-      allow(File).to receive(:exist?).with(regexp_matches(%r{\.kvno})).and_return(true)
-      allow(File).to receive(:read).with(regexp_matches(%r{\.kvno})).and_return("1\n1\n")
+      allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(true)
+      allow(File).to receive(:read).with(%r{\.kvno}).and_return("1\n1\n")
 
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}})).never
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).never
+      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).never
+      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
 
       provider.exists?
       provider.sync_keytabs
@@ -118,11 +118,11 @@ describe provider_class do
 
   context 'with a non-matching kvno file' do
     it 'does not have any errors' do
-      allow(File).to receive(:exist?).with(regexp_matches(%r{\.kvno})).and_return(true)
-      allow(File).to receive(:read).with(regexp_matches(%r{\.kvno})).and_return("1\n2\n")
+      allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(true)
+      allow(File).to receive(:read).with(%r{\.kvno}).and_return("1\n2\n")
 
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}})).once
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).never
+      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
+      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
 
       provider.exists?
       provider.sync_keytabs
@@ -139,8 +139,8 @@ describe provider_class do
     end
 
     it 'does not have any errors' do
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}})).once
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).once
+      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
+      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).once
 
       provider.exists?
       provider.sync_keytabs
@@ -162,8 +162,8 @@ describe provider_class do
     it 'does not have any errors' do
       allow(provider).to receive(:introspect_hosts).and_return([])
 
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}})).twice
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).never
+      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).twice
+      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
 
       provider.exists?
       provider.sync_keytabs
