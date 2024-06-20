@@ -95,8 +95,8 @@ describe provider_class do
 
   context 'when generating keytabs' do
     it 'does not have any errors' do
-      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
-      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
+      expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
+      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -108,8 +108,8 @@ describe provider_class do
       allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(true)
       allow(File).to receive(:read).with(%r{\.kvno}).and_return("1\n1\n")
 
-      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).never
-      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
+      expect(provider).to_not receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
+      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -121,8 +121,8 @@ describe provider_class do
       allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(true)
       allow(File).to receive(:read).with(%r{\.kvno}).and_return("1\n2\n")
 
-      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
-      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
+      expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
+      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -139,8 +139,8 @@ describe provider_class do
     end
 
     it 'does not have any errors' do
-      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
-      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).once
+      expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
+      expect(provider).to receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).once
 
       provider.exists?
       provider.sync_keytabs
@@ -162,8 +162,8 @@ describe provider_class do
     it 'does not have any errors' do
       allow(provider).to receive(:introspect_hosts).and_return([])
 
-      provider.expects(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).twice
-      provider.expects(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
+      expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).twice
+      expect(provider).to receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
 
       provider.exists?
       provider.sync_keytabs
