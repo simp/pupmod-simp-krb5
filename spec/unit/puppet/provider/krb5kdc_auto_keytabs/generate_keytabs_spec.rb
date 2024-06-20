@@ -70,33 +70,33 @@ describe provider_class do
   let(:provider) { resource.provider }
 
   before :each do
-    Puppet.stubs(:[]).with(:confdir).returns(target_dir)
-    Puppet.stubs(:[]).with(:environmentpath).returns(nil)
-    Puppet.stubs(:[]).with(:environment).returns('')
-    Puppet::Util.stubs(:which).with('kadmin.local').returns('/usr/sbin/kadmin.local')
+    allow(Puppet).to receive(:[]).with(:confdir).and_return(target_dir)
+    allow(Puppet).to receive(:[]).with(:environmentpath).and_return(nil)
+    allow(Puppet).to receive(:[]).with(:environment).and_return('')
+    allow(Puppet::Util).to receive(:which).with('kadmin.local').and_return('/usr/sbin/kadmin.local')
 
-    provider.stubs(:execute).with(regexp_matches(%r{list_principals})).returns(list_principals)
-    provider.stubs(:execute).with(regexp_matches(%r{get_principal})).returns(get_principal)
-    provider.stubs(:execute).with(regexp_matches(%r{add_principal})).returns(add_principal)
-    provider.stubs(:execute).with(regexp_matches(%r{ktadd})).returns(add_keytab)
+    allow(provider).to receive(:execute).with(%r{list_principals}).and_return(list_principals)
+    allow(provider).to receive(:execute).with(%r{get_principal}).and_return(get_principal)
+    allow(provider).to receive(:execute).with(%r{add_principal}).and_return(add_principal)
+    allow(provider).to receive(:execute).with(%r{ktadd}).and_return(add_keytab)
 
-    provider.stubs(:introspect_hosts).returns([test_host])
-    provider.stubs(:clean_files).returns(true)
+    allow(provider).to receive(:introspect_hosts).and_return([test_host])
+    allow(provider).to receive(:clean_files).and_return(true)
 
-    File.stubs(:exist?).with(regexp_matches(%r{\.keytab})).returns(true)
-    File.stubs(:exist?).with(regexp_matches(%r{\.kvno})).returns(false)
-    File.stubs(:open).with(regexp_matches(%r{\.kvno}), 'w').returns(true)
+    allow(File).to receive(:exist?).with(%r{\.keytab}).and_return(true)
+    allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(false)
+    allow(File).to receive(:open).with(%r{\.kvno}, 'w').and_return(true)
 
-    FileUtils.stubs(:mkdir_p).returns(true)
-    FileUtils.stubs(:chmod).returns(true)
-    FileUtils.stubs(:chown).returns(true)
-    FileUtils.stubs(:mv).returns(true)
+    allow(FileUtils).to receive(:mkdir_p).and_return(true)
+    allow(FileUtils).to receive(:chmod).and_return(true)
+    allow(FileUtils).to receive(:chown).and_return(true)
+    allow(FileUtils).to receive(:mv).and_return(true)
   end
 
   context 'when generating keytabs' do
     it 'does not have any errors' do
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}}))
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).never
+      expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
+      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -105,11 +105,11 @@ describe provider_class do
 
   context 'with a matching kvno file' do
     it 'does not have any errors' do
-      File.stubs(:exist?).with(regexp_matches(%r{\.kvno})).returns(true)
-      File.stubs(:read).with(regexp_matches(%r{\.kvno})).returns("1\n1\n")
+      allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(true)
+      allow(File).to receive(:read).with(%r{\.kvno}).and_return("1\n1\n")
 
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}})).never
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).never
+      expect(provider).to_not receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
+      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -118,11 +118,11 @@ describe provider_class do
 
   context 'with a non-matching kvno file' do
     it 'does not have any errors' do
-      File.stubs(:exist?).with(regexp_matches(%r{\.kvno})).returns(true)
-      File.stubs(:read).with(regexp_matches(%r{\.kvno})).returns("1\n2\n")
+      allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(true)
+      allow(File).to receive(:read).with(%r{\.kvno}).and_return("1\n2\n")
 
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}})).once
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).never
+      expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
+      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -139,8 +139,8 @@ describe provider_class do
     end
 
     it 'does not have any errors' do
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}})).once
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).once
+      expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
+      expect(provider).to receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).once
 
       provider.exists?
       provider.sync_keytabs
@@ -160,10 +160,10 @@ describe provider_class do
     end
 
     it 'does not have any errors' do
-      provider.stubs(:introspect_hosts).returns([])
+      allow(provider).to receive(:introspect_hosts).and_return([])
 
-      provider.expects(:execute).with(regexp_matches(%r{ktadd.*.+/#{test_host}@#{test_realm}})).twice
-      provider.expects(:execute).with(regexp_matches(%r{add_principal.*.+/#{test_host}@#{test_realm}})).never
+      expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).twice
+      expect(provider).to receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}}).never
 
       provider.exists?
       provider.sync_keytabs
