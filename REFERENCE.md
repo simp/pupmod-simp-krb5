@@ -1487,7 +1487,7 @@ Default value: `true`
 
 The realms under which the hosts should be generated
 
-Default value: `Facter.value(:domain)`
+Default value: `Facter.value(:networking)['domain']`
 
 ##### <a name="-krb5kdc_auto_keytabs--user"></a>`user`
 

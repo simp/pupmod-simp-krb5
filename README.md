@@ -8,18 +8,26 @@
 
 #### Table of Contents
 
-1. [Module Description - What the module does and why it is useful](#module-description)
-2. [Setup - The basics of getting started with Krb5](#setup)
-    * [What Krb5 affects](#what-krb5-affects)
-    * [Setup requirements](#setup-requirements)
-    * [Beginning with Krb5](#beginning-with-krb5)
-3. [Usage - Configuration options and additional functionality](#usage)
-    * [Automatic Management](#automatically-manage-the-kdc-and-keytabs-on-clients)
-    * [Manual Configuration](#manual-configuration-and-expansion)
-4. [Integration with SIMP NFS Module](#integration-with-simp-nfs-module)
-5. [Limitations - OS compatibility, etc.](#limitations)
-6. [Development - Guide for contributing to the module](#development)
-7. [Acceptance Tests](#acceptance-tests)
+- [Krb5](#krb5)
+      - [Table of Contents](#table-of-contents)
+  - [Module Description](#module-description)
+  - [Setup](#setup)
+    - [What krb5 affects](#what-krb5-affects)
+    - [Setup Requirements](#setup-requirements)
+    - [Beginning with krb5](#beginning-with-krb5)
+  - [Usage](#usage)
+    - [Automatically manage the KDC and keytabs on clients](#automatically-manage-the-kdc-and-keytabs-on-clients)
+    - [Keytab Propagation](#keytab-propagation)
+    - [Manual Configuration and Expansion](#manual-configuration-and-expansion)
+      - [Creating Admin Principals](#creating-admin-principals)
+        - [ACL Configuration](#acl-configuration)
+        - [Create Your Admin Principal](#create-your-admin-principal)
+        - [Creating Host Principals](#creating-host-principals)
+      - [Create Your Keytabs](#create-your-keytabs)
+    - [Integration with SIMP NFS Module](#integration-with-simp-nfs-module)
+  - [Limitations](#limitations)
+  - [Development](#development)
+  - [Acceptance tests](#acceptance-tests)
 
 ## Module Description
 
@@ -163,8 +171,8 @@ is **probably** appropriate for your organization.
 
 ```ruby
 
-   krb5_acl{ "${::domain}_admin":
-     principal       => "*/admin@${::domain}",
+   krb5_acl{ "${facts['networking']['domain']}_admin":
+     principal       => "*/admin@${facts['networking']['domain']}",
      operation_mask  => '*'
    }
 ```

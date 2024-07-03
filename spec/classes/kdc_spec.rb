@@ -9,8 +9,8 @@ shared_examples_for 'common kdc config' do
   it { is_expected.to create_class('krb5::kdc::install') }
   it { is_expected.to create_class('krb5::kdc::config') }
   it { is_expected.to create_class('krb5::kdc::service') }
-  it { is_expected.to create_krb5__kdc__realm(facts[:domain]) }
-  it { is_expected.to create_krb5__setting__realm(facts[:domain]) }
+  it { is_expected.to create_krb5__kdc__realm(facts[:networking][:domain]) }
+  it { is_expected.to create_krb5__setting__realm(facts[:networking][:domain]) }
   it { is_expected.to contain_class('krb5::kdc::auto_keytabs') }
 
   it_behaves_like 'auto_keytab'
@@ -31,7 +31,7 @@ shared_examples_for 'common kdc config' do
 end
 
 shared_examples_for 'auto_keytab' do
-  it { is_expected.to create_krb5kdc_auto_keytabs('__default__').with(:realms => facts[:domain]) }
+  it { is_expected.to create_krb5kdc_auto_keytabs('__default__').with(:realms => facts[:networking][:domain]) }
 end
 
 shared_examples_for 'selinux hotfix' do
@@ -62,7 +62,7 @@ describe 'krb5::kdc' do
           it { is_expected.not_to contain_package('krb5-server-ldap') }
           it { is_expected.not_to contain_class('krb5::kdc::firewall') }
 
-          if os_facts[:selinux]
+          unless os_facts.dig(:os, 'selinux').nil?
             it { is_expected.to contain_class('krb5::kdc::selinux_hotfix') }
           end
         end
@@ -71,7 +71,7 @@ describe 'krb5::kdc' do
           let(:params) { { :firewall => true, :haveged => true, :ldap => true } }
 
           it_behaves_like 'common kdc config'
-          if os_facts[:selinux]
+          unless os_facts.dig(:os, 'selinux').nil?
             it_behaves_like 'selinux hotfix'
           end
           it { is_expected.to contain_class('haveged') }
@@ -87,7 +87,7 @@ describe 'krb5::kdc' do
           end
 
           it_behaves_like 'common kdc config'
-          if os_facts[:selinux]
+          unless os_facts.dig(:os, 'selinux').nil?
             it_behaves_like 'selinux hotfix'
           end
         end
