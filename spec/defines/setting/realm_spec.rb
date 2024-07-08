@@ -18,7 +18,7 @@ describe 'krb5::setting::realm' do
 
         let(:params) do
           {
-            :admin_server => facts[:hostname]
+            :admin_server => facts[:networking][:hostname]
           }
         end
 

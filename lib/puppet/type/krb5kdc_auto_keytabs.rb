@@ -150,7 +150,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
       The realms under which the hosts should be generated
     DESC
 
-    defaultto(Facter.value(:domain))
+    defaultto(Facter.value(:networking)['domain'])
 
     validate do |value|
       unless (value.is_a?(String) || value.is_a?(Array)) || Array(value).count { |x| !x.is_a?(String) }.zero?

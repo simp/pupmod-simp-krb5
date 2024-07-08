@@ -21,7 +21,7 @@ describe 'krb5::client' do
           it_behaves_like 'common config'
 
           # Based on the Hiera default.yaml
-          it { is_expected.to create_krb5__setting__realm(facts[:domain]).with_admin_server(facts[:fqdn]) }
+          it { is_expected.to create_krb5__setting__realm(facts[:networking][:domain]).with_admin_server(facts[:networking][:fqdn]) }
         end
 
         context 'with krb5::kdc declared' do
@@ -32,7 +32,7 @@ describe 'krb5::client' do
           it_behaves_like 'common config'
 
           # Based on the Hiera default.yaml
-          it { is_expected.to create_krb5__setting__realm(facts[:domain]).with_admin_server(facts[:fqdn]) }
+          it { is_expected.to create_krb5__setting__realm(facts[:networking][:domain]).with_admin_server(facts[:networking][:fqdn]) }
         end
 
         context 'when passed a custom set of realms' do
@@ -53,7 +53,7 @@ describe 'krb5::client' do
           it_behaves_like 'common config'
 
           # Based on the Hiera default.yaml
-          it { is_expected.not_to create_krb5__setting__realm(facts[:domain]).with_admin_server(facts[:fqdn]) }
+          it { is_expected.not_to create_krb5__setting__realm(facts[:networking][:domain]).with_admin_server(facts[:networking][:fqdn]) }
 
           it { is_expected.to create_krb5__setting__realm('realm.one').with_admin_server('admin.server.one') }
 

@@ -1,3 +1,6 @@
+* Wed Jul 03 2024 Steven Pritchard <steve@sicura.us> - 7.7.2
+- Clean up legacy fact usage to support puppet 8
+
 * Wed Jan 17 2024 Richard Gardner <rick@sicura.us> - 7.7.1
 - Updated hiera.yaml facts to support puppet 8
 

@@ -1,4 +1,4 @@
 ---
-simp_options::puppet::server: "%{facts.fqdn}"
+simp_options::puppet::server: "%{facts.networking.fqdn}"
 simp_options::trusted_nets:
   - '1.2.3.4/32'
