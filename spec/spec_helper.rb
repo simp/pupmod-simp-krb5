@@ -1,4 +1,11 @@
 # frozen_string_literal: true
+#
+# ------------------------------------------------------------------------------
+#         NOTICE: **This file is maintained with puppetsync**
+#
+# This file is automatically updated as part of a puppet module baseline.
+# The next baseline sync will overwrite any local changes made to this file.
+# ------------------------------------------------------------------------------
 
 require 'puppetlabs_spec_helper/module_spec_helper'
 require 'rspec-puppet'
@@ -11,30 +18,24 @@ require 'pathname'
 fixture_path = File.expand_path(File.join(__FILE__, '..', 'fixtures'))
 module_name = File.basename(File.expand_path(File.join(__FILE__, '../..')))
 
-# Add fixture lib dirs to LOAD_PATH. Work-around for PUP-3336
-if Puppet.version < '4.0.0'
-  Dir["#{fixture_path}/modules/*/lib"].entries.each do |lib_dir|
-    $LOAD_PATH << lib_dir
-  end
-end
-
-unless ENV.key?('TRUSTED_NODE_DATA')
-  warn '== WARNING: TRUSTED_NODE_DATA is unset, using TRUSTED_NODE_DATA=yes'
-  ENV['TRUSTED_NODE_DATA'] = 'yes'
+if ENV['PUPPET_DEBUG']
+  Puppet::Util::Log.level = :debug
+  Puppet::Util::Log.newdestination(:console)
 end
 
 default_hiera_config = <<~HIERA_CONFIG
 ---
-:backends:
-  - "rspec"
-  - "yaml"
-:yaml:
-  :datadir: "stub"
-:hierarchy:
-  - "%{custom_hiera}"
-  - "%{spec_title}"
-  - "%{module_name}"
-  - "default"
+version: 5
+hierarchy:
+  - name: Custom Test Hiera
+    path: "%{custom_hiera}.yaml"
+  - name: "%{module_name}"
+    path: "%{module_name}.yaml"
+  - name: Common
+    path: default.yaml
+defaults:
+  data_hash: yaml_data
+  datadir: "stub"
 HIERA_CONFIG
 
 # This can be used from inside your spec tests to set the testable environment.
@@ -84,10 +85,10 @@ end
 RSpec.configure do |c|
   # If nothing else...
   c.default_facts = {
-    :production => {
-      # :fqdn           => 'production.rspec.test.localdomain',
-      :path => '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
-      :concat_basedir => '/tmp'
+    production: {
+      #:fqdn           => 'production.rspec.test.localdomain',
+      path: '/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin',
+      concat_basedir: '/tmp'
     }
   }
 
@@ -113,10 +114,16 @@ RSpec.configure do |c|
 
   # rubocop:disable RSpec/BeforeAfterAll
   c.before(:all) do
-    # rubocop:disable Security/YAMLLoad
-    data = YAML.load(default_hiera_config)
-    # rubocop:enable Security/YAMLLoad
-    data[:yaml][:datadir] = File.join(fixture_path, 'hieradata')
+    data = YAML.safe_load(default_hiera_config)
+    data.each_key do |key|
+      next unless data[key].is_a?(Hash)
+
+      if data[key][:datadir] == 'stub'
+        data[key][:datadir] = File.join(fixture_path, 'hieradata')
+      elsif data[key]['datadir'] == 'stub'
+        data[key]['datadir'] = File.join(fixture_path, 'hieradata')
+      end
+    end
 
     File.open(c.hiera_config, 'w') do |f|
       f.write data.to_yaml
@@ -133,6 +140,7 @@ RSpec.configure do |c|
     end
 
     # ensure the user running these tests has an accessible environmentpath
+    Puppet[:digest_algorithm] = 'sha256'
     Puppet[:environmentpath] = @spec_global_env_temp
     Puppet[:user] = Etc.getpwuid(Process.uid).name
     Puppet[:group] = Etc.getgrgid(Process.gid).name
