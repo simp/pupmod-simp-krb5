@@ -30,7 +30,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     end
   end
 
-  newparam(:name, :namevar => true) do
+  newparam(:name, namevar: true) do
     desc <<~DESC
       The output directory to which to write the keytabs
 
@@ -72,7 +72,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     end
   end
 
-  newparam(:introspect, :boolean => true, :parent => Puppet::Parameter::Boolean) do
+  newparam(:introspect, boolean: true, parent: Puppet::Parameter::Boolean) do
     desc <<~DESC
       Attempt to discover, and create, all relevant keytabs from data on the
       Puppet server.
@@ -90,7 +90,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     defaultto(true)
   end
 
-  newparam(:all_known, :boolean => true, :parent => Puppet::Parameter::Boolean) do
+  newparam(:all_known, boolean: true, parent: Puppet::Parameter::Boolean) do
     desc <<~DESC
       Generate keytabs for any 'host/.*' entires known to the KDC.
     DESC
@@ -145,7 +145,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     end
   end
 
-  newparam(:realms, :array_matching => :all) do
+  newparam(:realms, array_matching: :all) do
     desc <<~DESC
       The realms under which the hosts should be generated
     DESC
@@ -163,7 +163,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     end
   end
 
-  newparam(:global_services, :array_matching => :all) do
+  newparam(:global_services, array_matching: :all) do
     desc <<~DESC
       The global services that should be applied to *every* auto-generated principal
     DESC
@@ -238,7 +238,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     end
   end
 
-  newparam(:purge, :boolean => true, :parent => Puppet::Parameter::Boolean) do
+  newparam(:purge, boolean: true, parent: Puppet::Parameter::Boolean) do
     desc <<~DESC
       Remove all unmanaged keytabs from the '$name' directory
     DESC

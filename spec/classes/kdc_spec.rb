@@ -31,7 +31,7 @@ shared_examples_for 'common kdc config' do
 end
 
 shared_examples_for 'auto_keytab' do
-  it { is_expected.to create_krb5kdc_auto_keytabs('__default__').with(:realms => facts[:networking][:domain]) }
+  it { is_expected.to create_krb5kdc_auto_keytabs('__default__').with(realms: facts[:networking][:domain]) }
 end
 
 shared_examples_for 'selinux hotfix' do
@@ -53,7 +53,7 @@ describe 'krb5::kdc' do
         let(:facts) do
           # to workaround service provider issues related to masking haveged
           # when tests are run on GitLab runners which are docker containers
-          os_facts.merge({ :haveged__rngd_enabled => false })
+          os_facts.merge({ haveged__rngd_enabled: false })
         end
 
         context 'with default parameters' do
@@ -68,7 +68,7 @@ describe 'krb5::kdc' do
         end
 
         context 'with firewall = true, haveged = true, ldap = true' do
-          let(:params) { { :firewall => true, :haveged => true, :ldap => true } }
+          let(:params) { { firewall: true, haveged: true, ldap: true } }
 
           it_behaves_like 'common kdc config'
           unless os_facts.dig(:os, 'selinux').nil?
