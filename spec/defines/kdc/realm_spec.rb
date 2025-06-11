@@ -3,12 +3,13 @@
 require 'spec_helper'
 
 shared_examples_for 'common realm config' do
+  let(:realm_resource_name) { %(/var/kerberos/krb5kdc/kdc.conf.simp.d/#{title}__realm) }
+
   it { is_expected.to compile.with_all_deps }
+  it { is_expected.to create_file(realm_resource_name) }
 
   it {
-    resource_name = %(/var/kerberos/krb5kdc/kdc.conf.simp.d/#{title}__realm)
-    expect(subject).to create_file(resource_name)
-    file_content = catalogue.resource(%(File[#{resource_name}]))[:content].dup.split("\n")
+    file_content = catalogue.resource(%(File[#{realm_resource_name}]))[:content].dup.split("\n")
     expect(file_content).not_to be_empty
     # First line
     expect(file_content.shift).to match(%r{^\s*\[.+\]\s*})
@@ -46,13 +47,13 @@ describe 'krb5::kdc::realm' do
           it { is_expected.not_to create_krb5_acl('krbtestrealm_puppet_auto_admin') }
 
           it {
-            pending
-            expect(subject).not_to create_exec('add_admin_principal_puppet_auto')
+            pending('Test was marked pending when Amazon Linux 2 support was added')
+            it { is_expected.not_to create_exec('add_admin_principal_puppet_auto') }
           }
 
           it {
-            pending
-            expect(subject).not_to create_exec('create_admin_principal_puppet_auto_keytab')
+            pending('Test was marked pending when Amazon Linux 2 support was added')
+            it { is_expected.not_to create_exec('create_admin_principal_puppet_auto_keytab') }
           }
         end
 
@@ -65,11 +66,13 @@ describe 'krb5::kdc::realm' do
             let(:params) { { kdc_tcp_ports: [2000, 1234] } }
 
             it {
-              expect(subject).to create_iptables__listen__tcp_stateful(%(#{title}_allow_kdc)).with({
-                                                                                                     order: 11,
-                                                                                                     trusted_nets: ['1.2.3.4/32'],
-                                                                                                     dports: params[:kdc_tcp_ports]
-                                                                                                   })
+              is_expected.to create_iptables__listen__tcp_stateful(%(#{title}_allow_kdc)).with(
+              {
+                order: 11,
+                trusted_nets: ['1.2.3.4/32'],
+                dports: params[:kdc_tcp_ports],
+              },
+            )
             }
           end
 
@@ -77,11 +80,13 @@ describe 'krb5::kdc::realm' do
             let(:params) { { kdc_ports: [2000, 1234] } }
 
             it {
-              expect(subject).to create_iptables__listen__udp(%(#{title}_allow_kdc)).with({
-                                                                                            order: 11,
-                                                                                            trusted_nets: ['1.2.3.4/32'],
-                                                                                            dports: params[:kdc_ports]
-                                                                                          })
+              is_expected.to create_iptables__listen__udp(%(#{title}_allow_kdc)).with(
+              {
+                order: 11,
+                trusted_nets: ['1.2.3.4/32'],
+                dports: params[:kdc_ports]
+              },
+            )
             }
           end
 

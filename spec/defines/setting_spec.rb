@@ -19,7 +19,7 @@ describe 'krb5::setting' do
         let(:params) { { value: 'bar' } }
 
         it {
-          expect(subject).to create_file(
+          is_expected.to create_file(
             '/etc/krb5.conf.simp.d/libdefaults-test_option__setting',
           ).with_content(
             %r{\[libdefaults\]\n  test_option = bar},
