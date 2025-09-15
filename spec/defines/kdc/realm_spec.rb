@@ -31,7 +31,7 @@ describe 'krb5::kdc::realm' do
         let(:facts) do
           # to workaround service provider issues related to masking haveged
           # when tests are run on GitLab runners which are docker containers
-          os_facts.merge({ :haveged__rngd_enabled => false })
+          os_facts.merge({ haveged__rngd_enabled: false })
         end
 
         let(:pre_condition) { 'include krb5::kdc' }
@@ -58,29 +58,29 @@ describe 'krb5::kdc::realm' do
 
         context 'with firewall = true and initialize = true' do
           let(:hieradata) { 'firewall' }
-          let(:params) { { :initialize => true, :auto_principal => 'auto_principal_bob' } }
+          let(:params) { { initialize: true, auto_principal: 'auto_principal_bob' } }
 
           it_behaves_like 'common realm config'
           context 'with tcp ports' do
-            let(:params) { { :kdc_tcp_ports => [2000, 1234] } }
+            let(:params) { { kdc_tcp_ports: [2000, 1234] } }
 
             it {
               expect(subject).to create_iptables__listen__tcp_stateful(%(#{title}_allow_kdc)).with({
-                                                                                                     :order => 11,
-                                                                                                     :trusted_nets => ['1.2.3.4/32'],
-                                                                                                     :dports => params[:kdc_tcp_ports]
+                                                                                                     order: 11,
+                                                                                                     trusted_nets: ['1.2.3.4/32'],
+                                                                                                     dports: params[:kdc_tcp_ports]
                                                                                                    })
             }
           end
 
           context 'with udp ports' do
-            let(:params) { { :kdc_ports => [2000, 1234] } }
+            let(:params) { { kdc_ports: [2000, 1234] } }
 
             it {
               expect(subject).to create_iptables__listen__udp(%(#{title}_allow_kdc)).with({
-                                                                                            :order => 11,
-                                                                                            :trusted_nets => ['1.2.3.4/32'],
-                                                                                            :dports => params[:kdc_ports]
+                                                                                            order: 11,
+                                                                                            trusted_nets: ['1.2.3.4/32'],
+                                                                                            dports: params[:kdc_ports]
                                                                                           })
             }
           end

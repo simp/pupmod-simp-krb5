@@ -10,13 +10,13 @@ Puppet::Type.newtype(:krb5_acl) do
   def initialize(args)
     super
     found_resource = nil
-    unless catalog.resources.select { |r|
+    unless catalog.resources.none? do |r|
       r.is_a?(Puppet::Type.type(:krb5_acl)) &&
       (r[:target] == self[:target]) &&
       (r[:principal] == self[:principal]) &&
       (r[:operation_target] == self[:operation_target]) &&
       (found_resource = r)
-    }.empty?
+    end
       msg = "Duplicate declaration: Krb5_acl with target='#{self[:target]}', principal='#{self[:principal]}', and operation_target='#{self[:operation_target]}' is already declared"
 
       msg << " in file #{found_resource.file} at line #{found_resource.line}" if found_resource.file && found_resource.line
@@ -98,7 +98,7 @@ Puppet::Type.newtype(:krb5_acl) do
           raise Puppet::Error, "'operation_target' does not contain a valid regex"
         end
       else
-        if value =~ %r{[!@#$%^&*()+=]}
+        if %r{[!@#$%^&*()+=]}.match?(value)
           raise Puppet::Error, "'operation_target' does not look like a valid Kerberos 5 principal."
         end
 
@@ -125,7 +125,6 @@ Puppet::Type.newtype(:krb5_acl) do
       end
     end
 
-    # rubocop:disable Naming/MethodParameterName
     def insync?(is)
       is == @should.join
     end

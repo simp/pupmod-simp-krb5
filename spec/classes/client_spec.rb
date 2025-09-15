@@ -14,7 +14,7 @@ describe 'krb5::client' do
         let(:facts) do
           # to workaround service provider issues related to masking haveged
           # when tests are run on GitLab runners which are docker containers
-          os_facts.merge({ :haveged__rngd_enabled => false })
+          os_facts.merge({ haveged__rngd_enabled: false })
         end
 
         context 'with default parameters' do
@@ -38,7 +38,7 @@ describe 'krb5::client' do
         context 'when passed a custom set of realms' do
           let(:params) do
             {
-              :realms => {
+              realms: {
                 'realm.one' => {
                   'admin_server' => 'admin.server.one'
                 },

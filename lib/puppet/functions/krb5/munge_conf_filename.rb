@@ -11,7 +11,7 @@ Puppet::Functions.create_function(:'krb5::munge_conf_filename') do
 
   def munge_conf_filename(name)
     filename = name.strip.split('').map { |chr|
-      if chr =~ %r{^[A-Za-z0-9_-]$}
+      if %r{^[A-Za-z0-9_-]$}.match?(chr)
         chr
       else
         '-'

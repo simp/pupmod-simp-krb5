@@ -10,11 +10,11 @@ describe 'krb5 class' do
       let(:manifest) { %(include 'krb5') }
 
       it 'works with no errors' do
-        apply_manifest_on(host, manifest, :catch_failures => true)
+        apply_manifest_on(host, manifest, catch_failures: true)
       end
 
       it 'is idempotent' do
-        apply_manifest_on(host, manifest, { :catch_changes => true })
+        apply_manifest_on(host, manifest, { catch_changes: true })
       end
 
       ['krb5-workstation', 'pam_krb5'].each do |pkg|
@@ -31,7 +31,7 @@ describe 'krb5 class' do
 
       it 'setups a default realm' do
         domain = fact_on(host, 'domain')
-        on(host, "cat /etc/krb5.conf.simp.d/domain_realm-#{domain.gsub('.', '-')}__setting") do
+        on(host, "cat /etc/krb5.conf.simp.d/domain_realm-#{domain.tr('.', '-')}__setting") do
           expect(stdout).to match(%r{\[domain_realm\]\n\s+#{domain} = #{domain.upcase}}m)
         end
       end
@@ -47,11 +47,11 @@ describe 'krb5 class' do
       end
 
       it 'works with no errors' do
-        apply_manifest_on(host, manifest, :catch_failures => true)
+        apply_manifest_on(host, manifest, catch_failures: true)
       end
 
       it 'is idempotent' do
-        apply_manifest_on(host, manifest, { :catch_changes => true })
+        apply_manifest_on(host, manifest, { catch_changes: true })
       end
 
       ['krb5kdc', 'kadmin'].each do |svc|
@@ -78,7 +78,7 @@ describe 'krb5 class' do
 
     context 'when acting as a client' do
       it 'does not have any initial tickets' do
-        on(host, 'klist', :acceptable_exit_codes => [1])
+        on(host, 'klist', acceptable_exit_codes: [1])
       end
 
       it 'is able to get a ticket' do

@@ -60,9 +60,9 @@ describe provider_class do
   let(:resource) do
     Puppet::Type.type(:krb5kdc_auto_keytabs).new(
       {
-        :name => '__default__',
-        :realms => test_realm,
-        :provider => described_class.name
+        name: '__default__',
+        realms: test_realm,
+        provider: described_class.name
       },
     )
   end
@@ -80,23 +80,19 @@ describe provider_class do
     allow(provider).to receive(:execute).with(%r{add_principal}).and_return(add_principal)
     allow(provider).to receive(:execute).with(%r{ktadd}).and_return(add_keytab)
 
-    allow(provider).to receive(:introspect_hosts).and_return([test_host])
-    allow(provider).to receive(:clean_files).and_return(true)
+    allow(provider).to receive_messages(introspect_hosts: [test_host], clean_files: true)
 
     allow(File).to receive(:exist?).with(%r{\.keytab}).and_return(true)
     allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(false)
     allow(File).to receive(:open).with(%r{\.kvno}, 'w').and_return(true)
 
-    allow(FileUtils).to receive(:mkdir_p).and_return(true)
-    allow(FileUtils).to receive(:chmod).and_return(true)
-    allow(FileUtils).to receive(:chown).and_return(true)
-    allow(FileUtils).to receive(:mv).and_return(true)
+    allow(FileUtils).to receive_messages(mkdir_p: true, chmod: true, chown: true, mv: true)
   end
 
   context 'when generating keytabs' do
     it 'does not have any errors' do
       expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
-      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
+      expect(provider).not_to receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -108,8 +104,8 @@ describe provider_class do
       allow(File).to receive(:exist?).with(%r{\.kvno}).and_return(true)
       allow(File).to receive(:read).with(%r{\.kvno}).and_return("1\n1\n")
 
-      expect(provider).to_not receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
-      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
+      expect(provider).not_to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}})
+      expect(provider).not_to receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -122,7 +118,7 @@ describe provider_class do
       allow(File).to receive(:read).with(%r{\.kvno}).and_return("1\n2\n")
 
       expect(provider).to receive(:execute).with(%r{ktadd.*.+/#{test_host}@#{test_realm}}).once
-      expect(provider).to_not receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
+      expect(provider).not_to receive(:execute).with(%r{add_principal.*.+/#{test_host}@#{test_realm}})
 
       provider.exists?
       provider.sync_keytabs
@@ -151,10 +147,10 @@ describe provider_class do
     let(:resource) do
       Puppet::Type.type(:krb5kdc_auto_keytabs).new(
         {
-          :name => '__default__',
-          :all_known => true,
-          :realms => test_realm,
-          :provider => described_class.name
+          name: '__default__',
+          all_known: true,
+          realms: test_realm,
+          provider: described_class.name
         },
       )
     end

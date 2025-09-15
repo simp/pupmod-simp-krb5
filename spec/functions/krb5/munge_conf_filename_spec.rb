@@ -7,7 +7,7 @@ describe 'krb5::munge_conf_filename' do
     'libdefaults:test_option' => 'libdefaults-test_option',
     ' section-174 ' => 'section-174',
     'section foo' => 'section-foo',
-    'section.foo' => 'section-foo',  # TODO: why are dots not allowed in filename?
+    'section.foo' => 'section-foo', # TODO: why are dots not allowed in filename?
     'section/foo' => 'section-foo',
     'section\foo' => 'section-foo',
     'section[foo]' => 'section-foo-',

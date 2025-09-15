@@ -26,7 +26,7 @@ describe 'krb5' do
         let(:facts) do
           # to workaround service provider issues related to masking haveged
           # when tests are run on GitLab runners which are docker containers
-          os_facts.merge({ :haveged__rngd_enabled => false })
+          os_facts.merge({ haveged__rngd_enabled: false })
         end
 
         context 'with default parameters' do
@@ -36,7 +36,7 @@ describe 'krb5' do
         end
 
         context 'with haveged => true' do
-          let(:params) { { :haveged => true } }
+          let(:params) { { haveged: true } }
 
           it_behaves_like 'common config'
           it { is_expected.to contain_class('haveged') }

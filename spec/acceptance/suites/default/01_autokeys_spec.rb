@@ -43,11 +43,11 @@ describe 'krb5 class autokeys' do
 
       it 'works with no errors' do
         set_hieradata_on(host, hieradata)
-        apply_manifest_on(host, manifest, :catch_failures => true)
+        apply_manifest_on(host, manifest, catch_failures: true)
       end
 
       it 'is idempotent' do
-        apply_manifest_on(host, manifest, { :catch_changes => true })
+        apply_manifest_on(host, manifest, { catch_changes: true })
       end
 
       it 'creates keytabs for the hosts' do
@@ -62,7 +62,7 @@ describe 'krb5 class autokeys' do
       it 'creates keytabs for the hosts in the krb5 site_files space if it exists' do
         on(host, %(mkdir -p "/var/simp/environments/production/site_files/krb5_files/files"))
 
-        apply_manifest_on(host, manifest, :catch_failures => true)
+        apply_manifest_on(host, manifest, catch_failures: true)
 
         ['fake_host1.some.domain', 'fake_host2.some.domain'].each do |hname|
           host_principals = on(host, %(kadmin.local -q 'list_principals')).stdout.strip.split("\n").join(':')
@@ -89,7 +89,7 @@ describe 'krb5 class autokeys' do
           HIERADATA
 
         set_hieradata_on(host, hieradata)
-        apply_manifest_on(host, manifest, :catch_failures => true)
+        apply_manifest_on(host, manifest, catch_failures: true)
 
         on(host, %(ls /var/simp/environments/production/site_files/krb5_files/files/keytabs/cool_test_bro/krb5.keytab))
       end
