@@ -12,7 +12,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
       them if necessary
   DESC
 
-  commands :kadmin => 'kadmin.local'
+  commands kadmin: 'kadmin.local'
 
   def exists?
     require 'fileutils'
@@ -74,7 +74,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
           host_hash[host_name] ||= {
             'ensure' => 'present',
             'realms' => Array(host_realm),
-            'services' => (Array(host_svc) + global_services).uniq
+            'services' => (Array(host_svc) + global_services).uniq,
           }
         end
       end
@@ -88,7 +88,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
         host_hash[host] = {
           'ensure' => 'present',
           'realms' => target_realms,
-          'services' => global_services
+          'services' => global_services,
         }
       end
     end
@@ -147,10 +147,10 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
 
         if must_generate || must_create
           @principals_to_process[host_principal] = {
-            :vno_file => kvno_file,
-            :vnos => principal_vnos,
-            :tmp_keytab => host_tmp_keytab,
-            :keytab => host_keytab
+            vno_file: kvno_file,
+            vnos: principal_vnos,
+            tmp_keytab: host_tmp_keytab,
+            keytab: host_keytab,
           }
         end
         if must_create
@@ -257,7 +257,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
         next if Dir.glob('/*').include?(path)
 
         # If we have a keytab, remove us
-        if path =~ %r{keytab$}
+        if %r{keytab$}.match?(path)
           FileUtils.rm_rf(file)
           break
         end

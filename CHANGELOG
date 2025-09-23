@@ -1,3 +1,6 @@
+* Wed Jun 11 2025 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.8.1
+- Fix rubocop issues
+
 * Fri Sep 13 2024 Steven Pritchard <steve@sicura.us> - 7.8.0
 - [puppetsync] Update module dependencies to support simp-iptables 7.x
 

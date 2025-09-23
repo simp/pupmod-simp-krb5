@@ -9,27 +9,27 @@ describe 'krb5::setting::realm' do
         let(:facts) do
           # to workaround service provider issues related to masking haveged
           # when tests are run on GitLab runners which are docker containers
-          os_facts.merge({ :haveged__rngd_enabled => false })
+          os_facts.merge({ haveged__rngd_enabled: false })
         end
 
         let(:pre_condition) { 'include krb5' }
 
         let(:title) { 'myrealm' }
 
+        let(:realm_resource_name) { %(/etc/krb5.conf.simp.d/#{title}__realm) }
+
         let(:params) do
           {
-            :admin_server => facts[:networking][:hostname]
+            admin_server: facts[:networking][:hostname],
           }
         end
 
         it { is_expected.to compile.with_all_deps }
 
+        it { is_expected.to create_file(realm_resource_name) }
+
         it {
-          resource_name = %(/etc/krb5.conf.simp.d/#{title}__realm)
-
-          expect(subject).to create_file(resource_name)
-
-          file_content = catalogue.resource(%(File[#{resource_name}]))[:content].dup.split("\n")
+          file_content = catalogue.resource(%(File[#{realm_resource_name}]))[:content].dup.split("\n")
 
           expect(file_content).not_to be_empty
 
