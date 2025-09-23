@@ -13,10 +13,10 @@ gem_sources.each { |gem_source| source gem_source }
 group :syntax do
   gem 'metadata-json-lint'
   gem 'puppet-lint-trailing_comma-check', require: false
-  gem 'rubocop', '~> 1.68.0'
-  gem 'rubocop-performance', '~> 1.23.0'
-  gem 'rubocop-rake', '~> 0.6.0'
-  gem 'rubocop-rspec', '~> 3.2.0'
+  gem 'rubocop', '~> 1.80.0'
+  gem 'rubocop-performance', '~> 1.26.0'
+  gem 'rubocop-rake', '~> 0.7.0'
+  gem 'rubocop-rspec', '~> 3.7.0'
 end
 
 group :test do
@@ -31,7 +31,7 @@ group :test do
   gem 'rake'
   gem 'rspec'
   gem 'rspec-puppet'
-  gem 'simp-rake-helpers', ENV.fetch('SIMP_RAKE_HELPERS_VERSION', '>= 5.23.0')
+  gem 'simp-rake-helpers', ENV.fetch('SIMP_RAKE_HELPERS_VERSION', '~> 5.23.0')
   gem 'simp-rspec-puppet-facts', ENV.fetch('SIMP_RSPEC_PUPPET_FACTS_VERSION', '~> 3.7')
 end
 

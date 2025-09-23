@@ -40,13 +40,13 @@ describe 'krb5::client' do
             {
               realms: {
                 'realm.one' => {
-                  'admin_server' => 'admin.server.one'
+                  'admin_server' => 'admin.server.one',
                 },
                 'realm.two' => {
                   'admin_server' => 'admin.server.two',
-                  'kdc' => 'kdc.server.two'
-                }
-              }
+                  'kdc' => 'kdc.server.two',
+                },
+              },
             }
           end
 

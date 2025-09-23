@@ -62,7 +62,7 @@ describe provider_class do
       {
         name: '__default__',
         realms: test_realm,
-        provider: described_class.name
+        provider: described_class.name,
       },
     )
   end
@@ -150,7 +150,7 @@ describe provider_class do
           name: '__default__',
           all_known: true,
           realms: test_realm,
-          provider: described_class.name
+          provider: described_class.name,
         },
       )
     end

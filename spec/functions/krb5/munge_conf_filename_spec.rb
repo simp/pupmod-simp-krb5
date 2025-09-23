@@ -12,7 +12,7 @@ describe 'krb5::munge_conf_filename' do
     'section\foo' => 'section-foo',
     'section[foo]' => 'section-foo-',
     'section<foo>' => 'section-foo-',
-    '-`~!@#$%^&*()+={};\'",?|' => '_----------------------'
+    '-`~!@#$%^&*()+={};\'",?|' => '_----------------------',
   }
 
   context 'with valid input' do

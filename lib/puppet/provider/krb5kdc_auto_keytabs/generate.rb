@@ -74,7 +74,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
           host_hash[host_name] ||= {
             'ensure' => 'present',
             'realms' => Array(host_realm),
-            'services' => (Array(host_svc) + global_services).uniq
+            'services' => (Array(host_svc) + global_services).uniq,
           }
         end
       end
@@ -88,7 +88,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
         host_hash[host] = {
           'ensure' => 'present',
           'realms' => target_realms,
-          'services' => global_services
+          'services' => global_services,
         }
       end
     end
@@ -150,7 +150,7 @@ Puppet::Type.type(:krb5kdc_auto_keytabs).provide :generate do
             vno_file: kvno_file,
             vnos: principal_vnos,
             tmp_keytab: host_tmp_keytab,
-            keytab: host_keytab
+            keytab: host_keytab,
           }
         end
         if must_create

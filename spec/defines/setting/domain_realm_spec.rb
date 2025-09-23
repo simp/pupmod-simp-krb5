@@ -18,7 +18,7 @@ describe 'krb5::setting::domain_realm' do
 
         let(:params) do
           {
-            realm: 'test.net'
+            realm: 'test.net',
           }
         end
 

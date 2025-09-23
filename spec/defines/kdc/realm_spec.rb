@@ -84,7 +84,7 @@ describe 'krb5::kdc::realm' do
               {
                 order: 11,
                 trusted_nets: ['1.2.3.4/32'],
-                dports: params[:kdc_ports]
+                dports: params[:kdc_ports],
               },
             )
             }

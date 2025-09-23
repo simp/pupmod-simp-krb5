@@ -153,7 +153,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     defaultto(Facter.value(:networking)['domain'])
 
     validate do |value|
-      unless (value.is_a?(String) || value.is_a?(Array)) || Array(value).count { |x| !x.is_a?(String) }.zero?
+      unless (value.is_a?(String) || value.is_a?(Array)) || Array(value).none? { |x| !x.is_a?(String) }
         raise(Puppet::Error, "'$realms' must be a String or Array of Strings, not '#{value.class}'")
       end
     end
@@ -169,7 +169,7 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
     DESC
 
     validate do |value|
-      unless (value.is_a?(String) || value.is_a?(Array)) || Array(value).count { |x| !x.is_a?(String) }.zero?
+      unless (value.is_a?(String) || value.is_a?(Array)) || Array(value).none? { |x| !x.is_a?(String) }
         raise(Puppet::Error, "'$global_services' must be a String or Array, not '#{value.class}'")
       end
     end
@@ -206,11 +206,11 @@ Puppet::Type.newtype(:krb5kdc_auto_keytabs) do
           raise(Puppet::Error, "'#{host} => 'ensure' must be either 'absent' or 'present'")
         end
 
-        if value[host]['realms'] && (Array(value[host]['realms']).count { |x| !x.is_a?(String) } != 0)
+        if value[host]['realms'] && Array(value[host]['realms']).any? { |x| !x.is_a?(String) }
           raise(Puppet::Error, "'#{host} => 'realms' must be an Array of Strings")
         end
 
-        if value[host]['services'] && (Array(value[host]['services']).count { |x| !x.is_a?(String) } != 0)
+        if value[host]['services'] && Array(value[host]['services']).any? { |x| !x.is_a?(String) }
           raise(Puppet::Error, "'#{host} => 'services' must be an Array of Strings")
         end
       end

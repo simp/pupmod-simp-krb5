@@ -70,8 +70,8 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
           name: '/var/kerberos/krb5kdc/auto_keytabs',
           hosts: {
             'foo.bar.baz' => {
-              'ensure' => 'present'
-            }
+              'ensure' => 'present',
+            },
           },
         )
       }.not_to raise_error
@@ -83,8 +83,8 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
           name: '/var/kerberos/krb5kdc/auto_keytabs',
           hosts: {
             'foo.bar.baz' => {
-              'ensure' => 'garbage'
-            }
+              'ensure' => 'garbage',
+            },
           },
         )
       }.to raise_error(%r{must be})
@@ -97,8 +97,8 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
           hosts: {
             'foo.bar.baz' => {
               'ensure' => 'present',
-              'realms' => ['FOO', 'BAR']
-            }
+              'realms' => ['FOO', 'BAR'],
+            },
           },
         )
       }.not_to raise_error
@@ -111,8 +111,8 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
           hosts: {
             'foo.bar.baz' => {
               'ensure' => 'present',
-              'services' => ['nfs', 'dns']
-            }
+              'services' => ['nfs', 'dns'],
+            },
           },
         )
       }.not_to raise_error
@@ -125,8 +125,8 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
           hosts: {
             'foo.bar.baz' => {
               'ensure' => 'present',
-              'realms' => ['realm', 'ReAlm2', 'REALM3']
-            }
+              'realms' => ['realm', 'ReAlm2', 'REALM3'],
+            },
           },
         )[:hosts]['foo.bar.baz']['realms'],
       ).to eql(['REALM', 'REALM2', 'REALM3'])

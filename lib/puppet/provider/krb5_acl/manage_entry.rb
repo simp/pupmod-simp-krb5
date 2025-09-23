@@ -12,7 +12,7 @@ Puppet::Type.type(:krb5_acl).provide :manage_entry do
     # Original Content
     old_acl = []
 
-    operation_mask = Array(@resource[:operation_mask]).flatten.join
+    operation_mask = Array(@resource[:operation_mask]).join
 
     new_rule = if @resource[:operation_target] == 'undef'
                  "#{@resource[:principal]} #{operation_mask}"
