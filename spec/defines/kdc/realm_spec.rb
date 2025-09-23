@@ -67,12 +67,12 @@ describe 'krb5::kdc::realm' do
 
             it {
               is_expected.to create_iptables__listen__tcp_stateful(%(#{title}_allow_kdc)).with(
-              {
-                order: 11,
-                trusted_nets: ['1.2.3.4/32'],
-                dports: params[:kdc_tcp_ports],
-              },
-            )
+                {
+                  order: 11,
+                  trusted_nets: ['1.2.3.4/32'],
+                  dports: params[:kdc_tcp_ports],
+                },
+              )
             }
           end
 
@@ -81,12 +81,12 @@ describe 'krb5::kdc::realm' do
 
             it {
               is_expected.to create_iptables__listen__udp(%(#{title}_allow_kdc)).with(
-              {
-                order: 11,
-                trusted_nets: ['1.2.3.4/32'],
-                dports: params[:kdc_ports],
-              },
-            )
+                {
+                  order: 11,
+                  trusted_nets: ['1.2.3.4/32'],
+                  dports: params[:kdc_ports],
+                },
+              )
             }
           end
 
