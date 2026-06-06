@@ -118,7 +118,6 @@ Puppet::Type.type(:krb5_acl).provide :manage_entry do
 
   def operation_mask=(_should)
     mod_target('modify')
-    # rubocop:disable Lint/Void
     nil
     # rubocop:enable Lint/Void
   end
