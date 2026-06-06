@@ -1,3 +1,6 @@
+* Sat Jun 06 2026 Steven Pritchard <steve@sicura.us> - 7.8.2
+- Additional cleanup for rubocop
+
 * Wed Jun 11 2025 Chris Tessmer <chris.tessmer@onyxpoint.com> - 7.8.1
 - Fix rubocop issues
 
