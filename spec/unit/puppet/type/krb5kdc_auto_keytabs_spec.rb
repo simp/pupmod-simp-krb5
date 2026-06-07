@@ -142,9 +142,8 @@ describe Puppet::Type.type(:krb5kdc_auto_keytabs) do
       expect { krb5kdc_auto_keytabs }.not_to raise_error
     end
 
-    auto_dir = '/var/kerberos/krb5kdc/generated_keytabs'
-    it "translates __default__ to #{auto_dir}" do
-      expect(krb5kdc_auto_keytabs[:name]).to eql(auto_dir)
+    it 'translates __default__ to /var/kerberos/krb5kdc/generated_keytabs' do
+      expect(krb5kdc_auto_keytabs[:name]).to eql('/var/kerberos/krb5kdc/generated_keytabs')
     end
   end
 end

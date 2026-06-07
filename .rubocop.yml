@@ -33,6 +33,9 @@ RSpec/HookArgument:
 RSpec/DescribeSymbol:
   Exclude:
     - spec/unit/facter/**/*.rb
+RSpec/MatchWithSimpleRegex:
+  Exclude:
+    - spec/acceptance/**/*.rb
 Style/BlockDelimiters:
   Description:
     Prefer braces for chaining. Mostly an aesthetical choice. Better to
