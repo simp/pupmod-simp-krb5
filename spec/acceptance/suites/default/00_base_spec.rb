@@ -24,16 +24,14 @@ describe 'krb5 class' do
       end
 
       it 'manages /etc/krb5.conf' do
-        on(host, 'cat /etc/krb5.conf') do
-          expect(stdout).to match(%r{This file managed by Puppet})
-        end
+        result = on(host, 'cat /etc/krb5.conf')
+        expect(result.stdout).to match(%r{This file managed by Puppet})
       end
 
       it 'setups a default realm' do
-        domain = fact_on(host, 'domain')
-        on(host, "cat /etc/krb5.conf.simp.d/domain_realm-#{domain.tr('.', '-')}__setting") do
-          expect(stdout).to match(%r{\[domain_realm\]\n\s+#{domain} = #{domain.upcase}}m)
-        end
+        domain = fact_on(host, 'networking.domain')
+        result = on(host, "cat /etc/krb5.conf.simp.d/domain_realm-#{domain.tr('.', '-')}__setting")
+        expect(result.stdout).to match(%r{\[domain_realm\]\n\s+#{domain} = #{domain.upcase}}m)
       end
     end
 
@@ -56,23 +54,20 @@ describe 'krb5 class' do
 
       ['krb5kdc', 'kadmin'].each do |svc|
         it "is running service #{svc}" do
-          on(host, "puppet resource service #{svc}") do
-            expect(stdout).to match(%r{ensure\s*=> 'running'})
-            expect(stdout).to match(%r{enable\s*=> '?true'?})
-          end
+          result = on(host, "puppet resource service #{svc}")
+          expect(result.stdout).to match(%r{ensure\s*=> 'running'})
+          expect(result.stdout).to match(%r{enable\s*=> '?true'?})
         end
       end
 
       it 'manages /var/kerberos/krb5kdc/kdc.conf' do
-        on(host, 'cat /var/kerberos/krb5kdc/kdc.conf') do
-          expect(stdout).to match(%r{This file managed by Puppet})
-        end
+        result = on(host, 'cat /var/kerberos/krb5kdc/kdc.conf')
+        expect(result.stdout).to match(%r{This file managed by Puppet})
       end
 
       it 'manages /var/kerberos/krb5kdc/kdc.conf.simp.d/kdcdefaults-kdc_ports__setting' do
-        on(host, 'cat /var/kerberos/krb5kdc/kdc.conf.simp.d/kdcdefaults-kdc_ports__setting') do
-          expect(stdout).to match(%r{\[kdcdefaults\]\n\s+kdc_ports = 88,750}m)
-        end
+        result = on(host, 'cat /var/kerberos/krb5kdc/kdc.conf.simp.d/kdcdefaults-kdc_ports__setting')
+        expect(result.stdout).to match(%r{\[kdcdefaults\]\n\s+kdc_ports = 88,750}m)
       end
     end
 
