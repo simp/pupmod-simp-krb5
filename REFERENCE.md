@@ -161,7 +161,7 @@ Data type: `String`
 
 Default realm to which to bind.
 
-Default value: `inline_template('<%= @domain.upcase %>')`
+Default value: `upcase($facts['networking']['domain'])`
 
 ##### <a name="-krb5--config--realm_domains"></a>`realm_domains`
 
@@ -272,6 +272,8 @@ Data type: `Array[String[1]]`
 The list of pakages to install
 
 * Provided by module data
+
+Default value: `['krb5-workstation']`
 
 ##### <a name="-krb5--install--ensure"></a>`ensure`
 
