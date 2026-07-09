@@ -26,9 +26,8 @@ class krb5 (
   Boolean       $ldap     = simplib::lookup('simp_options::ldap', { 'default_value' => false }),
   Boolean       $firewall = simplib::lookup('simp_options::firewall', { 'default_value' => false }),
   Boolean       $haveged  = simplib::lookup('simp_options::haveged', { 'default_value' => true }),
-  Array[String] $enctypes = [ 'aes256-cts-hmac-sha1-96', 'aes128-cts-hmac-sha1-96' ]
-){
-
+  Array[String] $enctypes = ['aes256-cts-hmac-sha1-96', 'aes128-cts-hmac-sha1-96']
+) {
   simplib::assert_metadata($module_name)
 
   contain 'krb5::install'

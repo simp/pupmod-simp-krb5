@@ -34,7 +34,6 @@ class krb5::kdc::firewall (
   Array[Simplib::Port] $kadmind_udp_ports = [464],
   Array[Simplib::Port] $kadmind_tcp_ports = [464, 749]
 ) {
-
   assert_private()
 
   simplib::assert_optional_dependency($module_name, 'simp/iptables')

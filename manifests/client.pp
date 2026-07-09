@@ -35,7 +35,7 @@ class krb5::client (
   }
 
   if empty($realms) and $_use_default {
-    $_default_kdc = simplib::lookup('simp_options::puppet::server', { 'default_value' => $server_facts ? { undef => undef, default => $server_facts['servername'] }})
+    $_default_kdc = simplib::lookup('simp_options::puppet::server', { 'default_value' => $server_facts ? { undef => undef, default => $server_facts['servername'] } })
 
     if !$_default_kdc {
       fail('Could not determine an appropriate default KDC, please specify the "$realms" hash manually')

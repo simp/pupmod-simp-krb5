@@ -20,7 +20,6 @@ define krb5::setting::domain_realm (
   String               $ensure = 'present',
   Stdlib::Absolutepath $target = pick(getvar('krb5::config::config_dir'), '/etc/krb5.conf.d')
 ) {
-
   if !defined(Class['krb5']) {
     fail('You must include krb5 before using krb5::setting::domain_realm')
   }

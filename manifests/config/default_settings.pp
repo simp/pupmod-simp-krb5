@@ -4,7 +4,6 @@
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 class krb5::config::default_settings {
-
   assert_private()
 
   krb5::setting { 'libdefaults:default_realm':          value => $krb5::config::default_realm }

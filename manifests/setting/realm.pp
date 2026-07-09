@@ -20,6 +20,9 @@
 #     RULE:<exp>
 #     DEFAULT
 # @param target  The path to the Puppet managed config files.
+# @param owner  The owner of the target realm config file.
+# @param group  The group owner of the target realm config file.
+# @param mode  The permissions on the target realm config file.
 #
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
@@ -36,7 +39,6 @@ define krb5::setting::realm (
   String                  $group               = 'root',
   String                  $mode                = '0644'
 ) {
-
   if !defined(Class['krb5']) {
     fail('You must include krb5 before using krb5::setting::realm')
   }

@@ -88,7 +88,7 @@ Data type: `Array[String]`
 
 An Array of default permitted encryption types
 
-Default value: `[ 'aes256-cts-hmac-sha1-96', 'aes128-cts-hmac-sha1-96' ]`
+Default value: `['aes256-cts-hmac-sha1-96', 'aes128-cts-hmac-sha1-96']`
 
 ### <a name="krb5--client"></a>`krb5::client`
 
@@ -170,7 +170,7 @@ Data type: `Array[String]`
 Array of domains bound to the default realm set
 in $default_realm.
 
-Default value: `[ ".${facts['networking']['domain']}", $facts['networking']['domain'] ]`
+Default value: `[".${facts['networking']['domain']}", $facts['networking']['domain']]`
 
 ##### <a name="-krb5--config--dns_lookup_realm"></a>`dns_lookup_realm`
 
@@ -548,9 +548,9 @@ Data type:
 
 ```puppet
 Hash[String,
-    Struct[{'ensure'             => Enum['absent','present'],
-            Optional['realms']   => Array[String],
-            Optional['services'] => Array[String]
+    Struct[{ 'ensure'             => Enum['absent','present'],
+      Optional['realms']   => Array[String],
+      Optional['services'] => Array[String]
     }]
   ]
 ```
@@ -781,7 +781,7 @@ The following parameters are available in the `krb5::keytab` class:
 
 ##### <a name="-krb5--keytab--keytab_source"></a>`keytab_source`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The `File` resource compatible source for the system keytab
 
@@ -789,7 +789,7 @@ Default value: `"puppet:///modules/krb5_files/keytabs/${facts['networking']['fqd
 
 ##### <a name="-krb5--keytab--owner"></a>`owner`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The keytab file owner
 
@@ -797,7 +797,7 @@ Default value: `'root'`
 
 ##### <a name="-krb5--keytab--group"></a>`group`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The keytab file group
 
@@ -805,7 +805,7 @@ Default value: `'root'`
 
 ##### <a name="-krb5--keytab--mode"></a>`mode`
 
-Data type: `Any`
+Data type: `String[1]`
 
 The keytab file mode
 
@@ -880,9 +880,9 @@ Default value:
 
 ```puppet
 pick(
-                                                                    getvar('krb5::kdc::trusted_nets'),
-                                                                    simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1']})
-                                                                  )
+    getvar('krb5::kdc::trusted_nets'),
+    simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1'] })
+  )
 ```
 
 ##### <a name="-krb5--kdc--realm--acl_file"></a>`acl_file`
@@ -1045,7 +1045,7 @@ Data type: `Array[String]`
 
 The default key/salt combinations for this realm.
 
-Default value: `[ 'aes256-cts:normal', 'aes128-cts:normal' ]`
+Default value: `['aes256-cts:normal', 'aes128-cts:normal']`
 
 ##### <a name="-krb5--kdc--realm--reject_bad_transit"></a>`reject_bad_transit`
 
@@ -1282,7 +1282,7 @@ Default value: `pick(getvar('krb5::config::config_dir'), '/etc/krb5.conf.d')`
 
 Data type: `String`
 
-
+The owner of the target realm config file.
 
 Default value: `'root'`
 
@@ -1290,7 +1290,7 @@ Default value: `'root'`
 
 Data type: `String`
 
-
+The group owner of the target realm config file.
 
 Default value: `'root'`
 
@@ -1298,7 +1298,7 @@ Default value: `'root'`
 
 Data type: `String`
 
-
+The permissions on the target realm config file.
 
 Default value: `'0644'`
 

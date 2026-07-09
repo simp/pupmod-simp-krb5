@@ -17,12 +17,11 @@
 # @author Trevor Vaughan <tvaughan@onyxpoint.com>
 #
 class krb5::keytab (
-  $keytab_source = "puppet:///modules/krb5_files/keytabs/${facts['networking']['fqdn']}",
-  $owner         = 'root',
-  $group         = 'root',
-  $mode          = '0400'
-){
-
+  String[1] $keytab_source = "puppet:///modules/krb5_files/keytabs/${facts['networking']['fqdn']}",
+  String[1] $owner         = 'root',
+  String[1] $group         = 'root',
+  String[1] $mode          = '0400'
+) {
   file { '/etc/krb5_keytabs':
     ensure  => 'directory',
     owner   => 'root',

@@ -41,7 +41,6 @@ class krb5::kdc::config (
   Array[Simplib::Port] $kdc_ports     = [88, 750],
   Array[Simplib::Port] $kdc_tcp_ports = [88, 750]
 ) inherits krb5::kdc {
-
   assert_private()
 
   $_trusted_nets = getvar('krb5::kdc::trusted_nets')

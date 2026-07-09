@@ -37,7 +37,6 @@ define krb5::setting (
   String               $filemode = '0644',
   String               $seltype  = 'krb5_conf_t'
 ) {
-
   if !defined(Class['krb5']) {
     fail('You must include krb5 before using krb5::setting')
   }
@@ -58,7 +57,7 @@ define krb5::setting (
     group   => 'root',
     mode    => $filemode,
     seltype => $seltype,
-    content =>"[${_section}]\n  ${_key} = ${value}\n"
+    content => "[${_section}]\n  ${_key} = ${value}\n"
   }
 
   Class['krb5'] -> Krb5::Setting[$name]
