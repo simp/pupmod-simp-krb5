@@ -26,7 +26,7 @@
 class krb5::config (
   Stdlib::Absolutepath $config_dir               = '/etc/krb5.conf.simp.d',
   String               $default_realm            = upcase($facts['networking']['domain']),
-  Array[String]        $realm_domains            = [ ".${facts['networking']['domain']}", $facts['networking']['domain'] ],
+  Array[String]        $realm_domains            = [".${facts['networking']['domain']}", $facts['networking']['domain']],
   Boolean              $dns_lookup_realm         = false,
   Boolean              $dns_lookup_kdc           = true,
   String               $renew_lifetime           = '7d',
@@ -37,7 +37,6 @@ class krb5::config (
   Array[String]        $permitted_enctypes       = $krb5::enctypes,
   Boolean              $puppet_exclusive_managed = true
 ) inherits krb5 {
-
   assert_private()
 
   krb5::validate_time_duration($renew_lifetime)

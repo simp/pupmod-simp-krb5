@@ -11,16 +11,15 @@ class krb5::kdc::service (
   String  $ensure = 'running',
   Boolean $enable = true
 ) {
-
   assert_private()
 
   service { [
-    'krb5kdc',
-    'kadmin'
-  ]:
-    ensure     => $ensure,
-    enable     => $enable,
-    hasrestart => true,
-    hasstatus  => true
+      'krb5kdc',
+      'kadmin'
+    ]:
+      ensure     => $ensure,
+      enable     => $enable,
+      hasrestart => true,
+      hasstatus  => true
   }
 }

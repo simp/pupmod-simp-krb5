@@ -67,13 +67,12 @@ class krb5::kdc::auto_keytabs (
   Array[String]                  $global_services = [],
   Boolean                        $purge           = true,
   Hash[String,
-    Struct[{'ensure'             => Enum['absent','present'],
-            Optional['realms']   => Array[String],
-            Optional['services'] => Array[String]
+    Struct[{ 'ensure'             => Enum['absent','present'],
+      Optional['realms']   => Array[String],
+      Optional['services'] => Array[String]
     }]
   ]                              $hosts           = {}
 ) inherits krb5::kdc {
-
   assert_private()
 
   if $output_dir {

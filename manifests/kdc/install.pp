@@ -13,7 +13,6 @@
 class krb5::kdc::install (
   String $ensure = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
 ) inherits krb5::kdc {
-
   assert_private()
 
   package { 'krb5-server':

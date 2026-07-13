@@ -53,9 +53,9 @@ define krb5::kdc::realm (
   Boolean                        $initialize                   = false,
   String                         $auto_principal               = 'puppet_auto',
   Simplib::Netlist               $trusted_nets                 = pick(
-                                                                    getvar('krb5::kdc::trusted_nets'),
-                                                                    simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1']})
-                                                                  ),
+    getvar('krb5::kdc::trusted_nets'),
+    simplib::lookup('simp_options::trusted_nets', { 'default_value' => ['127.0.0.1'] })
+  ),
   Stdlib::Absolutepath           $acl_file                     = "/var/kerberos/krb5kdc/kadm5_${name}.acl",
   Stdlib::Absolutepath           $admin_keytab                 = "/var/kerberos/krb5kdc/kadm5_${name}.keytab",
   Optional[String]               $database_name                = undef,
@@ -74,13 +74,12 @@ define krb5::kdc::realm (
   Optional[Boolean]              $iprop_enable                 = undef,
   Optional[Integer]              $iprop_master_ulogsize        = undef,
   Optional[String]               $iprop_slave_poll             = undef,
-  Array[String]                  $supported_enctypes           = [ 'aes256-cts:normal', 'aes128-cts:normal' ],
+  Array[String]                  $supported_enctypes           = ['aes256-cts:normal', 'aes128-cts:normal'],
   Optional[Boolean]              $reject_bad_transit           = undef,
   Stdlib::Absolutepath           $config_dir                   = simplib::lookup('krb5::kdc::config_dir', { 'default_value' => '/var/kerberos/krb5kdc/kdc.conf.simp.d' }),
   String                         $ensure                       = 'present',
   Boolean                        $firewall                     = simplib::lookup('krb5::kdc::firewall', { 'default_value' => false })
 ) {
-
   if !defined(Class['krb5::kdc']) {
     fail('You must include krb5::kdc before using krb5::kdc::realm')
   }

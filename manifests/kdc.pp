@@ -76,7 +76,6 @@ class krb5::kdc (
   String               $auto_management_principal  = 'puppet_auto',
   Boolean              $auto_generate_host_keytabs = true
 ) inherits krb5 {
-
   simplib::assert_metadata($module_name)
 
   if $haveged { include 'haveged' }
