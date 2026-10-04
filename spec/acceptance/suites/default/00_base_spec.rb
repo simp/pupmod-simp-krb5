@@ -47,7 +47,7 @@ describe 'krb5 class' do
 
       it 'manages /etc/krb5.conf' do
         result = on(host, 'cat /etc/krb5.conf')
-        expect(result.stdout).to match(%r{This file managed by Puppet})
+        expect(result.stdout).to include('This file managed by Puppet')
       end
 
       it 'setups a default realm' do
@@ -84,7 +84,7 @@ describe 'krb5 class' do
 
       it 'manages /var/kerberos/krb5kdc/kdc.conf' do
         result = on(host, 'cat /var/kerberos/krb5kdc/kdc.conf')
-        expect(result.stdout).to match(%r{This file managed by Puppet})
+        expect(result.stdout).to include('This file managed by Puppet')
       end
 
       it 'manages /var/kerberos/krb5kdc/kdc.conf.simp.d/kdcdefaults-kdc_ports__setting' do
