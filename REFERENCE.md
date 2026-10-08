@@ -8,7 +8,7 @@
 
 * [`krb5`](#krb5): Kerberos 5 management and manipulation
 * [`krb5::client`](#krb5--client): A client class that will connect with the given KDC
-* [`krb5::config`](#krb5--config): **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**  Basic configuration of the MIT Kerberos 
+* [`krb5::config`](#krb5--config): **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**  Basic configuration of the MIT Kerberos
 * [`krb5::config::default_settings`](#krb5--config--default_settings): Default System Settings
 * [`krb5::install`](#krb5--install): Install the MIT Kerberos client
 * [`krb5::kdc`](#krb5--kdc): The necessary structure to manage the Kerberos 5 KDC on a given system.
@@ -29,7 +29,7 @@
 
 ### Resource types
 
-* [`krb5_acl`](#krb5_acl): Manages krb5 kadmind ACL entries per kadmind(8). When removing an entry, you can specify a regex for the operation_target and all associated 
+* [`krb5_acl`](#krb5_acl): Manages krb5 kadmind ACL entries per kadmind(8). When removing an entry, you can specify a regex for the operation_target and all associated
 * [`krb5kdc_auto_keytabs`](#krb5kdc_auto_keytabs): Auto-generates principals and keytabs on a functional KDC and outputs the keytabs to a directory of the user's choosing.  Can optionally take
 
 ### Functions
@@ -1540,4 +1540,3 @@ Returns: `Undef`
 Data type: `String`
 
 Time duration string to be validated
-
