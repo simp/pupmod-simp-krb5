@@ -7,8 +7,8 @@
   warns when it does
 - `simp/rngd` is now a dependency; `simp/haveged` remains an optional
   dependency and must be installed separately by sites that still use it
-- Raise the `puppetlabs/stdlib` floor to 9.2.0, for the 3-argument
-  `deprecation()`. Requiring OpenVox 8 already ruled out stdlib 8.x
+- Require `puppetlabs/stdlib` >= 9.2.0, for the 3-argument `deprecation()`.
+  Environments on stdlib 9.0.x or 9.1.x must upgrade stdlib.
 
 * Thu Oct 08 2026 Steven Pritchard <steve@sicura.us> - 8.1.0
 - Add support for OpenVox 9
