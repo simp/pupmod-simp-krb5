@@ -235,7 +235,7 @@ not runtime deps): `augeas_core`, `firewalld`, `selinux`, `selinux_core`,
 `simp_firewalld`, `simp_options`, `systemd`, plus the hard/optional deps above.
 
 Runtime requirement (from `metadata.json` `requirements`): `openvox
->= 8.0.0 < 9.0.0`.
+>= 8.0.0 < 10.0.0`.
 
 Supported OS matrix (from `metadata.json`): CentOS 9/10; RedHat 8/9/10;
 OracleLinux 8/9/10; Rocky 8/9/10; AlmaLinux 8/9/10.
