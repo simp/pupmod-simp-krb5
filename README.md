@@ -15,6 +15,7 @@
     - [What krb5 affects](#what-krb5-affects)
     - [Setup Requirements](#setup-requirements)
     - [Beginning with krb5](#beginning-with-krb5)
+    - [Entropy: `krb5::haveged` is deprecated](#entropy-krb5haveged-is-deprecated)
   - [Usage](#usage)
     - [Automatically manage the KDC and keytabs on clients](#automatically-manage-the-kdc-and-keytabs-on-clients)
     - [Keytab Propagation](#keytab-propagation)
@@ -104,6 +105,31 @@ information, please see the official [Red Hat Documentation](https://access.redh
 >  keytabs and the master password.
 
 --------------------
+
+### Entropy: `krb5::haveged` is deprecated
+
+`krb5::haveged` is deprecated and will be removed in the next major release.
+Use `krb5::rngd` instead, which includes
+[`simp/rngd`](https://github.com/simp/pupmod-simp-rngd). By default `rngd`
+only installs `rng-tools`; set `rngd::service_ensure` and
+`rngd::service_enable` to run the daemon. On kernels 5.6 and later (EL9,
+EL10) a userspace entropy daemon is rarely needed. On a KDC, `rngd` is ordered
+before the realm initialization.
+
+To switch:
+
+```yaml
+krb5::rngd: true
+rngd::service_ensure: running
+rngd::service_enable: true
+```
+
+Until then, existing behavior is preserved: with `krb5::haveged` unset, haveged
+is still used when `simp_options::haveged` is `true` (the default), with a
+deprecation warning, unless `krb5::rngd` is `true`. Set `krb5::haveged: false`
+to stop using it. `simp/haveged` is an optional dependency that sites still
+using it must install themselves. Switching does not remove haveged from nodes
+where it was installed.
 
 ## Usage
 
