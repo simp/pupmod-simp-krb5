@@ -1579,4 +1579,3 @@ Returns: `Undef`
 Data type: `String`
 
 Time duration string to be validated
-
