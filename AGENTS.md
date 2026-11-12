@@ -212,11 +212,11 @@ default rather than assuming `simp_options` is included.
 
 Hard dependencies (from `metadata.json`):
 
-- `simp/simplib` `>= 4.9.0 < 6.0.0` (provides `simplib::lookup`,
+- `simp/simplib` `>= 4.9.0 < 8.0.0` (provides `simplib::lookup`,
   `simplib::assert_metadata`, `simplib::assert_optional_dependency`,
   `simplib::passgen`, `simplib::validate_re_array`, and the `Simplib::Host`,
   `Simplib::Netlist`, `Simplib::Port` types)
-- `puppetlabs/stdlib` `>= 8.0.0 < 10.0.0`
+- `puppetlabs/stdlib` `>= 9.2.0 < 11.0.0`
 - `simp/rngd` `>= 0.2.0 < 1.0.0` (entropy daemon; included only when `$rngd`)
 
 Optional dependencies (from `metadata.json` `simp.optional_dependencies`,
@@ -225,7 +225,7 @@ condition):
 
 - `simp/haveged` `>= 0.4.5 < 1.0.0` — when haveged is in use (`install.pp`,
   `kdc.pp`); deprecated
-- `simp/iptables` `>= 6.5.3 < 9.0.0` — when the KDC firewall is on
+- `simp/iptables` `>= 6.5.3 < 10.0.0` — when the KDC firewall is on
   (`kdc/firewall.pp`)
 - `simp/vox_selinux` (no version pin) — when SELinux is enabled
   (`kdc/selinux_hotfix.pp`)
