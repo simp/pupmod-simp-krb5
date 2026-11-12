@@ -41,6 +41,32 @@ describe 'krb5' do
           it_behaves_like 'common config'
           it { is_expected.to contain_class('haveged') }
         end
+
+        context 'with haveged => false' do
+          let(:params) { { haveged: false } }
+
+          it_behaves_like 'common config'
+          it { is_expected.not_to contain_class('haveged') }
+          it { is_expected.not_to contain_class('rngd') }
+        end
+
+        context 'with rngd => true' do
+          let(:params) { { rngd: true } }
+
+          it_behaves_like 'common config'
+          it { is_expected.to contain_class('rngd') }
+          it { is_expected.to contain_package('rng-tools') }
+          it { is_expected.not_to contain_service('rngd') }
+          it { is_expected.not_to contain_class('haveged') }
+        end
+
+        context 'with rngd => true and haveged => true' do
+          let(:params) { { rngd: true, haveged: true } }
+
+          it_behaves_like 'common config'
+          it { is_expected.to contain_class('rngd') }
+          it { is_expected.to contain_class('haveged') }
+        end
       end
     end
   end

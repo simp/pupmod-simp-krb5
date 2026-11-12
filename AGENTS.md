@@ -27,7 +27,8 @@ on top.
 
 - **`krb5` (`manifests/init.pp`)** — public base class. Consumers
   `include 'krb5'`. Parameters `$ldap`, `$firewall`, `$haveged` come from the
-  `simp_options::*` seam; `$enctypes` defaults to
+  `simp_options::*` seam (`$haveged` is deprecated and unset by default, see
+  below); `$rngd` (default `false`) includes `rngd`; `$enctypes` defaults to
   `['aes256-cts-hmac-sha1-96', 'aes128-cts-hmac-sha1-96']` and is the source of
   the three `permitted_*_enctypes` config defaults. Calls
   `simplib::assert_metadata` (`init.pp`), then `contain`s install → config
@@ -35,9 +36,13 @@ on top.
 
 - **`krb5::install` (`manifests/install.pp`, PRIVATE)** — installs
   `$packages` (from module data, default `['krb5-workstation']` —
-  `data/common.yaml`) at `$ensure`. If `$haveged` (inherited from `krb5`),
-  asserts the optional `simp/haveged` dependency and `include`s `haveged`
-  (`install.pp`).
+  `data/common.yaml`) at `$ensure`. If `$haveged` (deprecated; inherited from
+  `krb5`), asserts the optional `simp/haveged` dependency and `include`s
+  `haveged`; if `$rngd`, `include`s `rngd` (`install.pp`).
+  `krb5` computes `$haveged_enabled`: an explicit `$haveged` wins, otherwise
+  `simp_options::haveged` (default `true`) applies unless `$rngd` is `true`.
+  It warns with `deprecation()` whenever haveged is in use. `krb5::kdc` orders
+  `Class['rngd']` (or `Class['haveged']`) before `Krb5::Kdc::Realm`.
 
 - **`krb5::config` (`manifests/config.pp`, PRIVATE, `inherits krb5`)** —
   writes the `/etc/krb5.conf` includedir stub, creates the two include dirs, and
@@ -186,7 +191,7 @@ This is the module's SIMP feature-toggle seam. All calls use
 |----------|-----|-----------------|
 | `init.pp` | `simp_options::ldap` | `false` |
 | `init.pp` | `simp_options::firewall` | `false` |
-| `init.pp` | `simp_options::haveged` | `true` |
+| `init.pp` | `simp_options::haveged` | `true` (deprecated; ignored when `rngd` is `true`) |
 | `install.pp` | `simp_options::package_ensure` | `'installed'` |
 | `kdc/install.pp` | `simp_options::package_ensure` | `'installed'` |
 | `kdc.pp` | `simp_options::trusted_nets` | `['127.0.0.1', '::1']` |
@@ -212,12 +217,14 @@ Hard dependencies (from `metadata.json`):
   `simplib::passgen`, `simplib::validate_re_array`, and the `Simplib::Host`,
   `Simplib::Netlist`, `Simplib::Port` types)
 - `puppetlabs/stdlib` `>= 8.0.0 < 10.0.0`
+- `simp/rngd` `>= 0.2.0 < 1.0.0` (entropy daemon; included only when `$rngd`)
 
 Optional dependencies (from `metadata.json` `simp.optional_dependencies`,
 each asserted at runtime with `simplib::assert_optional_dependency` behind a
 condition):
 
-- `simp/haveged` `>= 0.4.5 < 1.0.0` — when `$haveged` (`install.pp`)
+- `simp/haveged` `>= 0.4.5 < 1.0.0` — when haveged is in use (`install.pp`,
+  `kdc.pp`); deprecated
 - `simp/iptables` `>= 6.5.3 < 9.0.0` — when the KDC firewall is on
   (`kdc/firewall.pp`)
 - `simp/vox_selinux` (no version pin) — when SELinux is enabled

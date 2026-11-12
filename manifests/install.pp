@@ -13,14 +13,18 @@
 #   * Compatible with the ``Package`` Resource ``ensure`` parameter can
 #
 # @param haveged
-#   Include ``haveged`` for entropy generation.
+#   Include ``haveged`` for entropy generation (deprecated).
+#
+# @param rngd
+#   Include ``rngd`` for entropy generation.
 #
 # @author https://github.com/simp/pupmod-simp-krb5/graphs/contributors
 #
 class krb5::install (
   Array[String[1]] $packages,
   String[1]        $ensure    = simplib::lookup('simp_options::package_ensure', { 'default_value' => 'installed' }),
-  Boolean          $haveged   = $krb5::haveged
+  Boolean          $haveged   = $krb5::haveged_enabled,
+  Boolean          $rngd      = $krb5::rngd
 ) {
   assert_private()
 
@@ -28,6 +32,10 @@ class krb5::install (
     simplib::assert_optional_dependency($module_name, 'simp/haveged')
 
     include 'haveged'
+  }
+
+  if $rngd {
+    include 'rngd'
   }
 
   package { $packages:

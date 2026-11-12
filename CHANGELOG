@@ -1,3 +1,13 @@
+* Thu Nov 12 2026 Steven Pritchard <steve@sicura.us> - 8.2.0
+- Add `krb5::rngd` to include `simp/rngd`, which replaces `simp/haveged`. When
+  managing a KDC, `rngd` is ordered before the realm initialization
+- Deprecate `krb5::haveged`; it will be removed in the next major release.
+  `krb5` still uses haveged by default (`simp_options::haveged`, default
+  `true`) unless `krb5::rngd` is `true` or `krb5::haveged` is `false`, and now
+  warns when it does
+- `simp/rngd` is now a dependency; `simp/haveged` remains an optional
+  dependency and must be installed separately by sites that still use it
+
 * Thu Oct 08 2026 Steven Pritchard <steve@sicura.us> - 8.1.0
 - Add support for OpenVox 9
 - Update metadata.json dependency ranges from the Forge

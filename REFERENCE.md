@@ -8,7 +8,7 @@
 
 * [`krb5`](#krb5): Kerberos 5 management and manipulation
 * [`krb5::client`](#krb5--client): A client class that will connect with the given KDC
-* [`krb5::config`](#krb5--config): **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**  Basic configuration of the MIT Kerberos
+* [`krb5::config`](#krb5--config): **NOTE: THIS IS A [PRIVATE](https://github.com/puppetlabs/puppetlabs-stdlib#assert_private) CLASS**  Basic configuration of the MIT Kerberos 
 * [`krb5::config::default_settings`](#krb5--config--default_settings): Default System Settings
 * [`krb5::install`](#krb5--install): Install the MIT Kerberos client
 * [`krb5::kdc`](#krb5--kdc): The necessary structure to manage the Kerberos 5 KDC on a given system.
@@ -29,7 +29,7 @@
 
 ### Resource types
 
-* [`krb5_acl`](#krb5_acl): Manages krb5 kadmind ACL entries per kadmind(8). When removing an entry, you can specify a regex for the operation_target and all associated
+* [`krb5_acl`](#krb5_acl): Manages krb5 kadmind ACL entries per kadmind(8). When removing an entry, you can specify a regex for the operation_target and all associated 
 * [`krb5kdc_auto_keytabs`](#krb5kdc_auto_keytabs): Auto-generates principals and keytabs on a functional KDC and outputs the keytabs to a directory of the user's choosing.  Can optionally take
 
 ### Functions
@@ -54,6 +54,7 @@ The following parameters are available in the `krb5` class:
 * [`ldap`](#-krb5--ldap)
 * [`firewall`](#-krb5--firewall)
 * [`haveged`](#-krb5--haveged)
+* [`rngd`](#-krb5--rngd)
 * [`enctypes`](#-krb5--enctypes)
 
 ##### <a name="-krb5--ldap"></a>`ldap`
@@ -76,11 +77,29 @@ Default value: `simplib::lookup('simp_options::firewall', { 'default_value' => f
 
 ##### <a name="-krb5--haveged"></a>`haveged`
 
+Data type: `Optional[Boolean]`
+
+Deprecated; use `rngd` instead. Use the SIMP haveged module to provide
+entropy. `simp/haveged` is an optional dependency, so the module must be
+installed separately. This parameter will be removed in the next major
+release.
+
+* When unset, this follows `simp_options::haveged` (default `true`),
+  unless `rngd` is `true`, in which case haveged is not used
+* When `true`, a deprecation warning is emitted
+
+Default value: `undef`
+
+##### <a name="-krb5--rngd"></a>`rngd`
+
 Data type: `Boolean`
 
-Use the SIMP haveged module
+Include the SIMP `rngd` class to provide entropy. By default `rngd` only
+installs `rng-tools`; set `rngd::service_ensure` and `rngd::service_enable`
+to run the service. When managing a KDC, `rngd` is ordered before the
+realm initialization.
 
-Default value: `simplib::lookup('simp_options::haveged', { 'default_value' => true })`
+Default value: `false`
 
 ##### <a name="-krb5--enctypes"></a>`enctypes`
 
@@ -264,6 +283,7 @@ The following parameters are available in the `krb5::install` class:
 * [`packages`](#-krb5--install--packages)
 * [`ensure`](#-krb5--install--ensure)
 * [`haveged`](#-krb5--install--haveged)
+* [`rngd`](#-krb5--install--rngd)
 
 ##### <a name="-krb5--install--packages"></a>`packages`
 
@@ -289,9 +309,17 @@ Default value: `simplib::lookup('simp_options::package_ensure', { 'default_value
 
 Data type: `Boolean`
 
-Include ``haveged`` for entropy generation.
+Include ``haveged`` for entropy generation (deprecated).
 
-Default value: `$krb5::haveged`
+Default value: `$krb5::haveged_enabled`
+
+##### <a name="-krb5--install--rngd"></a>`rngd`
+
+Data type: `Boolean`
+
+Include ``rngd`` for entropy generation.
+
+Default value: `$krb5::rngd`
 
 ### <a name="krb5--kdc"></a>`krb5::kdc`
 
@@ -325,6 +353,7 @@ The following parameters are available in the `krb5::kdc` class:
 * [`ldap`](#-krb5--kdc--ldap)
 * [`firewall`](#-krb5--kdc--firewall)
 * [`haveged`](#-krb5--kdc--haveged)
+* [`rngd`](#-krb5--kdc--rngd)
 * [`auto_initialize`](#-krb5--kdc--auto_initialize)
 * [`auto_realm`](#-krb5--kdc--auto_realm)
 * [`auto_management_principal`](#-krb5--kdc--auto_management_principal)
@@ -370,9 +399,19 @@ Default value: `$krb5::firewall`
 
 Data type: `Boolean`
 
-If set, enable the HAVEGE daemon for entropy
+Deprecated; use `rngd`. If set, enable the HAVEGE daemon for
+entropy.
 
-Default value: `$krb5::haveged`
+Default value: `$krb5::haveged_enabled`
+
+##### <a name="-krb5--kdc--rngd"></a>`rngd`
+
+Data type: `Boolean`
+
+If set, include the `rngd` class for entropy and order it before
+the realm initialization.
+
+Default value: `$krb5::rngd`
 
 ##### <a name="-krb5--kdc--auto_initialize"></a>`auto_initialize`
 
@@ -1540,3 +1579,4 @@ Returns: `Undef`
 Data type: `String`
 
 Time duration string to be validated
+

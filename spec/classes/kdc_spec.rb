@@ -67,6 +67,16 @@ describe 'krb5::kdc' do
           end
         end
 
+        context 'with rngd = true' do
+          let(:pre_condition) { "class { 'krb5': rngd => true }" }
+          let(:params) { { rngd: true } }
+
+          it_behaves_like 'common kdc config'
+          it { is_expected.to contain_class('rngd') }
+          it { is_expected.not_to contain_class('haveged') }
+          it { is_expected.to contain_class('rngd').that_comes_before("Krb5::Kdc::Realm[#{facts[:networking][:domain]}]") }
+        end
+
         context 'with firewall = true, haveged = true, ldap = true' do
           let(:params) { { firewall: true, haveged: true, ldap: true } }
 

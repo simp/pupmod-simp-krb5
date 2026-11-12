@@ -24,7 +24,10 @@
 #   components.
 #   @note This presently does not set up the LDAP back-end for KRB5
 # @param firewall  If set, use the SIMP iptables module.
-# @param haveged  If set, enable the HAVEGE daemon for entropy
+# @param haveged  Deprecated; use `rngd`. If set, enable the HAVEGE daemon for
+#   entropy.
+# @param rngd  If set, include the `rngd` class for entropy and order it before
+#   the realm initialization.
 # @param auto_initialize  If set, create a default realm do all
 #   necessary work to set up the environment for production.
 #   @note This will simply use the system defaults. If you want something other
@@ -70,7 +73,8 @@ class krb5::kdc (
   Stdlib::Absolutepath $config_dir                 = '/var/kerberos/krb5kdc/kdc.conf.simp.d',
   Boolean              $ldap                       = $krb5::ldap,
   Boolean              $firewall                   = $krb5::firewall,
-  Boolean              $haveged                    = $krb5::haveged,
+  Boolean              $haveged                    = $krb5::haveged_enabled,
+  Boolean              $rngd                       = $krb5::rngd,
   Boolean              $auto_initialize            = true,
   String               $auto_realm                 = $facts['networking']['domain'],
   String               $auto_management_principal  = 'puppet_auto',
@@ -78,7 +82,13 @@ class krb5::kdc (
 ) inherits krb5 {
   simplib::assert_metadata($module_name)
 
-  if $haveged { include 'haveged' }
+  if $haveged {
+    simplib::assert_optional_dependency($module_name, 'simp/haveged')
+
+    include 'haveged'
+  }
+
+  if $rngd { include 'rngd' }
 
   contain 'krb5::kdc::install'
   contain 'krb5::kdc::config'
@@ -115,6 +125,10 @@ class krb5::kdc (
 
     if $haveged {
       Class['haveged'] -> Krb5::Kdc::Realm[$auto_realm]
+    }
+
+    if $rngd {
+      Class['rngd'] -> Krb5::Kdc::Realm[$auto_realm]
     }
   }
 

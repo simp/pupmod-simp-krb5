@@ -1,6 +1,6 @@
 {
   "name": "simp-krb5",
-  "version": "8.1.0",
+  "version": "8.2.0",
   "author": "SIMP Team",
   "summary": "Puppet management of the MIT kerberos stack",
   "license": "Apache-2.0",
@@ -18,6 +18,10 @@
     {
       "name": "puppetlabs/stdlib",
       "version_requirement": ">= 8.0.0 < 11.0.0"
+    },
+    {
+      "name": "simp/rngd",
+      "version_requirement": ">= 0.2.0 < 1.0.0"
     }
   ],
   "simp": {
