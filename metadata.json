@@ -1,6 +1,6 @@
 {
   "name": "simp-krb5",
-  "version": "8.2.0",
+  "version": "8.2.1",
   "author": "SIMP Team",
   "summary": "Puppet management of the MIT kerberos stack",
   "license": "Apache-2.0",
@@ -32,7 +32,7 @@
       },
       {
         "name": "simp/iptables",
-        "version_requirement": ">= 6.5.3 < 10.0.0"
+        "version_requirement": ">= 6.5.3 < 11.0.0"
       },
       {
         "name": "simp/vox_selinux"

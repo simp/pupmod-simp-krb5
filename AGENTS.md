@@ -225,7 +225,7 @@ condition):
 
 - `simp/haveged` `>= 0.4.5 < 1.0.0` — when haveged is in use (`install.pp`,
   `kdc.pp`); deprecated
-- `simp/iptables` `>= 6.5.3 < 10.0.0` — when the KDC firewall is on
+- `simp/iptables` `>= 6.5.3 < 11.0.0` — when the KDC firewall is on
   (`kdc/firewall.pp`)
 - `simp/vox_selinux` (no version pin) — when SELinux is enabled
   (`kdc/selinux_hotfix.pp`)
