@@ -1,3 +1,6 @@
+* Mon Nov 23 2026 Steven Pritchard <steve@sicura.us> - 8.2.1
+- Allow simp/iptables 10.x
+
 * Thu Nov 12 2026 Steven Pritchard <steve@sicura.us> - 8.2.0
 - Add `krb5::rngd` to include `simp/rngd`, which replaces `simp/haveged`. When
   managing a KDC, `rngd` is ordered before the realm initialization
