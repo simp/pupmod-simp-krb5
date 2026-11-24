@@ -36,6 +36,7 @@ end
 
 shared_examples_for 'selinux hotfix' do
   it { is_expected.to create_vox_selinux__module('krb5kdc_hotfix') }
+  it { is_expected.to create_vox_selinux__module('krb5kdc_hotfix').with_content_te(%r{allow kadmind_t krb5_conf_t:dir \{ read open getattr \};}) }
 end
 
 shared_examples_for 'firewall' do
@@ -62,7 +63,7 @@ describe 'krb5::kdc' do
           it { is_expected.not_to contain_package('krb5-server-ldap') }
           it { is_expected.not_to contain_class('krb5::kdc::firewall') }
 
-          unless os_facts.dig(:os, 'selinux').nil?
+          unless os_facts.dig(:os, :selinux).nil?
             it { is_expected.to contain_class('krb5::kdc::selinux_hotfix') }
           end
         end
@@ -81,7 +82,7 @@ describe 'krb5::kdc' do
           let(:params) { { firewall: true, haveged: true, ldap: true } }
 
           it_behaves_like 'common kdc config'
-          unless os_facts.dig(:os, 'selinux').nil?
+          unless os_facts.dig(:os, :selinux).nil?
             it_behaves_like 'selinux hotfix'
           end
           it { is_expected.to contain_class('haveged') }
@@ -97,7 +98,7 @@ describe 'krb5::kdc' do
           end
 
           it_behaves_like 'common kdc config'
-          unless os_facts.dig(:os, 'selinux').nil?
+          unless os_facts.dig(:os, :selinux).nil?
             it_behaves_like 'selinux hotfix'
           end
         end
