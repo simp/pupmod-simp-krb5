@@ -1,3 +1,7 @@
+* Tue Nov 24 2026 Hazel Caballero <hazel@sicura.us> - 8.2.2
+- Fixed the krb5kdc SELinux hotfix policy on EL10, which was missing the
+  `getattr` permission because the OS release was compared as a string
+
 * Mon Nov 23 2026 Steven Pritchard <steve@sicura.us> - 8.2.1
 - Allow simp/iptables 10.x
 

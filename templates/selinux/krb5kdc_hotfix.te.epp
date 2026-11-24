@@ -10,10 +10,10 @@ require {
 
 #============= kadmind_t ==============
 allow kadmind_t krb5_conf_t:dir search;
-<% if ($facts['os']['family'] in ['RedHat']) and ($facts['os']['release']['major'] > '7') { -%>
+<% if ($facts['os']['family'] in ['RedHat']) and (versioncmp($facts['os']['release']['major'], '7') > 0) { -%>
 allow kadmind_t krb5_conf_t:dir { read open getattr };
 <% } -%>
-<% elsif ($facts['os']['name'] in ['Amazon']) and ($facts['os']['release']['major'] > '2') { -%>
+<% elsif ($facts['os']['name'] in ['Amazon']) and (versioncmp($facts['os']['release']['major'], '2') > 0) { -%>
 allow kadmind_t krb5_conf_t:dir { read open getattr };
 <% } -%>
 <% else { -%>
